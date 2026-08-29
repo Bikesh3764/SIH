@@ -471,39 +471,39 @@ export default function GovtSchemes({ currentLang, onNavigate }) {
   });
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-7 animate-apple-fade text-[#1d1d1f]">
+    <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-5 sm:space-y-6 animate-apple-fade text-[#1d1d1f] overflow-x-hidden min-w-0">
       
       {/* 1. Header Banner (DESIGN.md {component.product-tile-dark}: #272729 Tile) */}
-      <div className="p-7 sm:p-9 rounded-[18px] bg-[#272729] text-white shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 animate-apple-in">
+      <div className="p-5 sm:p-8 rounded-[18px] bg-[#272729] text-white shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-5 sm:gap-6 animate-apple-in overflow-hidden">
         <div className="space-y-2">
           <div className="flex items-center space-x-2">
             <span className="px-3 py-1 rounded-full text-[12px] font-semibold uppercase bg-[#2997ff]/15 border border-[#2997ff]/30 text-[#2997ff] tracking-[0.04em]">
               Central & State Welfare
             </span>
           </div>
-          <h1 className="text-[28px] sm:text-[36px] font-semibold tracking-[-0.28px] text-white leading-tight">
+          <h1 className="text-[24px] sm:text-[36px] font-semibold tracking-[-0.28px] text-white leading-tight">
             {t.schemesPageTitle}
           </h1>
-          <p className="text-[14px] text-[#cccccc] max-w-2xl leading-[1.47]">
+          <p className="text-[13px] sm:text-[14px] text-[#cccccc] max-w-2xl leading-[1.47]">
             {t.schemesPageSubtitle}
           </p>
         </div>
 
         {/* 2 Stats Pods (DESIGN.md Tile 2 #2a2a2c) */}
-        <div className="grid grid-cols-2 gap-3 shrink-0 w-full sm:w-auto">
-          <div className="p-4 rounded-[14px] bg-[#2a2a2c] border border-white/5 text-center min-w-[130px]">
-            <span className="text-[11px] uppercase font-semibold text-[#7a7a7a] block tracking-wide">{t.totalGrantPool}</span>
-            <span className="text-[21px] font-semibold text-white tracking-[-0.231px]">₹1.24 Lakh Cr</span>
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-3 shrink-0 w-full sm:w-auto">
+          <div className="p-3 sm:p-4 rounded-[14px] bg-[#2a2a2c] border border-white/5 text-center w-full sm:min-w-[130px]">
+            <span className="text-[10px] sm:text-[11px] uppercase font-semibold text-[#7a7a7a] block tracking-wide">{t.totalGrantPool}</span>
+            <span className="text-[17px] sm:text-[21px] font-semibold text-white tracking-[-0.231px]">₹1.24 Lakh Cr</span>
           </div>
-          <div className="p-4 rounded-[14px] bg-[#2a2a2c] border border-white/5 text-center min-w-[130px]">
-            <span className="text-[11px] uppercase font-semibold text-[#7a7a7a] block tracking-wide">{t.activePrograms}</span>
-            <span className="text-[21px] font-semibold text-[#2997ff] tracking-[-0.231px]">6 Schemes</span>
+          <div className="p-3 sm:p-4 rounded-[14px] bg-[#2a2a2c] border border-white/5 text-center w-full sm:min-w-[130px]">
+            <span className="text-[10px] sm:text-[11px] uppercase font-semibold text-[#7a7a7a] block tracking-wide">{t.activePrograms}</span>
+            <span className="text-[17px] sm:text-[21px] font-semibold text-[#2997ff] tracking-[-0.231px]">6 Schemes</span>
           </div>
         </div>
       </div>
 
       {/* 2. Search & Category Filter Toolbar (DESIGN.md search-input & pill grammar) */}
-      <div className="p-5 rounded-[18px] bg-white border border-[#e0e0e0] space-y-3.5 shadow-xs">
+      <div className="p-4 sm:p-5 rounded-[18px] bg-white border border-[#e0e0e0] space-y-3 shadow-xs">
         
         {/* Apple Pill Search Input */}
         <div className="relative">
@@ -513,7 +513,7 @@ export default function GovtSchemes({ currentLang, onNavigate }) {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={t.searchSchemesPlaceholder}
-            className="w-full pl-11 pr-9 py-3 rounded-full bg-[#f5f5f7] border border-[#e0e0e0] text-[14px] font-normal text-[#1d1d1f] focus:outline-none focus:ring-2 focus:ring-[#0066cc] focus:bg-white transition-all shadow-xs"
+            className="w-full pl-11 pr-9 py-2.5 sm:py-3 rounded-full bg-[#f5f5f7] border border-[#e0e0e0] text-[14px] font-normal text-[#1d1d1f] focus:outline-none focus:ring-2 focus:ring-[#0066cc] focus:bg-white transition-all shadow-xs"
           />
           {searchQuery && (
             <button onClick={() => setSearchQuery('')} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#7a7a7a] hover:text-[#1d1d1f] cursor-pointer">
@@ -535,7 +535,7 @@ export default function GovtSchemes({ currentLang, onNavigate }) {
             <button
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`px-4 py-2 rounded-full text-[13px] font-medium whitespace-nowrap transition-all cursor-pointer active:scale-95 ${
+              className={`px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-[12px] sm:text-[13px] font-medium whitespace-nowrap transition-all cursor-pointer active:scale-95 ${
                 selectedCategory === cat.id
                   ? 'bg-[#0066cc] text-white shadow-sm'
                   : 'bg-[#f5f5f7] hover:bg-[#e8e8ed] text-[#1d1d1f] border border-[#e0e0e0]'
@@ -548,7 +548,7 @@ export default function GovtSchemes({ currentLang, onNavigate }) {
       </div>
 
       {/* 3. Schemes Grid (DESIGN.md {component.store-utility-card}: #ffffff, 18px rounded, 24px padding) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         {filteredSchemes.map((scheme, idx) => {
           const IconComp = scheme.icon;
           const localizedTitle = scheme.localizedNames[currentLang] || scheme.name;
@@ -558,7 +558,7 @@ export default function GovtSchemes({ currentLang, onNavigate }) {
           return (
             <div
               key={scheme.id}
-              className={`p-7 rounded-[18px] bg-white border border-[#e0e0e0] transition-all flex flex-col justify-between space-y-5 apple-card-hover animate-apple-in delay-${(idx % 6) + 1}`}
+              className={`p-5 sm:p-7 rounded-[18px] bg-white border border-[#e0e0e0] transition-all flex flex-col justify-between space-y-5 apple-card-hover animate-apple-in delay-${(idx % 6) + 1}`}
             >
               <div className="space-y-4">
                 

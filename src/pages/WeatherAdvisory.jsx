@@ -54,15 +54,15 @@ export default function WeatherAdvisory({ currentLang }) {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6 animate-apple-fade text-[#1d1d1f]">
+    <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-5 sm:space-y-6 animate-apple-fade text-[#1d1d1f] overflow-x-hidden min-w-0">
       
       {/* Header & District Selector */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-apple-in">
         <div>
-          <h1 className="text-3xl font-semibold tracking-[-0.03em] text-[#1d1d1f]">
+          <h1 className="text-[24px] sm:text-[34px] font-semibold tracking-[-0.374px] text-[#1d1d1f]">
             {t.weatherPageTitle}
           </h1>
-          <p className="text-sm text-[#86868b] font-normal">
+          <p className="text-[13px] sm:text-[16px] text-[#7a7a7a] font-normal">
             {t.weatherPageSubtitle} • {selectedDistrict.name} ({selectedDistrict.state})
           </p>
         </div>
@@ -86,7 +86,7 @@ export default function WeatherAdvisory({ currentLang }) {
       </div>
 
       {/* Main Weather Card (Apple Dark Sky Blue Tile) */}
-      <div className="p-7 sm:p-9 rounded-[26px] bg-gradient-to-br from-[#0066cc] to-[#0077ed] text-white shadow-[0_12px_32px_rgba(0,102,204,0.22)] space-y-6">
+      <div className="p-5 sm:p-8 rounded-[18px] sm:rounded-[26px] bg-gradient-to-br from-[#0066cc] to-[#0077ed] text-white shadow-[0_12px_32px_rgba(0,102,204,0.22)] space-y-5 sm:space-y-6 overflow-hidden">
         
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
@@ -94,78 +94,78 @@ export default function WeatherAdvisory({ currentLang }) {
               Current Weather Conditions
             </span>
             <div className="flex items-baseline space-x-3 mt-1">
-              <span className="text-5xl sm:text-6xl font-semibold tracking-tight text-white">32°C</span>
-              <span className="text-xl font-medium text-blue-100">Overcast</span>
+              <span className="text-4xl sm:text-6xl font-semibold tracking-tight text-white">32°C</span>
+              <span className="text-lg sm:text-xl font-medium text-blue-100">Overcast</span>
             </div>
             <span className="text-xs text-blue-100 mt-1 block">
               Feels like 36°C • Updated: {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
             </span>
           </div>
 
-          <div className="w-16 h-16 rounded-full bg-white/15 backdrop-blur-md flex items-center justify-center border border-white/20">
-            <CloudSun size={38} className="text-white" />
+          <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/15 backdrop-blur-md flex items-center justify-center border border-white/20 self-start sm:self-auto">
+            <CloudSun size={32} className="text-white" />
           </div>
         </div>
 
         {/* 6 Key Weather Telemetry Metrics */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 pt-3 border-t border-white/20 text-xs">
-          <div className="p-3 rounded-[14px] bg-white/10 backdrop-blur-md border border-white/15">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3 pt-3 border-t border-white/20 text-xs">
+          <div className="p-2.5 sm:p-3 rounded-[12px] sm:rounded-[14px] bg-white/10 backdrop-blur-md border border-white/15">
             <span className="text-[10px] text-blue-200 uppercase font-semibold block">Soil Moisture</span>
-            <span className="text-base font-semibold text-white">68% Optimal</span>
+            <span className="text-[13px] sm:text-base font-semibold text-white">68% Optimal</span>
           </div>
-          <div className="p-3 rounded-[14px] bg-white/10 backdrop-blur-md border border-white/15">
+          <div className="p-2.5 sm:p-3 rounded-[12px] sm:rounded-[14px] bg-white/10 backdrop-blur-md border border-white/15">
             <span className="text-[10px] text-blue-200 uppercase font-semibold block">Rain Chance</span>
-            <span className="text-base font-semibold text-white">74% High</span>
+            <span className="text-[13px] sm:text-base font-semibold text-white">74% High</span>
           </div>
-          <div className="p-3 rounded-[14px] bg-white/10 backdrop-blur-md border border-white/15">
+          <div className="p-2.5 sm:p-3 rounded-[12px] sm:rounded-[14px] bg-white/10 backdrop-blur-md border border-white/15">
             <span className="text-[10px] text-blue-200 uppercase font-semibold block">Wind Speed</span>
-            <span className="text-base font-semibold text-white">14 km/h WNW</span>
+            <span className="text-[13px] sm:text-base font-semibold text-white">14 km/h WNW</span>
           </div>
-          <div className="p-3 rounded-[14px] bg-white/10 backdrop-blur-md border border-white/15">
+          <div className="p-2.5 sm:p-3 rounded-[12px] sm:rounded-[14px] bg-white/10 backdrop-blur-md border border-white/15">
             <span className="text-[10px] text-blue-200 uppercase font-semibold block">Air Humidity</span>
-            <span className="text-base font-semibold text-white">78%</span>
+            <span className="text-[13px] sm:text-base font-semibold text-white">78%</span>
           </div>
-          <div className="p-3 rounded-[14px] bg-white/10 backdrop-blur-md border border-white/15">
+          <div className="p-2.5 sm:p-3 rounded-[12px] sm:rounded-[14px] bg-white/10 backdrop-blur-md border border-white/15">
             <span className="text-[10px] text-blue-200 uppercase font-semibold block">Barometric</span>
-            <span className="text-base font-semibold text-white">1008 hPa</span>
+            <span className="text-[13px] sm:text-base font-semibold text-white">1008 hPa</span>
           </div>
-          <div className="p-3 rounded-[14px] bg-white/10 backdrop-blur-md border border-white/15">
+          <div className="p-2.5 sm:p-3 rounded-[12px] sm:rounded-[14px] bg-white/10 backdrop-blur-md border border-white/15">
             <span className="text-[10px] text-blue-200 uppercase font-semibold block">UV Index</span>
-            <span className="text-base font-semibold text-white">4 (Moderate)</span>
+            <span className="text-[13px] sm:text-base font-semibold text-white">4 (Moderate)</span>
           </div>
         </div>
 
       </div>
 
       {/* Farming Advisories Section (3 Apple Utility Cards) */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-3.5">
         
-        <div className="p-5 rounded-[20px] bg-white border border-[#d2d2d7]/60 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-2">
-          <div className="flex items-center space-x-2 text-[#0071e3]">
+        <div className="p-4 sm:p-5 rounded-[18px] bg-white border border-[#e0e0e0] shadow-xs space-y-2">
+          <div className="flex items-center space-x-2 text-[#0066cc]">
             <Droplets size={18} />
             <h3 className="font-semibold text-sm text-[#1d1d1f]">Watering Advisory</h3>
           </div>
-          <p className="text-xs text-[#6e6e73] leading-relaxed">
+          <p className="text-xs text-[#7a7a7a] leading-relaxed">
             Heavy afternoon rain expected (14:00 - 16:00). <b>Hold drip irrigation</b> for the next 24 hours to prevent root waterlogging.
           </p>
         </div>
 
-        <div className="p-5 rounded-[20px] bg-white border border-[#d2d2d7]/60 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-2">
+        <div className="p-4 sm:p-5 rounded-[18px] bg-white border border-[#e0e0e0] shadow-xs space-y-2">
           <div className="flex items-center space-x-2 text-amber-600">
             <AlertTriangle size={18} />
             <h3 className="font-semibold text-sm text-[#1d1d1f]">Pest & Fungal Alert</h3>
           </div>
-          <p className="text-xs text-[#6e6e73] leading-relaxed">
+          <p className="text-xs text-[#7a7a7a] leading-relaxed">
             High humidity (78%) and warm temperature promote <b>early fungal spore germination</b>. Inspect lower crop foliage regularly.
           </p>
         </div>
 
-        <div className="p-5 rounded-[20px] bg-white border border-[#d2d2d7]/60 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-2">
+        <div className="p-4 sm:p-5 rounded-[18px] bg-white border border-[#e0e0e0] shadow-xs space-y-2">
           <div className="flex items-center space-x-2 text-emerald-600">
             <ShieldCheck size={18} />
             <h3 className="font-semibold text-sm text-[#1d1d1f]">Harvesting Window</h3>
           </div>
-          <p className="text-xs text-[#6e6e73] leading-relaxed">
+          <p className="text-xs text-[#7a7a7a] leading-relaxed">
             Dry clear window available between <b>07:00 - 11:00 AM</b> tomorrow for spraying organic biopesticides and harvesting leafy produce.
           </p>
         </div>
@@ -173,10 +173,10 @@ export default function WeatherAdvisory({ currentLang }) {
       </div>
 
       {/* Forecast View Mode Toggle & Timeline Strip */}
-      <div className="p-6 sm:p-7 rounded-[24px] bg-white border border-[#d2d2d7]/60 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-5">
+      <div className="p-4 sm:p-7 rounded-[18px] sm:rounded-[24px] bg-white border border-[#e0e0e0] shadow-xs space-y-4 sm:space-y-5 overflow-hidden">
         
         <div className="flex items-center justify-between">
-          <h2 className="text-base font-semibold text-[#1d1d1f]">
+          <h2 className="text-sm sm:text-base font-semibold text-[#1d1d1f]">
             {forecastView === 'hourly' ? '24-Hour Hourly Forecast' : '7-Day Agronomy Forecast'}
           </h2>
 

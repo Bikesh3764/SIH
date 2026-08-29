@@ -241,24 +241,44 @@ export default function MandiMarket({ currentLang }) {
   }, []);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6 animate-apple-fade text-[#1d1d1f]">
+    <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-5 sm:space-y-6 animate-apple-fade text-[#1d1d1f] overflow-x-hidden min-w-0">
       
-      {/* Header (Apple Display Style) */}
-      <div className="animate-apple-in">
-        <h1 className="text-3xl font-semibold tracking-[-0.03em] text-[#1d1d1f]">
-          {t.marketTitle}
-        </h1>
-        <p className="text-sm text-[#86868b] mt-0.5 font-normal">
-          {t.marketSubtitle}
-        </p>
+      {/* 1. Header with Live Pulse Badge */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-apple-in">
+        <div>
+          <div className="flex items-center space-x-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span className="text-[12px] font-semibold uppercase tracking-[0.04em] text-emerald-600">
+              AGMARKNET Data.gov.in Live API
+            </span>
+          </div>
+          <h1 className="text-[24px] sm:text-[34px] font-semibold tracking-[-0.374px] text-[#1d1d1f] mt-0.5">
+            {t.marketTitle}
+          </h1>
+          <p className="text-[13px] sm:text-[16px] text-[#7a7a7a] tracking-[-0.224px]">
+            {t.marketSubtitle}
+          </p>
+        </div>
+
+        {/* Live Selling Advisory Capsule */}
+        <div className="px-4 py-2 rounded-full bg-[#f5f5f7] border border-[#e0e0e0] flex items-center space-x-2 self-start sm:self-auto shadow-xs">
+          <span className="text-xs font-semibold text-[#7a7a7a]">Recommendation:</span>
+          <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold ${
+            matchedCrop.advisory === 'SELL' 
+              ? 'bg-emerald-100 text-emerald-800' 
+              : 'bg-amber-100 text-amber-900'
+          }`}>
+            {matchedCrop.advisory}
+          </span>
+        </div>
       </div>
 
-      {/* Top 4 Selector Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+      {/* 4 Apple Select Filters Toolbar */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 animate-apple-in">
         
         {/* 1. Select District */}
-        <div className="p-4 rounded-[18px] bg-white border border-[#d2d2d7]/60 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-1.5 flex flex-col justify-between">
-          <label className="text-[11px] font-semibold text-[#86868b] uppercase tracking-wider block">
+        <div className="p-3.5 sm:p-4 rounded-[18px] bg-white border border-[#e0e0e0] space-y-1.5 flex flex-col justify-between shadow-xs">
+          <label className="text-[11px] font-semibold text-[#7a7a7a] uppercase tracking-wider block">
             {t.selectDistrict}
           </label>
           <AppleSelect
@@ -271,14 +291,14 @@ export default function MandiMarket({ currentLang }) {
             onChange={handleDistrictChange}
             icon={MapPin}
           />
-          <span className="text-[11px] text-[#86868b] block">
+          <span className="text-[11px] text-[#7a7a7a] block truncate">
             District: {selectedDistrict.name}
           </span>
         </div>
 
         {/* 2. Select Market */}
-        <div className="p-4 rounded-[18px] bg-white border border-[#d2d2d7]/60 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-1.5 flex flex-col justify-between">
-          <label className="text-[11px] font-semibold text-[#86868b] uppercase tracking-wider block">
+        <div className="p-3.5 sm:p-4 rounded-[18px] bg-white border border-[#e0e0e0] space-y-1.5 flex flex-col justify-between shadow-xs">
+          <label className="text-[11px] font-semibold text-[#7a7a7a] uppercase tracking-wider block">
             {t.selectMarket}
           </label>
           <AppleSelect
@@ -290,14 +310,14 @@ export default function MandiMarket({ currentLang }) {
             onChange={handleMarketChange}
             icon={Store}
           />
-          <span className="text-[11px] text-[#86868b] block">
+          <span className="text-[11px] text-[#7a7a7a] block truncate">
             {selectedDistrict.markets.length} markets available
           </span>
         </div>
 
         {/* 3. Select Crop */}
-        <div className="p-4 rounded-[18px] bg-white border border-[#d2d2d7]/60 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-1.5 flex flex-col justify-between">
-          <label className="text-[11px] font-semibold text-[#86868b] uppercase tracking-wider block">
+        <div className="p-3.5 sm:p-4 rounded-[18px] bg-white border border-[#e0e0e0] space-y-1.5 flex flex-col justify-between shadow-xs">
+          <label className="text-[11px] font-semibold text-[#7a7a7a] uppercase tracking-wider block">
             {t.selectCrop}
           </label>
           <AppleSelect
@@ -309,18 +329,18 @@ export default function MandiMarket({ currentLang }) {
             onChange={handleCropChange}
             icon={Sparkles}
           />
-          <span className="text-[11px] text-[#86868b] block">
+          <span className="text-[11px] text-[#7a7a7a] block truncate">
             Crop: {selectedCropKey}
           </span>
         </div>
 
         {/* 4. Last Updated & Refresh */}
-        <div className="p-4 rounded-[18px] bg-white border border-[#d2d2d7]/60 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-1.5 flex flex-col justify-between">
+        <div className="p-3.5 sm:p-4 rounded-[18px] bg-white border border-[#e0e0e0] space-y-1.5 flex flex-col justify-between shadow-xs">
           <div>
-            <label className="text-[11px] font-semibold text-[#86868b] uppercase tracking-wider block">
+            <label className="text-[11px] font-semibold text-[#7a7a7a] uppercase tracking-wider block">
               {t.lastUpdated}
             </label>
-            <span className="text-xs font-medium text-[#1d1d1f] block mt-0.5">
+            <span className="text-xs font-medium text-[#1d1d1f] block mt-0.5 truncate">
               {lastUpdatedTime}
             </span>
           </div>
@@ -328,7 +348,7 @@ export default function MandiMarket({ currentLang }) {
           <button
             onClick={() => triggerApiSync(selectedDistrict.name, selectedMarket, selectedCropKey)}
             disabled={isRefreshing}
-            className="w-full py-2 rounded-full bg-[#0071e3] hover:bg-[#0077ed] active:scale-95 text-white text-xs font-medium shadow-xs transition-all flex items-center justify-center space-x-1.5 disabled:opacity-75 cursor-pointer"
+            className="w-full py-2 rounded-full bg-[#0066cc] hover:bg-[#0071e3] active:scale-95 text-white text-xs font-medium shadow-xs transition-all flex items-center justify-center space-x-1.5 disabled:opacity-75 cursor-pointer"
           >
             <RotateCw size={13} className={isRefreshing ? 'animate-spin' : ''} />
             <span>{isRefreshing ? t.updating : t.refresh}</span>
@@ -338,18 +358,18 @@ export default function MandiMarket({ currentLang }) {
       </div>
 
       {/* Main Interactive Price Chart Card */}
-      <div className="p-6 sm:p-7 rounded-[22px] bg-white border border-[#d2d2d7]/60 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-4">
+      <div className="p-4 sm:p-7 rounded-[18px] sm:rounded-[22px] bg-white border border-[#e0e0e0] space-y-4 shadow-xs overflow-hidden">
         
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#0071e3] animate-pulse"></span>
+            <span className="w-2.5 h-2.5 rounded-full bg-[#0066cc] animate-pulse"></span>
             <span className="text-sm font-semibold text-[#1d1d1f]">{selectedCropKey}</span>
-            <span className="text-xs text-[#86868b]">({matchedCrop.unit}) • {selectedMarket}</span>
+            <span className="text-xs text-[#7a7a7a]">({matchedCrop.unit}) • {selectedMarket}</span>
           </div>
 
           <button
             onClick={() => alert(`Downloaded 7-Day AGMARKNET Price dataset for ${selectedCropKey} in ${selectedMarket}!`)}
-            className="p-1.5 rounded-lg hover:bg-[#f5f5f7] text-[#86868b] hover:text-[#1d1d1f] transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg hover:bg-[#f5f5f7] text-[#7a7a7a] hover:text-[#1d1d1f] transition-colors cursor-pointer"
             title="Download CSV"
           >
             <Download size={15} />
@@ -360,7 +380,7 @@ export default function MandiMarket({ currentLang }) {
         <div className="w-full overflow-x-auto no-scrollbar">
           <svg
             viewBox={`0 0 ${chartWidth} ${chartHeight}`}
-            className="w-full h-56 min-w-[550px]"
+            className="w-full h-auto min-w-[320px] max-h-56"
           >
             <defs>
               <linearGradient id="appleBlueGrad" x1="0" y1="0" x2="0" y2="1">

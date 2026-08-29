@@ -220,7 +220,7 @@ export default function AgronomyChatbot({ currentLang }) {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-4 sm:space-y-6 text-[#1d1d1f]">
+    <div className="w-full max-w-4xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-4 sm:space-y-6 text-[#1d1d1f] overflow-x-hidden min-w-0">
       
       {/* 1. Header (DESIGN.md SF Pro Display + Clean Pill CTA) */}
       <motion.div 

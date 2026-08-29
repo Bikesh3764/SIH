@@ -99,11 +99,11 @@ export default function App() {
       )}
 
       {/* Main Content Area */}
-      <div className={`flex-1 flex flex-col min-h-screen transition-all duration-300 ${!isLanding ? 'lg:pl-64' : 'w-full'}`}>
+      <div className={`flex-1 min-w-0 flex flex-col min-h-screen transition-all duration-300 w-full overflow-x-hidden ${!isLanding ? 'lg:pl-64' : 'w-full'}`}>
         
         {/* Apple Sub-Nav Frosted Header */}
         {!isLanding && (
-          <header className="sticky top-0 z-30 h-[56px] px-4 sm:px-8 bg-[#f5f5f7]/80 backdrop-blur-xl border-b border-[#d2d2d7]/60 flex items-center justify-between shadow-xs">
+          <header className="sticky top-0 z-30 h-[56px] px-3 sm:px-8 bg-[#f5f5f7]/80 backdrop-blur-xl border-b border-[#d2d2d7]/60 flex items-center justify-between shadow-xs w-full">
             <div className="flex items-center space-x-3">
               <button
                 onClick={() => setIsMobileNavOpen(true)}
@@ -122,7 +122,7 @@ export default function App() {
               </div>
             </div>
 
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2 sm:space-x-3">
               {/* Apple Popover Language Dropdown */}
               <AppleLanguageDropdown currentLang={currentLang} setLang={setLang} variant="light" />
 
@@ -148,7 +148,7 @@ export default function App() {
         )}
 
         {/* Page Routing with Rich Apple Spring Transitions */}
-        <main className="flex-1 overflow-x-hidden">
+        <main className="flex-1 min-w-0 w-full overflow-x-hidden">
           <AnimatePresence mode="wait">
             <motion.div
               key={activePage}
@@ -159,7 +159,7 @@ export default function App() {
                 duration: 0.35,
                 ease: [0.16, 1, 0.3, 1] // Apple Spring Curve
               }}
-              className="w-full"
+              className="w-full min-w-0"
             >
               {activePage === 'landing' && (
                 <LandingPage

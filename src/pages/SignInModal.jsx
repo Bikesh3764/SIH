@@ -25,12 +25,11 @@ export default function SignInModal({ isOpen, onClose, onLoginSuccess, currentLa
   // Farmer Registration Form State
   const [fullName, setFullName] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
-  const [selectedState, setSelectedState] = useState('Maharashtra');
-  const [selectedDistrict, setSelectedDistrict] = useState('Yavatmal');
+  const [selectedState, setSelectedState] = useState('Odisha');
+  const [selectedDistrict, setSelectedDistrict] = useState(DISTRICTS_DATA[0]?.name || 'Rourkela (Sundargarh)');
   const [villageName, setVillageName] = useState('');
   const [landHolding, setLandHolding] = useState('3.5 Acres');
-  const [primaryCrop, setPrimaryCrop] = useState('Cotton & Soybean');
-  const [soilType, setSoilType] = useState('Medium Black Clay Loam');
+  const [primaryCrop, setPrimaryCrop] = useState('Paddy & Mustard');
 
   // Existing Login Form State
   const [loginPhone, setLoginPhone] = useState('');
@@ -49,19 +48,18 @@ export default function SignInModal({ isOpen, onClose, onLoginSuccess, currentLa
       role: 'farmer',
       name: fullName,
       email: `${fullName.toLowerCase().replace(/\s+/g, '')}@agrishield.in`,
-      id: `MH-${selectedDistrict.substring(0, 3).toUpperCase()}-2026-${Math.floor(1000 + Math.random() * 9000)}`,
-      village: villageName || 'Main Village',
+      id: `OD-${selectedDistrict.substring(0, 3).toUpperCase()}-2026-${Math.floor(1000 + Math.random() * 9000)}`,
+      village: villageName || 'Panposh',
       taluk: selectedDistrict,
       district: selectedDistrict,
       state: selectedState,
       phone: mobileNumber,
       landSize: landHolding,
-      soilType: soilType,
       experience: '8',
       numFarms: '2',
       activeCrops: [
-        { name: primaryCrop.split('&')[0]?.trim() || 'Primary Crop', area: '2.0 Acres', sowingDate: '15 June 2024', stage: 'Vegetative Growth', health: 'Healthy' },
-        { name: primaryCrop.split('&')[1]?.trim() || 'Secondary Crop', area: '1.5 Acres', sowingDate: '20 June 2024', stage: 'Pod Filling', health: 'Healthy' }
+        { name: primaryCrop.split('&')[0]?.trim() || 'Paddy (Swarna)', area: '2.0 Acres', sowingDate: '25 June 2024', stage: 'Tillering & Vegetative', health: 'Healthy' },
+        { name: primaryCrop.split('&')[1]?.trim() || 'Mustard (Pusa Bold)', area: '1.5 Acres', sowingDate: '05 July 2024', stage: 'Vegetative Growth', health: 'Healthy' }
       ]
     };
 
@@ -73,17 +71,16 @@ export default function SignInModal({ isOpen, onClose, onLoginSuccess, currentLa
     e.preventDefault();
     const existingFarmer = {
       role: 'farmer',
-      name: loginPhone === '9823471234' ? CURRENT_FARMER_PROFILE.name : `Farmer (${loginPhone || 'Verified'})`,
-      email: 'rameshwar.patil@agrishield.in',
-      id: CURRENT_FARMER_PROFILE.farmerId,
-      village: CURRENT_FARMER_PROFILE.village,
-      taluk: CURRENT_FARMER_PROFILE.taluk,
-      district: 'Yavatmal',
-      state: CURRENT_FARMER_PROFILE.state,
+      name: loginPhone === '9861054321' || loginPhone === '9823471234' ? CURRENT_FARMER_PROFILE.name : `Farmer (${loginPhone || 'Verified'})`,
+      email: CURRENT_FARMER_PROFILE.email || 'bikesh.ray@agrishield.in',
+      id: CURRENT_FARMER_PROFILE.farmerId || 'OD-ROU-2026-4412',
+      village: CURRENT_FARMER_PROFILE.village || 'Panposh',
+      taluk: CURRENT_FARMER_PROFILE.taluk || 'Rourkela',
+      district: CURRENT_FARMER_PROFILE.district || 'Sundargarh',
+      state: CURRENT_FARMER_PROFILE.state || 'Odisha',
       phone: loginPhone || CURRENT_FARMER_PROFILE.phone,
-      landSize: CURRENT_FARMER_PROFILE.landSize,
-      soilType: CURRENT_FARMER_PROFILE.soilType,
-      experience: '12',
+      landSize: CURRENT_FARMER_PROFILE.landSize || '3.5 Acres',
+      experience: '10',
       numFarms: '2',
       activeCrops: CURRENT_FARMER_PROFILE.activeCrops
     };
@@ -223,7 +220,7 @@ export default function SignInModal({ isOpen, onClose, onLoginSuccess, currentLa
                     required
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    placeholder="e.g. Rameshwar Patil"
+                    placeholder="e.g. Bikesh Ray"
                     className="w-full px-3 py-2 rounded-[11px] bg-[#f5f5f7] border border-[#e0e0e0] focus:bg-white focus:ring-2 focus:ring-[#0066cc] focus:outline-none text-[13px]"
                   />
                 </div>
@@ -262,7 +259,7 @@ export default function SignInModal({ isOpen, onClose, onLoginSuccess, currentLa
                     type="text"
                     value={villageName}
                     onChange={(e) => setVillageName(e.target.value)}
-                    placeholder="e.g. Ghatanji"
+                    placeholder="e.g. Panposh"
                     className="w-full px-3 py-2 rounded-[11px] bg-[#f5f5f7] border border-[#e0e0e0] focus:bg-white focus:ring-2 focus:ring-[#0066cc] focus:outline-none text-[13px]"
                   />
                 </div>
@@ -275,7 +272,7 @@ export default function SignInModal({ isOpen, onClose, onLoginSuccess, currentLa
                     type="text"
                     value={landHolding}
                     onChange={(e) => setLandHolding(e.target.value)}
-                    placeholder="e.g. 4.2 Acres"
+                    placeholder="e.g. 3.5 Acres"
                     className="w-full px-3 py-2 rounded-[11px] bg-[#f5f5f7] border border-[#e0e0e0] focus:bg-white focus:ring-2 focus:ring-[#0066cc] focus:outline-none text-[13px]"
                   />
                 </div>
@@ -286,7 +283,7 @@ export default function SignInModal({ isOpen, onClose, onLoginSuccess, currentLa
                     type="text"
                     value={primaryCrop}
                     onChange={(e) => setPrimaryCrop(e.target.value)}
-                    placeholder="e.g. Cotton & Soybean / Rice"
+                    placeholder="e.g. Paddy & Mustard"
                     className="w-full px-3 py-2 rounded-[11px] bg-[#f5f5f7] border border-[#e0e0e0] focus:bg-white focus:ring-2 focus:ring-[#0066cc] focus:outline-none text-[13px]"
                   />
                 </div>

@@ -1,11 +1,15 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { 
   Sprout, 
   Scan, 
   MessageSquareText, 
   TrendingUp, 
   Building2, 
-  ArrowRight 
+  ArrowRight,
+  ShieldCheck,
+  Sparkles,
+  Award
 } from 'lucide-react';
 import VideoBackground from '../components/VideoBackground';
 import AppleLanguageDropdown from '../components/AppleLanguageDropdown';
@@ -14,125 +18,198 @@ import { TRANSLATIONS } from '../data/translations';
 export default function LandingPage({ onOpenSignIn, currentLang, setLang }) {
   const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.12,
+        delayChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 24, scale: 0.97 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: [0.16, 1, 0.3, 1] // Apple Spring Curve
+      }
+    }
+  };
+
+  const featureCards = [
+    {
+      title: t.scanLeafTitle,
+      desc: t.scanLeafDesc,
+      icon: Scan,
+      color: 'text-emerald-400',
+      bg: 'bg-emerald-500/20 border-emerald-500/30',
+      tag: 'AI Vision'
+    },
+    {
+      title: t.askAiTitle,
+      desc: t.askAiDesc,
+      icon: MessageSquareText,
+      color: 'text-blue-400',
+      bg: 'bg-blue-500/20 border-blue-500/30',
+      tag: 'Voice NLP'
+    },
+    {
+      title: t.mandiRadarTitle,
+      desc: t.mandiRadarDesc,
+      icon: TrendingUp,
+      color: 'text-amber-400',
+      bg: 'bg-amber-500/20 border-amber-500/30',
+      tag: 'Live Mandis'
+    },
+    {
+      title: t.schemesTitle,
+      desc: t.schemesDesc,
+      icon: Building2,
+      color: 'text-purple-400',
+      bg: 'bg-purple-500/20 border-purple-500/30',
+      tag: 'Subsidies'
+    }
+  ];
+
   return (
-    <div className="relative w-full min-h-screen text-white flex flex-col justify-between overflow-x-hidden animate-apple-fade">
+    <div className="relative w-full min-h-screen text-white flex flex-col justify-between overflow-x-hidden">
       {/* Background Farm Video Loop */}
       <VideoBackground overlayOpacity="opacity-50" />
 
-      {/* Top Floating Transparent Navigation Bar */}
-      <header className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 flex items-center justify-between animate-apple-in">
+      {/* Top Floating Navigation Bar */}
+      <motion.header 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 flex items-center justify-between"
+      >
         <div className="flex items-center space-x-3">
-          <span className="text-3xl animate-apple-float">🌾</span>
-          <h1 className="text-xl font-bold tracking-tight text-white">
-            {t.appName}
-          </h1>
+          <motion.span 
+            animate={{ y: [0, -5, 0], rotate: [0, 4, 0] }}
+            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+            className="text-3xl inline-block"
+          >
+            🌾
+          </motion.span>
+          <div className="flex items-center space-x-2">
+            <h1 className="text-xl font-bold tracking-tight text-white">
+              {t.appName}
+            </h1>
+            <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+              SIH 2026
+            </span>
+          </div>
         </div>
 
         <div className="flex items-center space-x-3">
           {/* Apple Popover Language Dropdown */}
           <AppleLanguageDropdown currentLang={currentLang} setLang={setLang} variant="dark" />
 
-          <button
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.94 }}
             onClick={() => onOpenSignIn('farmer')}
-            className="px-5 py-2 rounded-full bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white text-xs font-bold shadow-lg shadow-emerald-900/40 transition-all cursor-pointer"
+            className="px-5 py-2.5 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold shadow-lg shadow-emerald-900/40 transition-colors cursor-pointer"
           >
             {t.signIn}
-          </button>
+          </motion.button>
         </div>
-      </header>
+      </motion.header>
 
       {/* Hero Section */}
-      <main className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center space-y-6 animate-apple-in delay-1">
+      <motion.main 
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 text-center space-y-7"
+      >
         
+        {/* Floating Live Badge */}
+        <motion.div variants={itemVariants} className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-black/50 backdrop-blur-xl border border-white/20 text-xs font-medium text-white shadow-lg">
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>Next-Gen Agricultural AI Platform</span>
+          <span className="text-white/40">•</span>
+          <span className="text-emerald-400 font-semibold">8 Indian Languages</span>
+        </motion.div>
+
         {/* Main Hero Headline */}
-        <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-[1.12]">
+        <motion.h2 
+          variants={itemVariants}
+          className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1]"
+        >
           Empowering Farmers with <br />
-          <span className="text-emerald-400">AI Agronomy & Market Intelligence</span>
-        </h2>
+          <span className="bg-gradient-to-r from-emerald-300 via-teal-300 to-cyan-300 bg-clip-text text-transparent">
+            AI Agronomy & Market Intelligence
+          </span>
+        </motion.h2>
 
         {/* Subtitle */}
-        <p className="text-base sm:text-xl text-neutral-200 font-normal max-w-2xl mx-auto leading-relaxed">
+        <motion.p 
+          variants={itemVariants}
+          className="text-base sm:text-xl text-neutral-200 font-normal max-w-2xl mx-auto leading-relaxed"
+        >
           An AI-powered agricultural intelligence companion helping farmers diagnose crop diseases, track live Mandi prices, and receive spoken regional advisories.
-        </p>
+        </motion.p>
 
         {/* Primary Farmer Entry Button */}
-        <div className="pt-4 flex items-center justify-center">
-          <button
+        <motion.div variants={itemVariants} className="pt-2 flex items-center justify-center">
+          <motion.button
+            whileHover={{ scale: 1.04, y: -2 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => onOpenSignIn('farmer')}
-            className="px-9 py-4 rounded-full bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white text-base font-bold shadow-2xl shadow-emerald-900/50 transition-all flex items-center justify-center space-x-2.5 group cursor-pointer animate-apple-glow"
+            className="px-9 py-4 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white text-base font-bold shadow-2xl shadow-emerald-900/60 transition-all flex items-center justify-center space-x-3 group cursor-pointer animate-apple-glow"
           >
-            <Sprout size={20} className="group-hover:rotate-12 transition-transform" />
+            <Sprout size={22} className="group-hover:rotate-12 transition-transform" />
             <span>{t.getStarted} / {t.signIn}</span>
-            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-          </button>
-        </div>
+            <ArrowRight size={18} className="group-hover:translate-x-1.5 transition-transform" />
+          </motion.button>
+        </motion.div>
 
-        {/* 4 Feature Cards (Dark Frosted Glass with Apple Hover Physics) */}
-        <div className="pt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
-          
-          <div 
-            onClick={() => onOpenSignIn('farmer')}
-            className="p-6 rounded-2xl bg-black/60 backdrop-blur-xl border border-white/15 text-white shadow-2xl hover:bg-black/75 hover:border-emerald-400/50 cursor-pointer transition-all space-y-2.5 group active:scale-98 apple-card-hover animate-apple-in delay-2"
-          >
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-bold group-hover:scale-110 transition-transform">
-              <Scan size={20} />
-            </div>
-            <h3 className="font-bold text-base text-white group-hover:text-emerald-400 transition-colors">
-              {t.scanLeafTitle}
-            </h3>
-            <p className="text-xs text-neutral-300 leading-snug">
-              {t.scanLeafDesc}
-            </p>
-          </div>
+        {/* 4 Feature Cards (Dark Frosted Glass with Spring Hover Physics) */}
+        <motion.div 
+          variants={itemVariants}
+          className="pt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-left"
+        >
+          {featureCards.map((card, idx) => {
+            const IconComp = card.icon;
 
-          <div 
-            onClick={() => onOpenSignIn('farmer')}
-            className="p-6 rounded-2xl bg-black/60 backdrop-blur-xl border border-white/15 text-white shadow-2xl hover:bg-black/75 hover:border-blue-400/50 cursor-pointer transition-all space-y-2.5 group active:scale-98 apple-card-hover animate-apple-in delay-3"
-          >
-            <div className="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 border border-blue-500/30 flex items-center justify-center font-bold group-hover:scale-110 transition-transform">
-              <MessageSquareText size={20} />
-            </div>
-            <h3 className="font-bold text-base text-white group-hover:text-blue-400 transition-colors">
-              {t.askAiTitle}
-            </h3>
-            <p className="text-xs text-neutral-300 leading-snug">
-              {t.askAiDesc}
-            </p>
-          </div>
+            return (
+              <motion.div
+                key={idx}
+                whileHover={{ y: -8, scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => onOpenSignIn('farmer')}
+                className="p-6 rounded-2xl bg-black/60 backdrop-blur-xl border border-white/15 text-white shadow-2xl hover:bg-black/75 hover:border-emerald-400/50 cursor-pointer transition-colors space-y-3 group"
+              >
+                <div className="flex items-center justify-between">
+                  <div className={`w-11 h-11 rounded-xl ${card.bg} ${card.color} flex items-center justify-center font-bold group-hover:scale-110 transition-transform`}>
+                    <IconComp size={22} />
+                  </div>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-white/10 text-white/80 border border-white/10">
+                    {card.tag}
+                  </span>
+                </div>
+                <div>
+                  <h3 className={`font-bold text-base text-white group-hover:${card.color} transition-colors flex items-center justify-between`}>
+                    <span>{card.title}</span>
+                    <ArrowRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </h3>
+                  <p className="text-xs text-neutral-300 leading-snug mt-1">
+                    {card.desc}
+                  </p>
+                </div>
+              </motion.div>
+            );
+          })}
+        </motion.div>
 
-          <div 
-            onClick={() => onOpenSignIn('farmer')}
-            className="p-6 rounded-2xl bg-black/60 backdrop-blur-xl border border-white/15 text-white shadow-2xl hover:bg-black/75 hover:border-amber-400/50 cursor-pointer transition-all space-y-2.5 group active:scale-98 apple-card-hover animate-apple-in delay-4"
-          >
-            <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center font-bold group-hover:scale-110 transition-transform">
-              <TrendingUp size={20} />
-            </div>
-            <h3 className="font-bold text-base text-white group-hover:text-amber-400 transition-colors">
-              {t.mandiRadarTitle}
-            </h3>
-            <p className="text-xs text-neutral-300 leading-snug">
-              {t.mandiRadarDesc}
-            </p>
-          </div>
-
-          <div 
-            onClick={() => onOpenSignIn('farmer')}
-            className="p-6 rounded-2xl bg-black/60 backdrop-blur-xl border border-white/15 text-white shadow-2xl hover:bg-black/75 hover:border-purple-400/50 cursor-pointer transition-all space-y-2.5 group active:scale-98 apple-card-hover animate-apple-in delay-5"
-          >
-            <div className="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 border border-purple-500/30 flex items-center justify-center font-bold group-hover:scale-110 transition-transform">
-              <Building2 size={20} />
-            </div>
-            <h3 className="font-bold text-base text-white group-hover:text-purple-400 transition-colors">
-              {t.schemesTitle}
-            </h3>
-            <p className="text-xs text-neutral-300 leading-snug">
-              {t.schemesDesc}
-            </p>
-          </div>
-
-        </div>
-
-      </main>
+      </motion.main>
 
       {/* Footer */}
       <footer className="relative z-10 py-6 text-center text-xs text-neutral-300">

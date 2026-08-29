@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { 
   Scan, 
   MessageSquareText, 
@@ -57,7 +58,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
         score: 0,
         daysText: 'No Active Loan',
         subText: 'Zero debt liability',
-        colorHex: '#30d158', // Apple Green
+        colorHex: '#30d158',
         pillBg: 'bg-[#30d158]/15 text-[#30d158] border-[#30d158]/30',
         barWidth: '0%'
       };
@@ -73,7 +74,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
         score: 100,
         daysText: `Overdue ${Math.abs(diffDays)}d`,
         subText: `Immediate debt intervention required`,
-        colorHex: '#ff453a', // Apple Red
+        colorHex: '#ff453a',
         pillBg: 'bg-[#ff453a]/15 text-[#ff453a] border-[#ff453a]/30',
         barWidth: '100%'
       };
@@ -82,7 +83,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
         score: 85,
         daysText: `${diffDays} Days Left`,
         subText: `Due this week (${loanDetails.bankName?.split(' ')[0] || 'KCC'})`,
-        colorHex: '#ff9f0a', // Apple Orange
+        colorHex: '#ff9f0a',
         pillBg: 'bg-[#ff9f0a]/15 text-[#ff9f0a] border-[#ff9f0a]/30',
         barWidth: '85%'
       };
@@ -91,7 +92,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
         score: 60,
         daysText: `12 Days Left`,
         subText: `Repayment deadline approaching`,
-        colorHex: '#ffd60a', // Apple Gold
+        colorHex: '#ffd60a',
         pillBg: 'bg-[#ffd60a]/15 text-[#ffd60a] border-[#ffd60a]/30',
         barWidth: '60%'
       };
@@ -133,49 +134,100 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
       title: t.scanLeafTitle,
       subtitle: t.scanLeafDesc,
       icon: Scan,
-      tag: 'AI Diagnostic'
+      tag: 'AI Diagnostic',
+      color: 'text-emerald-600',
+      bg: 'group-hover:bg-emerald-600 group-hover:text-white'
     },
     {
       id: 'chat',
       title: t.askAiTitle,
       subtitle: t.askAiDesc,
       icon: MessageSquareText,
-      tag: 'Voice Assistant'
+      tag: 'Voice Assistant',
+      color: 'text-purple-600',
+      bg: 'group-hover:bg-purple-600 group-hover:text-white'
     },
     {
       id: 'market',
       title: t.mandiRadarTitle,
       subtitle: t.mandiRadarDesc,
       icon: TrendingUp,
-      tag: 'Live Mandis'
+      tag: 'Live Mandis',
+      color: 'text-[#0066cc]',
+      bg: 'group-hover:bg-[#0066cc] group-hover:text-white'
     },
     {
       id: 'weather',
       title: t.weatherTitle,
       subtitle: t.weatherDesc,
       icon: CloudSun,
-      tag: 'Microclimate'
+      tag: 'Microclimate',
+      color: 'text-amber-600',
+      bg: 'group-hover:bg-amber-600 group-hover:text-white'
     },
     {
       id: 'schemes',
       title: t.schemesTitle,
       subtitle: t.schemesDesc,
       icon: Building2,
-      tag: 'Subsidies'
+      tag: 'Subsidies',
+      color: 'text-teal-600',
+      bg: 'group-hover:bg-teal-600 group-hover:text-white'
     }
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.09,
+        delayChildren: 0.05
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20, scale: 0.98 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.55,
+        ease: [0.16, 1, 0.3, 1] // Apple Spring
+      }
+    }
+  };
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6 text-[#1d1d1f]">
+    <motion.div 
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6 text-[#1d1d1f]"
+    >
       
       {/* 1. Hero Profile Header Bar (DESIGN.md Product Tile Light / Store Spec) */}
-      <div className="p-6 sm:p-7 rounded-[18px] bg-white border border-[#e0e0e0] flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <motion.div 
+        variants={itemVariants}
+        className="p-6 sm:p-7 rounded-[18px] bg-white border border-[#e0e0e0] flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xs"
+      >
         <div className="flex items-center space-x-4">
-          <img
-            src={farmer.avatar || CURRENT_FARMER_PROFILE.avatar}
-            alt={farmer.name}
-            className="w-14 h-14 rounded-full object-cover border border-[#e0e0e0]"
-          />
+          <motion.div 
+            whileHover={{ scale: 1.08, rotate: 2 }}
+            className="relative"
+          >
+            <img
+              src={farmer.avatar || CURRENT_FARMER_PROFILE.avatar}
+              alt={farmer.name}
+              className="w-14 h-14 rounded-full object-cover border border-[#e0e0e0] shadow-sm"
+            />
+            <span className="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#30d158] border-2 border-white flex items-center justify-center text-[8px] text-white font-bold">
+              ✓
+            </span>
+          </motion.div>
+
           <div>
             <div className="flex items-center space-x-2">
               <h1 className="text-[24px] sm:text-[28px] font-semibold tracking-[-0.28px] text-[#1d1d1f]">
@@ -191,25 +243,32 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
 
         {/* Action Buttons (DESIGN.md Button Grammar: Pill Primary & Utility) */}
         <div className="flex items-center space-x-3 w-full sm:w-auto">
-          <button
+          <motion.button
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => onNavigate('profile')}
-            className="px-4 py-2 rounded-full bg-[#f5f5f7] hover:bg-[#e0e0e0] text-[#1d1d1f] text-[14px] font-medium transition-all active:scale-95 cursor-pointer"
+            className="px-4 py-2 rounded-full bg-[#f5f5f7] hover:bg-[#e0e0e0] text-[#1d1d1f] text-[14px] font-medium transition-colors cursor-pointer"
           >
             {t.editProfile}
-          </button>
+          </motion.button>
 
-          <button
+          <motion.button
+            whileHover={{ scale: 1.03, y: -1 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => onNavigate('schemes')}
-            className="px-5 py-2 rounded-full bg-[#0066cc] hover:bg-[#0071e3] text-white text-[14px] font-medium transition-all active:scale-95 cursor-pointer flex items-center space-x-1.5"
+            className="px-5 py-2 rounded-full bg-[#0066cc] hover:bg-[#0071e3] text-white text-[14px] font-medium transition-colors cursor-pointer flex items-center space-x-1.5 shadow-sm"
           >
             <span>Govt Schemes</span>
             <ArrowRight size={14} />
-          </button>
+          </motion.button>
         </div>
-      </div>
+      </motion.div>
 
       {/* 2. Predictive Farm Distress-Risk Telemetry (DESIGN.md product-tile-dark: #272729) */}
-      <div className="p-6 sm:p-8 rounded-[18px] bg-[#272729] text-white space-y-6">
+      <motion.div 
+        variants={itemVariants}
+        className="p-6 sm:p-8 rounded-[18px] bg-[#272729] text-white space-y-6 shadow-xl"
+      >
         
         {/* Telemetry Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/10">
@@ -227,10 +286,14 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
           </div>
 
           <div className="flex items-center space-x-2 shrink-0">
-            <span className="px-3.5 py-1.5 rounded-full text-[14px] font-semibold bg-[#2997ff]/15 text-[#2997ff] border border-[#2997ff]/30 flex items-center space-x-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#2997ff] animate-pulse"></span>
+            <motion.span 
+              animate={{ scale: [1, 1.02, 1] }}
+              transition={{ repeat: Infinity, duration: 2.5 }}
+              className="px-3.5 py-1.5 rounded-full text-[14px] font-semibold bg-[#2997ff]/15 text-[#2997ff] border border-[#2997ff]/30 flex items-center space-x-2"
+            >
+              <span className="w-2.5 h-2.5 rounded-full bg-[#2997ff] animate-ping"></span>
               <span>Low Risk (Safe) • {computedDistressScore} / 100</span>
-            </span>
+            </motion.span>
           </div>
         </div>
 
@@ -238,7 +301,10 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           
           {/* Metric 1: Rainfall Variance */}
-          <div className="p-5 rounded-[14px] bg-[#2a2a2c] border border-white/5 space-y-2">
+          <motion.div 
+            whileHover={{ y: -4, scale: 1.01 }}
+            className="p-5 rounded-[14px] bg-[#2a2a2c] border border-white/5 space-y-3 transition-colors"
+          >
             <div className="flex items-center justify-between text-[14px] text-[#cccccc]">
               <span>🌧️ Rainfall Variance</span>
               <span className="text-[12px] text-[#7a7a7a]">Weight 40%</span>
@@ -246,13 +312,25 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
             <div className="text-[28px] font-semibold tracking-[-0.28px] text-[#2997ff]">
               -18% <span className="text-[14px] font-normal text-[#cccccc]">Normal</span>
             </div>
+            {/* Animated Progress Bar */}
+            <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+              <motion.div 
+                initial={{ width: 0 }}
+                animate={{ width: "35%" }}
+                transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+                className="bg-[#2997ff] h-full rounded-full"
+              />
+            </div>
             <p className="text-[14px] text-[#7a7a7a] leading-snug">
               Soil moisture is currently optimal for vegetative crop development.
             </p>
-          </div>
+          </motion.div>
 
           {/* Metric 2: Mandi Price vs MSP */}
-          <div className="p-5 rounded-[14px] bg-[#2a2a2c] border border-white/5 space-y-2">
+          <motion.div 
+            whileHover={{ y: -4, scale: 1.01 }}
+            className="p-5 rounded-[14px] bg-[#2a2a2c] border border-white/5 space-y-3 transition-colors"
+          >
             <div className="flex items-center justify-between text-[14px] text-[#cccccc]">
               <span>📉 Mandi Realization</span>
               <span className="text-[12px] text-[#7a7a7a]">Weight 35%</span>
@@ -260,18 +338,28 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
             <div className="text-[28px] font-semibold tracking-[-0.28px] text-[#30d158]">
               +₹270 <span className="text-[14px] font-normal text-[#cccccc]">Above MSP</span>
             </div>
+            {/* Animated Progress Bar */}
+            <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+              <motion.div 
+                initial={{ width: 0 }}
+                animate={{ width: "85%" }}
+                transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+                className="bg-[#30d158] h-full rounded-full"
+              />
+            </div>
             <p className="text-[14px] text-[#7a7a7a] leading-snug">
               Spot rates trading above government minimum support price floor.
             </p>
-          </div>
+          </motion.div>
 
           {/* Metric 3: Interactive Crop Loan Due Proximity */}
-          <div 
+          <motion.div 
+            whileHover={{ y: -4, scale: 1.01 }}
             onClick={() => {
               setTempLoanDetails(loanDetails);
               setIsLoanModalOpen(true);
             }}
-            className="p-5 rounded-[14px] bg-[#2a2a2c] hover:bg-[#333336] border border-white/5 hover:border-[#2997ff]/40 transition-all space-y-2 cursor-pointer group"
+            className="p-5 rounded-[14px] bg-[#2a2a2c] hover:bg-[#333336] border border-white/5 hover:border-[#2997ff]/40 transition-all space-y-3 cursor-pointer group"
           >
             <div className="flex items-center justify-between text-[14px] text-[#cccccc]">
               <span>💳 Loan Proximity</span>
@@ -282,16 +370,26 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
             <div className="text-[28px] font-semibold tracking-[-0.28px]" style={{ color: loanMetrics.colorHex }}>
               {loanMetrics.daysText}
             </div>
+            {/* Animated Progress Bar */}
+            <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+              <motion.div 
+                initial={{ width: 0 }}
+                animate={{ width: loanMetrics.barWidth }}
+                transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
+                className="h-full rounded-full"
+                style={{ backgroundColor: loanMetrics.colorHex }}
+              />
+            </div>
             <p className="text-[14px] text-[#7a7a7a] leading-snug">
               {loanMetrics.subText}
             </p>
-          </div>
+          </motion.div>
 
         </div>
-      </div>
+      </motion.div>
 
       {/* 3. Five Quick Services (DESIGN.md {component.store-utility-card}) */}
-      <div className="space-y-3">
+      <motion.div variants={itemVariants} className="space-y-3">
         <div className="flex items-center justify-between px-1">
           <h3 className="text-[14px] font-semibold text-[#7a7a7a] uppercase tracking-[0.04em]">
             Core Agricultural AI Services
@@ -302,18 +400,20 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-          {quickServices.map((service) => {
+          {quickServices.map((service, idx) => {
             const IconComp = service.icon;
 
             return (
-              <div
+              <motion.div
                 key={service.id}
+                whileHover={{ y: -8, scale: 1.02 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => onNavigate(service.id)}
-                className="p-6 rounded-[18px] bg-white border border-[#e0e0e0] hover:border-[#0066cc]/40 transition-all duration-150 cursor-pointer active:scale-[0.97] flex flex-col justify-between space-y-4 group"
+                className="p-6 rounded-[18px] bg-white border border-[#e0e0e0] hover:border-[#0066cc]/40 shadow-xs hover:shadow-lg transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-4 group"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <div className="w-11 h-11 rounded-[11px] bg-[#f5f5f7] text-[#0066cc] flex items-center justify-center group-hover:bg-[#0066cc] group-hover:text-white transition-colors">
+                    <div className={`w-11 h-11 rounded-[11px] bg-[#f5f5f7] ${service.color} ${service.bg} flex items-center justify-center transition-colors`}>
                       <IconComp size={22} />
                     </div>
                     <span className="text-[12px] font-medium text-[#7a7a7a]">
@@ -322,8 +422,9 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                   </div>
 
                   <div>
-                    <h4 className="text-[17px] font-semibold text-[#1d1d1f] tracking-[-0.374px] group-hover:text-[#0066cc] transition-colors">
-                      {service.title}
+                    <h4 className="text-[17px] font-semibold text-[#1d1d1f] tracking-[-0.374px] group-hover:text-[#0066cc] transition-colors flex items-center justify-between">
+                      <span>{service.title}</span>
+                      <ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity text-[#0066cc]" />
                     </h4>
                     <p className="text-[14px] text-[#7a7a7a] leading-[1.43] tracking-[-0.224px] mt-1 line-clamp-2">
                       {service.subtitle}
@@ -335,17 +436,20 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                   <span>Open</span>
                   <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
-      </div>
+      </motion.div>
 
       {/* 4. Live Mandi Snapshot & Weather Advisory (DESIGN.md 2-Column Utility Cards) */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* Mandi Price Snapshot Card */}
-        <div className="p-6 sm:p-7 rounded-[18px] bg-white border border-[#e0e0e0] space-y-5 flex flex-col justify-between">
+        <motion.div 
+          whileHover={{ y: -4 }}
+          className="p-6 sm:p-7 rounded-[18px] bg-white border border-[#e0e0e0] space-y-5 flex flex-col justify-between shadow-xs"
+        >
           <div className="space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-[#f0f0f0]">
               <div>
@@ -356,22 +460,26 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                   Live Mandi Snapshot ({farmer.district || 'Yavatmal'})
                 </h3>
               </div>
-              <button
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => onNavigate('market')}
                 className="text-[14px] font-medium text-[#0066cc] hover:underline flex items-center gap-1 cursor-pointer"
               >
                 <span>Full Radar</span>
                 <ChevronRight size={14} />
-              </button>
+              </motion.button>
             </div>
 
             {/* 3 Commodity Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {Object.entries(CROPS_MARKET_DATA).slice(0, 3).map(([key, item]) => (
-                <div 
+                <motion.div 
                   key={key} 
+                  whileHover={{ scale: 1.04, y: -2 }}
+                  whileTap={{ scale: 0.96 }}
                   onClick={() => onNavigate('market')}
-                  className="p-4 rounded-[14px] bg-[#f5f5f7] hover:bg-[#ebebee] transition-colors space-y-1.5 cursor-pointer"
+                  className="p-4 rounded-[14px] bg-[#f5f5f7] hover:bg-[#ebebee] transition-colors space-y-1.5 cursor-pointer shadow-xs"
                 >
                   <div className="flex justify-between items-baseline">
                     <span className="text-[14px] font-semibold text-[#1d1d1f]">{key}</span>
@@ -383,7 +491,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                   <div className="text-[12px] text-[#7a7a7a]">
                     MSP: ₹{item.msp} / qtl
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -397,10 +505,13 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
               Mandi Comparison →
             </button>
           </div>
-        </div>
+        </motion.div>
 
         {/* Weather Advisory Card */}
-        <div className="p-6 sm:p-7 rounded-[18px] bg-white border border-[#e0e0e0] space-y-5 flex flex-col justify-between">
+        <motion.div 
+          whileHover={{ y: -4 }}
+          className="p-6 sm:p-7 rounded-[18px] bg-white border border-[#e0e0e0] space-y-5 flex flex-col justify-between shadow-xs"
+        >
           <div className="space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-[#f0f0f0]">
               <div>
@@ -411,13 +522,15 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                   {farmer.district || 'Yavatmal'} Weather
                 </h3>
               </div>
-              <button
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => onNavigate('weather')}
                 className="text-[14px] font-medium text-[#0066cc] hover:underline flex items-center gap-1 cursor-pointer"
               >
                 <span>5-Day Forecast</span>
                 <ChevronRight size={14} />
-              </button>
+              </motion.button>
             </div>
 
             <div className="flex items-center justify-between">
@@ -443,14 +556,20 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
               {WEATHER_FORECAST_DATA?.hyperlocalAdvisory || 'Optimal soil moisture for vegetative growth.'}
             </p>
           </div>
-        </div>
+        </motion.div>
 
-      </div>
+      </motion.div>
 
       {/* 5. Interactive Loan Details & Due Date Modal (DESIGN.md Spec) */}
       {isLoanModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md">
-          <div className="relative w-full max-w-lg bg-white rounded-[18px] p-6 sm:p-8 shadow-2xl space-y-5 border border-[#e0e0e0]">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="relative w-full max-w-lg bg-white rounded-[18px] p-6 sm:p-8 shadow-2xl space-y-5 border border-[#e0e0e0]"
+          >
             
             <div className="flex items-center justify-between pb-3 border-b border-[#f0f0f0]">
               <div>
@@ -568,10 +687,10 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
               </div>
 
             </form>
-          </div>
+          </motion.div>
         </div>
       )}
 
-    </div>
+    </motion.div>
   );
 }

@@ -64,20 +64,20 @@ export default function FarmerProfile({ currentLang, currentUser, onUpdateUser }
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6 animate-apple-fade text-[#1d1d1f]">
       
       {/* 1. Profile Header (Apple Banner Card) */}
-      <div className="p-7 sm:p-9 rounded-[26px] bg-[#1d1d1f] text-white shadow-[0_12px_32px_rgba(0,0,0,0.12)] flex flex-col md:flex-row items-start md:items-center justify-between gap-6 animate-apple-in">
+      <div className="p-7 sm:p-9 rounded-[18px] bg-[#272729] text-white shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 animate-apple-in">
         <div className="flex items-center space-x-4">
           <img
             src={farmer.avatar || CURRENT_FARMER_PROFILE.avatar}
             alt={farmer.name}
-            className="w-16 h-16 rounded-full object-cover border-2 border-white shadow-md"
+            className="w-16 h-16 rounded-full object-cover border-2 border-white/20 shadow-md"
           />
           <div>
             <div className="flex items-center space-x-2">
-              <h1 className="text-2xl sm:text-3xl font-semibold tracking-[-0.03em] text-white">
+              <h1 className="text-2xl sm:text-3xl font-semibold tracking-[-0.28px] text-white">
                 {farmer.name}
               </h1>
             </div>
-            <p className="text-xs text-[#86868b] mt-0.5">
+            <p className="text-[14px] text-[#cccccc] mt-0.5">
               ID: {farmer.id || farmer.farmerId || 'MH-YAV-2026-2509'} • Registered Farmer
             </p>
           </div>
@@ -85,7 +85,7 @@ export default function FarmerProfile({ currentLang, currentUser, onUpdateUser }
 
         <button
           onClick={() => setIsEditing(true)}
-          className="px-5 py-2.5 rounded-full bg-[#0071e3] hover:bg-[#0077ed] text-white text-xs font-medium tracking-tight shadow-sm active:scale-95 transition-all flex items-center space-x-1.5 cursor-pointer self-start sm:self-auto"
+          className="px-5 py-2.5 rounded-full bg-[#0066cc] hover:bg-[#0071e3] text-white text-[14px] font-medium tracking-tight shadow-sm active:scale-95 transition-all flex items-center space-x-1.5 cursor-pointer self-start sm:self-auto apple-btn-active"
         >
           <Edit3 size={14} />
           <span>Edit Profile</span>

@@ -17,7 +17,8 @@ import {
   X, 
   Clock, 
   CheckSquare,
-  ExternalLink
+  ExternalLink,
+  ArrowUpRight
 } from 'lucide-react';
 import { TRANSLATIONS } from '../data/translations';
 
@@ -50,54 +51,53 @@ export const GOVT_SCHEMES_CATALOG = [
       bn: 'বছরে ₹২,০০০ করে ৩টি কিস্তিতে ₹৬,০০০ সরাসরি ব্যাংক অ্যাকাউন্টে জমা।'
     },
     icon: Coins,
-    color: 'emerald',
     eligibility: {
       en: [
-        'All landholding farmer families with cultivable land registered in state land records.',
-        'Small and marginal farmers holding land up to 2 hectares (5 acres) get full benefit.',
-        'Must have active bank account linked with Aadhaar and e-KYC verified.'
+        'All landholding farmer families with cultivable land in state records.',
+        'Small & marginal farmers holding up to 2 hectares (5 acres).',
+        'Active bank account linked with Aadhaar & e-KYC.'
       ],
       hi: [
-        'राज्य के भू-अभिलेखों में दर्ज कृषि भूमि वाले सभी किसान परिवार।',
-        '2 हेक्टेयर (5 एकड़) तक भूमि वाले लघु और सीमांत किसानों को पूर्ण लाभ।',
-        'आधार से जुड़ा बैंक खाता और ई-केवाईसी सत्यापित होना अनिवार्य है।'
+        'भू-अभिलेखों में दर्ज कृषि भूमि वाले सभी किसान परिवार।',
+        '2 हेक्टेयर (5 एकड़) तक भूमि वाले लघु और सीमांत किसान।',
+        'आधार से जुड़ा बैंक खाता और ई-केवाईसी अनिवार्य।'
       ],
       mr: [
         'जमीन धारक सर्व शेतकरी कुटुंबे ज्यांच्या नावे ७/१२ नोंद आहे.',
-        '२ हेक्टरपर्यंत (५ एकर) शेती असणारे अल्प व अत्यल्प भूधारक शेतकरी पात्र.',
-        'आधार लिंक असलेले बँक खाते आणि ई-केवायसी पूर्ण असणे आवश्यक.'
+        '२ हेक्टरपर्यंत शेती असणारे अल्प भूधारक शेतकरी.',
+        'आधार लिंक बँक खाते आणि ई-केवायसी पूर्ण.'
       ],
       pa: [
-        'ਜ਼ਮੀਨ ਦੇ ਰਿਕਾਰਡ ਵਿੱਚ ਦਰਜ ਸਾਰੇ ਖੇਤੀਬਾੜੀ ਕਿਸਾਨ ਪਰਿਵਾਰ।',
-        '2 ਹੈਕਟੇਅਰ (5 ਏਕੜ) ਤੱਕ ਜ਼ਮੀਨ ਵਾਲੇ ਛੋਟੇ ਕਿਸਾਨ ਪੂਰਾ ਲਾਭ ਲੈ ਸਕਦੇ ਹਨ।',
-        'ਆਧਾਰ ਲਿੰਕ ਬੈਂਕ ਖਾਤਾ ਅਤੇ ਈ-ਕੇਵਾਈਸੀ ਲਾਜ਼ਮੀ ਹੈ।'
+        'ਜ਼ਮੀਨ ਦੇ ਰਿਕਾਰਡ ਵਿੱਚ ਦਰਜ ਸਾਰੇ ਕਿਸਾਨ ਪਰਿਵਾਰ।',
+        '5 ਏਕੜ ਤੱਕ ਜ਼ਮੀਨ ਵਾਲੇ ਛੋਟੇ ਕਿਸਾਨ ਪੂਰਾ ਲਾਭ।',
+        'ਆਧਾਰ ਲਿੰਕ ਬੈਂਕ ਖਾਤਾ ਅਤੇ ਈ-ਕੇਵਾਈਸੀ ਲਾਜ਼ਮੀ।'
       ],
       te: [
         'భూమి రికార్డుల్లో పేరున్న రైతు కుటుంబాలందరూ అర్హులు.',
-        '5 ఎకరాల లోపు భూమి ఉన్న చిన్న, సన్నకారు రైతులకు పూర్తి ప్రయోజనం.',
-        'ఆధార్ లింక్ అయిన బ్యాంక్ ఖాతా మరియు ఇ-కేవైసీ తప్పనిసరి.'
+        '5 ఎకరాల లోపు భూమి ఉన్న చిన్న, సన్నకారు రైతులు.',
+        'ఆధార్ లింక్ అయిన బ్యాంక్ ఖాతా మరియు ఇ-కేవైసీ.'
       ],
       ta: [
         'பட்டா நிலம் வைத்துள்ள அனைத்து விவசாயக் குடும்பங்களும்.',
-        '5 ஏக்கர் வரை நிலம் வைத்துள்ள சிறு மற்றும் குறு விவசாயிகள்.',
-        'ஆதார் இணைக்கப்பட்ட வங்கிக் கணக்கு மற்றும் e-KYC சரிபார்ப்பு.'
+        '5 ஏக்கர் வரை நிலம் வைத்துள்ள சிறு விவசாயிகள்.',
+        'ஆதார் இணைக்கப்பட்ட வங்கிக் கணக்கு மற்றும் e-KYC.'
       ],
       ml: [
         'ഭൂമിയുള്ള എല്ലാ കർഷക കുടുംബങ്ങളും അർഹരാണ്.',
-        '5 ഏക്കർ വരെ കൃഷിഭൂമിയുള്ള ചെറുകിട കർഷകർക്ക് പൂർണ്ണ ആനുകൂല്യം.',
-        'ആധാർ ലിങ്ക് ചെയ്ത ബാങ്ക് അക്കൗണ്ടും ഇ-കെവൈസിയും നിർബന്ധം.'
+        '5 ഏക്കർ വരെ കൃഷിഭൂമിയുള്ള ചെറുകിട കർഷകർ.',
+        'ആധാർ ലിങ്ക് ചെയ്ത ബാങ്ക് അക്കൗണ്ടും ഇ-കെവൈസിയും.'
       ],
       bn: [
         'জমির রেকর্ডভুক্ত সমস্ত কৃষক পরিবার।',
-        '৫ একর পর্যন্ত কৃষিজমি থাকা ক্ষুদ্র ও প্রান্তিক কৃষকগণ।',
-        'আধার লিংকযুক্ত ব্যাংক অ্যাকাউন্ট ও ই-কেওয়াইসি থাকা বাধ্যতামূলক।'
+        '৫ একর পর্যন্ত কৃষিজমি থাকা ক্ষুদ্র কৃষকগণ।',
+        'আধার লিংকযুক্ত ব্যাংক অ্যাকাউন্ট ও ই-কেওয়াইসি।'
       ]
     },
     documents: [
       'Aadhaar Card',
-      'Land Ownership Record (7/12 / Khatauni / Patta)',
-      'Bank Passbook with IFSC',
-      'Aadhaar Linked Mobile Number'
+      'Land Record (7/12 / Patta)',
+      'Bank Passbook',
+      'Mobile Number'
     ],
     processingDays: '15 Days',
     officialUrl: 'https://pmkisan.gov.in/'
@@ -120,7 +120,7 @@ export const GOVT_SCHEMES_CATALOG = [
     categoryLabel: 'Crop Insurance & Disaster Relief',
     benefitAmount: 'Up to ₹2,00,000 / Acre Cover',
     benefitDesc: {
-      en: 'Comprehensive crop insurance covering drought, floods, pest attack, hailstorm with nominal 1.5% (Rabi) & 2% (Kharif) premium.',
+      en: 'Comprehensive crop insurance covering drought, floods, pest attack, and hailstorm with nominal 1.5% - 2% premium.',
       hi: 'सूखा, बाढ़, ओलावृष्टि व कीट प्रकोप से फसल क्षति पर संपूर्ण वित्तीय सुरक्षा व बीमा क्लेम।',
       mr: 'दुष्काळ, अतिवृष्टी, गारपीट आणि कीड रोगांपासून पिकांचे संपूर्ण विमा संरक्षण.',
       pa: 'ਸੋਕਾ, ਹੜ੍ਹ, ਗੜੇਮਾਰੀ ਅਤੇ ਕੀੜਿਆਂ ਦੇ ਹਮਲੇ ਤੋਂ ਫ਼ਸਲਾਂ ਦਾ ਪੂਰਾ ਬੀਮਾ ਕਵਰ।',
@@ -130,48 +130,47 @@ export const GOVT_SCHEMES_CATALOG = [
       bn: 'খরা, বন্যা, শিলাবৃষ্টি ও পোকার আক্রমণে ফসল ক্ষতির সম্পূর্ণ বীমা সুরক্ষা।'
     },
     icon: ShieldCheck,
-    color: 'blue',
     eligibility: {
       en: [
         'All farmers cultivating notified crops in notified areas.',
         'Applicable for both loanee (KCC holders) and non-loanee farmers.',
-        'Sharecroppers and tenant farmers eligible with lease agreement or village cert.'
+        'Sharecroppers eligible with village certification.'
       ],
       hi: [
         'अधिसूचित क्षेत्रों में अधिसूचित फसलें उगाने वाले सभी किसान।',
         'केसीसी धारक ऋणी एवं गैर-ऋणी किसान दोनों के लिए लागू।',
-        'बटाईदार एवं पट्टेदार किसान भी ग्राम प्रमाणपत्र के साथ पात्र।'
+        'बटाईदार किसान भी ग्राम प्रमाणपत्र के साथ पात्र।'
       ],
       mr: [
         'अधिसूचित पिके घेणारे सर्व शेतकरी (कर्जदार व बिगर-कर्जदार).',
-        'कसेल त्याची जमीन किंवा भाडेकरू शेतकरी सुद्धा पात्र.'
+        'भाडेकरू शेतकरी सुद्धा पात्र.'
       ],
       pa: [
         'ਨੋਟੀਫਾਈਡ ਫ਼ਸਲਾਂ ਉਗਾਉਣ ਵਾਲੇ ਸਾਰੇ ਕਿਸਾਨ (ਲੋਨੀ ਅਤੇ ਗੈਰ-ਲੋਨੀ)।',
-        'ਠੇਕੇ ਤੇ ਜ਼ਮੀਨ ਲੈ ਕੇ ਖੇਤੀ ਕਰਨ ਵਾਲੇ ਕਿਸਾਨ ਵੀ ਯੋਗ।'
+        'ਠੇਕੇ ਤੇ ਜ਼ਮੀਨ ਲੈ ਕੇ ਖੇਤੀ ਕਰਨ ਵਾਲੇ ਵੀ ਯੋਗ।'
       ],
       te: [
-        'నోటిఫైడ్ పంటలు సాగు చేసే రైతులందరూ (రుణం తీసుకున్నవారు మరియు తీసుకోనివారు).',
+        'నోటిఫైడ్ పంటలు సాగు చేసే రైతులందరూ అర్హులు.',
         'కౌలు రైతులు కూడా గ్రామ ధ్రువీకరణతో అర్హులు.'
       ],
       ta: [
         'அறிவிக்கப்பட்ட பயிர்களை பயிரிடும் அனைத்து விவசாயிகளும்.',
-        'குத்தகை விவசாயிகளும் கிராம சான்றிதழுடன் தகுதியுடையவர்கள்.'
+        'குத்தகை விவசாயிகளும் தகுதியுடையவர்கள்.'
       ],
       ml: [
         'വിജ്ഞാപനം ചെയ്ത വിളകൾ കൃഷി ചെയ്യുന്ന എല്ലാ കർഷകരും.',
-        'പാട്ടക്കർഷകർക്കും വില്ലേജ് സർട്ടിഫിക്കറ്റോടെ അപേക്ഷിക്കാം.'
+        'പാട്ടക്കർഷകർക്കും അപേക്ഷിക്കാം.'
       ],
       bn: [
-        'বিজ্ঞাপিত ফসল চাষকারী সমস্ত কৃষক (ঋণগ্রহীতা ও অ-ঋণগ্রহীতা)।',
-        'ভাগচাষী ও লিজ নেওয়া কৃষকরাও আবেদনের যোগ্য।'
+        'বিজ্ঞাপিত ফসল চাষকারী সমস্ত কৃষক (ঋণগ্রহীता ও অ-ঋণগ্রহীতা)।',
+        'ভাগচাষীরাও আবেদনের যোগ্য।'
       ]
     },
     documents: [
-      'Crop Sowing Certificate (Patwari / Talaat)',
-      'Land Revenue Extract (7/12 / RoR)',
+      'Crop Sowing Certificate',
+      'Land Revenue Extract (7/12)',
       'Aadhaar Card & Bank Details',
-      'Crop Loss Photo (within 72 hours of disaster)'
+      'Crop Loss Photo (within 72h)'
     ],
     processingDays: '7-14 Days',
     officialUrl: 'https://pmfby.gov.in/'
@@ -204,48 +203,47 @@ export const GOVT_SCHEMES_CATALOG = [
       bn: '৩HP থেকে ৭.৫HP সৌর পাম্পের উপর ৯০% পর্যন্ত সরকারি ভর্তুকি।'
     },
     icon: Sun,
-    color: 'amber',
     eligibility: {
       en: [
-        'Individual farmers, cooperatives, panchayats with cultivable land.',
-        'Must have an existing open well, borewell, or surface water source on farm.',
-        'Farmers without existing electric pump connection given highest priority.'
+        'Individual farmers, cooperatives with cultivable land.',
+        'Must have open well, borewell, or water source on farm.',
+        'Farmers without electric pump connection given priority.'
       ],
       hi: [
-        'खेती योग्य जमीन वाले व्यक्तिगत किसान, सहकारी समितियां और पंचायतें।',
-        'खेत में खुला कुआं, बोरवेल या जल स्रोत होना चाहिए।',
-        'जिनके पास बिजली कनेक्शन नहीं है, उन्हें पहली प्राथमिकता।'
+        'खेती योग्य जमीन वाले व्यक्तिगत किसान व समितियां।',
+        'खेत में कुआं, बोरवेल या जल स्रोत होना चाहिए।',
+        'बिजली कनेक्शन न होने वालों को पहली प्राथमिकता।'
       ],
       mr: [
-        'शेतीयोग्य जमीन असलेले शेतकरी व शेतकरी गट.',
-        'शेतात विहीर, कूपनलिका किंवा पाण्याचा स्त्रोत असणे आवश्यक.'
+        'शेतीयोग्य जमीन असलेले शेतकरी.',
+        'शेतात विहीर किंवा बोरवेल असणे आवश्यक.'
       ],
       pa: [
-        'ਖੇਤੀਬਾੜੀ ਵਾਲੀ ਜ਼ਮੀਨ ਵਾਲੇ ਕਿਸਾਨ ਜਿਨ੍ਹਾਂ ਕੋਲ ਪਾਣੀ ਦਾ ਸਰੋਤ ਹੈ।',
-        'ਬਿਜਲੀ ਕੁਨੈਕਸ਼ਨ ਨਾ ਹੋਣ ਵਾਲੇ ਕਿਸਾਨਾਂ ਨੂੰ ਪਹਿਲ।'
+        'ਖੇਤੀਬਾੜੀ ਜ਼ਮੀਨ ਵਾਲੇ ਕਿਸਾਨ ਜਿਨ੍ਹਾਂ ਕੋਲ ਪਾਣੀ ਦਾ ਸਰੋਤ ਹੈ।',
+        'ਬਿਜਲੀ ਕੁਨੈਕਸ਼ਨ ਨਾ ਹੋਣ ਵਾਲਿਆਂ ਨੂੰ ਪਹਿਲ।'
       ],
       te: [
-        'సాగు భూమి మరియు నీటి వనరు (బోరుబావి/బావి) ఉన్న రైతులు.',
-        'విద్యుత్ కనెక్షన్ లేని రైతులకు మొదటి ప్రాధాన్యత.'
+        'సాగు భూమి మరియు నీటి వనరు ఉన్న రైతులు.',
+        'విద్యుత్ కనెక్షన్ లేని రైతులకు ప్రాధాన్యత.'
       ],
       ta: [
         'விவசாய நிலமும் நீர் ஆதாரமும் கொண்ட விவசாயிகள்.',
-        'மின் இணைப்பு இல்லாத விவசாயிகளுக்கு முன்னுரிமை.'
+        'மின் இணைப்பு இல்லாதவர்களுக்கு முன்னுரிமை.'
       ],
       ml: [
         'കൃഷിഭൂമിയും ജലസ്രോതസ്സുമുള്ള കർഷകർ.',
-        'വൈദ്യുതി കണക്ഷൻ ഇല്ലാത്ത കർഷകർക്ക് മുൻഗണന.'
+        'വൈദ്യുതി കണക്ഷൻ ഇല്ലാത്തവർക്ക് മുൻഗണന.'
       ],
       bn: [
-        'চাষযোগ্য জমি ও জলের উৎস (কূপ/বোরওয়েল) থাকা কৃষকগণ।',
-        'বিদ্যুৎ সংযোগহীন কৃষকদের অগ্রাধিকার।'
+        'চাষযোগ্য জমি ও জলের উৎস থাকা কৃষকগণ।',
+        'বিদ্যুৎ সংযোগহীনদের অগ্রাধিকার।'
       ]
     },
     documents: [
-      'Land Ownership Proof (Khasra/Khatauni/7-12)',
-      'Water Source Feasibility Certificate',
+      'Land Proof (Khasra / 7-12)',
+      'Water Source Certificate',
       'Aadhaar Card & Bank Passbook',
-      'Passport size Photograph'
+      'Passport Photograph'
     ],
     processingDays: '30 Days',
     officialUrl: 'https://pmkusum.mnre.gov.in/'
@@ -278,46 +276,45 @@ export const GOVT_SCHEMES_CATALOG = [
       bn: 'ট্রাক্টর, রোটাভেটর ও কিষাণ ড্রোনের ওপর ৪০% থেকে ৮০% পর্যন্ত ভর্তুকি।'
     },
     icon: Tractor,
-    color: 'purple',
     eligibility: {
       en: [
         'Small & marginal landholders get up to 50% subsidy.',
-        'Women farmers, SC/ST, and Farmer Producer Organizations (FPOs) receive up to 80% grant.',
-        'Must purchase equipment from authorized government empaneled dealers.'
+        'Women farmers and FPOs receive up to 80% grant.',
+        'Purchase from authorized government dealers.'
       ],
       hi: [
         'लघु एवं सीमांत किसानों को 50% तक सब्सिडी।',
-        'महिला किसानों, एससी/एसटी एवं किसान उत्पादक संगठनों (FPO) को 80% तक अनुदान।',
-        'सरकारी अधिकृत डीलर से उपकरण खरीदना अनिवार्य।'
+        'महिला किसानों एवं FPO को 80% तक अनुदान।',
+        'सरकारी अधिकृत डीलर से खरीद अनिवार्य।'
       ],
       mr: [
-        'अल्प व अत्यल्प भूधारक शेतकऱ्यांना ५०% पर्यंत अनुदान.',
-        'महिला शेतकरी, मागासवर्गीय व शेतकरी उत्पादक कंपन्यांना (FPO) ८०% पर्यंत अनुदान.'
+        'अल्प भूधारक शेतकऱ्यांना ५०% पर्यंत अनुदान.',
+        'महिला शेतकरी व FPO कंपन्यांना ८०% पर्यंत अनुदान.'
       ],
       pa: [
-        'ਛੋਟੇ ਕਿਸਾਨਾਂ ਨੂੰ 50% ਅਤੇ ਮਹਿਲਾ ਕਿਸਾਨਾਂ/FPO ਨੂੰ 80% ਤੱਕ ਸਬਸਿਡੀ।',
-        'ਸਰਕਾਰੀ ਮਾਨਤਾ ਪ੍ਰਾਪਤ ਡੀਲਰਾਂ ਤੋਂ ਖਰੀਦ ਲਾਜ਼ਮੀ।'
+        'ਛੋਟੇ ਕਿਸਾਨਾਂ ਨੂੰ 50% ਅਤੇ ਮਹਿਲਾ ਕਿਸਾਨਾਂ ਨੂੰ 80% ਸਬਸਿਡੀ।',
+        'ਸਰਕਾਰੀ ਡੀਲਰਾਂ ਤੋਂ ਖਰੀਦ ਲਾਜ਼ਮੀ।'
       ],
       te: [
-        'చిన్న రైతులకు 50%, మహిళా రైతులకు & FPO లకు 80% వరకు రాయితీ.',
+        'చిన్న రైతులకు 50%, మహిళా రైతులకు 80% వరకు రాయితీ.',
         'అధికారిక డీలర్ల వద్ద కొనుగోలు చేయాలి.'
       ],
       ta: [
-        'சிறு விவசாயிகளுக்கு 50%, பெண் விவசாயிகளுக்கு 80% வரை மானியம்.',
-        'அரசு அங்கீகாரம் பெற்ற டீலர்களிடம் வாங்க வேண்டும்.'
+        'சிறு விவசாயிகளுக்கு 50%, பெண்களுக்கு 80% மானியம்.',
+        'அரசு டீலர்களிடம் வாங்க வேண்டும்.'
       ],
       ml: [
-        'ചെറുകിട കർഷകർക്ക് 50%, വനിതാ കർഷകർക്ക് 80% വരെ സബ്‌സിഡി.',
+        'ചെറുകിട കർഷകർക്ക് 50%, വനിതകൾക്ക് 80% സബ്‌സിഡി.',
         'അംഗീകൃത ഡീലർമാരിൽ നിന്ന് വാങ്ങണം.'
       ],
       bn: [
-        'ক্ষুদ্র কৃষকদের ৫০% এবং মহিলা কৃষক/FPO-দের ৮০% পর্যন্ত অনুদান।'
+        'ক্ষুদ্র কৃষকদের ৫০% এবং মহিলা কৃষকদের ৮০% অনুদান।'
       ]
     },
     documents: [
-      'Aadhaar Card & Land Record',
-      'Authorized Dealer Machinery Quotation / Proforma Invoice',
-      'Caste Certificate (if claiming bonus subsidy)',
+      'Aadhaar & Land Record',
+      'Dealer Machinery Quotation',
+      'Caste Certificate (if applicable)',
       'Bank Cancelled Cheque'
     ],
     processingDays: '21 Days',
@@ -341,7 +338,7 @@ export const GOVT_SCHEMES_CATALOG = [
     categoryLabel: 'Concessional Credit',
     benefitAmount: 'Up to ₹3,00,000 @ 4% Interest',
     benefitDesc: {
-      en: 'Instant working capital loan for seeds, fertilizers, and diesel at an effective 4% annual interest with 3% prompt repayment subvention.',
+      en: 'Instant working capital loan for seeds, fertilizers, and diesel at an effective 4% annual interest with prompt repayment.',
       hi: 'बीज, खाद और डीजल के लिए 4% की रियायती वार्षिक ब्याज दर पर ₹3 लाख तक का आसान फसली ऋण।',
       mr: 'वेळेवर परतफेडीवर केवळ ४% व्याजदराने ₹३ लाखांपर्यंत तात्काळ पीक कर्ज.',
       pa: 'ਸਮੇਂ ਸਿਰ ਅਦਾਇਗੀ ਤੇ ਸਿਰਫ 4% ਵਿਆਜ ਦਰ ਨਾਲ ₹3 ਲੱਖ ਤੱਕ ਫ਼ਸਲੀ ਕਰਜ਼ਾ।',
@@ -351,42 +348,41 @@ export const GOVT_SCHEMES_CATALOG = [
       bn: 'সময়মতো পরিশোধে মাত্র ৪% সুদে ₹৩ লাখ পর্যন্ত ফসল ঋণ।'
     },
     icon: Coins,
-    color: 'emerald',
     eligibility: {
       en: [
-        'All owner-cultivators, tenant farmers, oral lessees, and sharecroppers.',
-        'Animal husbandry, dairy, and fisheries farmers also eligible up to ₹2 Lakh without collateral.'
+        'All owner-cultivators, tenant farmers, and sharecroppers.',
+        'Animal husbandry, dairy, and fisheries eligible up to ₹2 Lakh.'
       ],
       hi: [
         'सभी काश्तकार, पट्टेदार और बटाईदार किसान।',
-        'पशुपालन, डेयरी और मत्स्य पालन किसान भी बिना गारंटी ₹2 लाख तक पात्र।'
+        'पशुपालन व डेयरी किसान भी बिना गारंटी ₹2 लाख तक पात्र।'
       ],
       mr: [
-        'सर्व जमीनधारक, कुळ आणि भाडेकरू शेतकरी.',
-        'पशुपालन, दुग्धव्यवसाय आणि मत्स्यपालक शेतकरी सुद्धा पात्र.'
+        'सर्व जमीनधारक व भाडेकरू शेतकरी.',
+        'पशुपालन व दुग्धव्यवसाय शेतकरी सुद्धा पात्र.'
       ],
       pa: [
-        'ਸਾਰੇ ਖੇਤੀਬਾੜੀ, ਪਸ਼ੂ ਪਾਲਣ, ਡੇਅਰੀ ਅਤੇ ਮੱਛੀ ਪਾਲਣ ਵਾਲੇ ਕਿਸਾਨ।',
+        'ਸਾਰੇ ਖੇਤੀਬਾੜੀ, ਪਸ਼ੂ ਪਾਲਣ ਅਤੇ ਡੇਅਰੀ ਕਿਸਾਨ।',
         'ਬਿਨਾਂ ਗਾਰੰਟੀ ₹2 ਲੱਖ ਤੱਕ ਕਰਜ਼ਾ ਉਪਲਬਧ।'
       ],
       te: [
-        'భూమి ఉన్న రైతులు, కౌలు రైతులు మరియు పాడి, మత్స్య రైతులు అర్హులు.'
+        'భూమి ఉన్న రైతులు మరియు పాడి, మత్స్య రైతులు అర్హులు.'
       ],
       ta: [
-        'விவசாயிகள், குத்தகை விவசாயிகள் மற்றும் கால்நடை வளர்ப்பவர்கள்.'
+        'விவசாயிகள் மற்றும் கால்நடை வளர்ப்பவர்கள்.'
       ],
       ml: [
-        'എല്ലാ കർഷകരും കന്നുകാലി വളർത്തൽ, മത്സ്യത്തൊഴിലാളികളും.'
+        'എല്ലാ കർഷകരും കന്നുകാലി വളർത്തലുകാരും.'
       ],
       bn: [
-        'সমস্ত কৃষক, ভাগচাষী এবং পশুপালন ও মৎস্যচাষীগণ।'
+        'সমস্ত কৃষক এবং পশুপালন ও মৎস্যচাষীগণ।'
       ]
     },
     documents: [
-      'One-Page KCC Application Form',
-      'Land Record (7/12 / Pahani / Jamabandi)',
+      'KCC Application Form',
+      'Land Record (7/12 / Jamabandi)',
       'Aadhaar Card & PAN Card',
-      'No Dues Certificate / Self Declaration'
+      'Self Declaration'
     ],
     processingDays: '7 Days',
     officialUrl: 'https://myscheme.gov.in/schemes/kcc'
@@ -419,11 +415,10 @@ export const GOVT_SCHEMES_CATALOG = [
       bn: 'ড্রিপ ও স্প্রিংকলার সেচ ব্যবস্থা স্থাপনে ৭৫% পর্যন্ত সরকারি ভর্তুকি।'
     },
     icon: Droplets,
-    color: 'blue',
     eligibility: {
       en: [
-        'Farmers possessing agricultural land with assured irrigation water source.',
-        'Small and marginal farmers eligible for up to 75% total subsidy.'
+        'Farmers possessing agricultural land with water source.',
+        'Small and marginal farmers eligible for up to 75% subsidy.'
       ],
       hi: [
         'सिंचाई जल स्रोत वाले सभी कृषि भूमि धारक किसान।',
@@ -449,10 +444,10 @@ export const GOVT_SCHEMES_CATALOG = [
       ]
     },
     documents: [
-      'Land Title / 7-12 / Khatauni Record',
-      'Water Source Proof (Well/Canal/Borewell)',
+      'Land Title / 7-12 Record',
+      'Water Source Proof (Well/Borewell)',
       'Aadhaar Card & Bank Passbook',
-      'Micro-irrigation System Layout Quotation'
+      'Micro-irrigation Layout Quotation'
     ],
     processingDays: '20 Days',
     officialUrl: 'https://pmksy.gov.in/'
@@ -476,52 +471,53 @@ export default function GovtSchemes({ currentLang, onNavigate }) {
   });
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6 animate-apple-fade text-[#1d1d1f]">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-7 animate-apple-fade text-[#1d1d1f]">
       
-      {/* 1. Header Banner (Apple Dark Tile with Stats) */}
-      <div className="p-7 sm:p-9 rounded-[26px] bg-[#1d1d1f] text-white shadow-[0_12px_32px_rgba(0,0,0,0.12)] flex flex-col md:flex-row items-start md:items-center justify-between gap-6 animate-apple-in">
+      {/* 1. Header Banner (DESIGN.md {component.product-tile-dark}: #272729 Tile) */}
+      <div className="p-7 sm:p-9 rounded-[18px] bg-[#272729] text-white shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 animate-apple-in">
         <div className="space-y-2">
           <div className="flex items-center space-x-2">
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase bg-white/10 border border-white/20 text-[#2997ff] tracking-wide">
-              Central & State Portal
+            <span className="px-3 py-1 rounded-full text-[12px] font-semibold uppercase bg-[#2997ff]/15 border border-[#2997ff]/30 text-[#2997ff] tracking-[0.04em]">
+              Central & State Welfare
             </span>
           </div>
-          <h1 className="text-2xl sm:text-4xl font-semibold tracking-[-0.03em] text-white">
+          <h1 className="text-[28px] sm:text-[36px] font-semibold tracking-[-0.28px] text-white leading-tight">
             {t.schemesPageTitle}
           </h1>
-          <p className="text-xs sm:text-sm text-[#86868b] font-normal max-w-2xl leading-relaxed">
+          <p className="text-[14px] text-[#cccccc] max-w-2xl leading-[1.47]">
             {t.schemesPageSubtitle}
           </p>
         </div>
 
+        {/* 2 Stats Pods (DESIGN.md Tile 2 #2a2a2c) */}
         <div className="grid grid-cols-2 gap-3 shrink-0 w-full sm:w-auto">
-          <div className="p-3.5 rounded-[16px] bg-white/5 border border-white/10 text-center">
-            <span className="text-[10px] uppercase font-semibold text-[#86868b] block">{t.totalGrantPool}</span>
-            <span className="text-lg font-semibold text-white">₹1.24 Lakh Cr</span>
+          <div className="p-4 rounded-[14px] bg-[#2a2a2c] border border-white/5 text-center min-w-[130px]">
+            <span className="text-[11px] uppercase font-semibold text-[#7a7a7a] block tracking-wide">{t.totalGrantPool}</span>
+            <span className="text-[21px] font-semibold text-white tracking-[-0.231px]">₹1.24 Lakh Cr</span>
           </div>
-          <div className="p-3.5 rounded-[16px] bg-white/5 border border-white/10 text-center">
-            <span className="text-[10px] uppercase font-semibold text-[#86868b] block">{t.activePrograms}</span>
-            <span className="text-lg font-semibold text-white">6 Schemes</span>
+          <div className="p-4 rounded-[14px] bg-[#2a2a2c] border border-white/5 text-center min-w-[130px]">
+            <span className="text-[11px] uppercase font-semibold text-[#7a7a7a] block tracking-wide">{t.activePrograms}</span>
+            <span className="text-[21px] font-semibold text-[#2997ff] tracking-[-0.231px]">6 Schemes</span>
           </div>
         </div>
       </div>
 
-      {/* 2. Search & Category Filter Toolbar */}
-      <div className="p-4 rounded-[20px] bg-white border border-[#d2d2d7]/60 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-3">
+      {/* 2. Search & Category Filter Toolbar (DESIGN.md search-input & pill grammar) */}
+      <div className="p-5 rounded-[18px] bg-white border border-[#e0e0e0] space-y-3.5 shadow-xs">
         
-        {/* Search Input */}
+        {/* Apple Pill Search Input */}
         <div className="relative">
-          <Search size={15} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#86868b]" />
+          <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#7a7a7a]" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={t.searchSchemesPlaceholder}
-            className="w-full pl-10 pr-8 py-2.5 rounded-full bg-[#f5f5f7] border border-[#d2d2d7]/70 text-xs font-medium text-[#1d1d1f] focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:bg-white transition-all shadow-xs"
+            className="w-full pl-11 pr-9 py-3 rounded-full bg-[#f5f5f7] border border-[#e0e0e0] text-[14px] font-normal text-[#1d1d1f] focus:outline-none focus:ring-2 focus:ring-[#0066cc] focus:bg-white transition-all shadow-xs"
           />
           {searchQuery && (
-            <button onClick={() => setSearchQuery('')} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#86868b] hover:text-[#1d1d1f]">
-              <X size={13} />
+            <button onClick={() => setSearchQuery('')} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#7a7a7a] hover:text-[#1d1d1f] cursor-pointer">
+              <X size={14} />
             </button>
           )}
         </div>
@@ -539,10 +535,10 @@ export default function GovtSchemes({ currentLang, onNavigate }) {
             <button
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+              className={`px-4 py-2 rounded-full text-[13px] font-medium whitespace-nowrap transition-all cursor-pointer active:scale-95 ${
                 selectedCategory === cat.id
-                  ? 'bg-[#0071e3] text-white shadow-xs'
-                  : 'bg-[#f5f5f7] hover:bg-[#e8e8ed] text-[#1d1d1f] border border-[#d2d2d7]/60'
+                  ? 'bg-[#0066cc] text-white shadow-sm'
+                  : 'bg-[#f5f5f7] hover:bg-[#e8e8ed] text-[#1d1d1f] border border-[#e0e0e0]'
               }`}
             >
               {cat.label}
@@ -551,9 +547,9 @@ export default function GovtSchemes({ currentLang, onNavigate }) {
         </div>
       </div>
 
-      {/* 3. Schemes Grid */}
+      {/* 3. Schemes Grid (DESIGN.md {component.store-utility-card}: #ffffff, 18px rounded, 24px padding) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {filteredSchemes.map((scheme) => {
+        {filteredSchemes.map((scheme, idx) => {
           const IconComp = scheme.icon;
           const localizedTitle = scheme.localizedNames[currentLang] || scheme.name;
           const localizedDesc = scheme.benefitDesc[currentLang] || scheme.benefitDesc.en;
@@ -562,65 +558,65 @@ export default function GovtSchemes({ currentLang, onNavigate }) {
           return (
             <div
               key={scheme.id}
-              className="p-6 sm:p-7 rounded-[24px] bg-white border border-[#d2d2d7]/60 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-md transition-all space-y-4 flex flex-col justify-between apple-card-hover"
+              className={`p-7 rounded-[18px] bg-white border border-[#e0e0e0] transition-all flex flex-col justify-between space-y-5 apple-card-hover animate-apple-in delay-${(idx % 6) + 1}`}
             >
               <div className="space-y-4">
                 
-                {/* Header */}
-                <div className="flex items-start space-x-3">
-                  <div className="w-11 h-11 rounded-[14px] bg-[#f5f5f7] text-[#0071e3] flex items-center justify-center font-bold shrink-0 border border-[#d2d2d7]/60">
-                    <IconComp size={20} />
+                {/* Header with Circular Glyph Container */}
+                <div className="flex items-start space-x-3.5">
+                  <div className="w-12 h-12 rounded-[12px] bg-[#f5f5f7] text-[#0066cc] flex items-center justify-center font-bold shrink-0 border border-[#e0e0e0]">
+                    <IconComp size={22} />
                   </div>
                   <div>
                     <div className="flex items-center space-x-2">
-                      <span className="px-2 py-0.2 rounded-md text-[10px] font-bold bg-[#f5f5f7] text-[#1d1d1f] border border-[#d2d2d7]/70">
+                      <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#f5f5f7] text-[#1d1d1f] border border-[#e0e0e0]">
                         {scheme.code}
                       </span>
-                      <span className="text-[11px] text-[#86868b]">
+                      <span className="text-[12px] text-[#7a7a7a]">
                         {scheme.categoryLabel}
                       </span>
                     </div>
-                    <h3 className="text-[15px] font-semibold text-[#1d1d1f] mt-1 leading-snug">
+                    <h3 className="text-[18px] font-semibold text-[#1d1d1f] tracking-[-0.28px] mt-1 leading-snug">
                       {localizedTitle}
                     </h3>
                   </div>
                 </div>
 
-                {/* Benefit Highlight Box */}
-                <div className="p-4 rounded-[16px] bg-[#f5f5f7] border border-[#d2d2d7]/50 space-y-1">
+                {/* Benefit Highlight Box (DESIGN.md Parchment surface #f5f5f7) */}
+                <div className="p-4 rounded-[14px] bg-[#f5f5f7] border border-[#e0e0e0] space-y-1.5">
                   <div className="flex justify-between items-baseline">
-                    <span className="text-[10px] font-semibold uppercase text-[#86868b] tracking-wider">
+                    <span className="text-[11px] font-semibold uppercase text-[#7a7a7a] tracking-wider">
                       {t.subsidyBenefit}
                     </span>
-                    <span className="text-sm font-semibold text-emerald-700">
+                    <span className="text-[17px] font-semibold text-[#0066cc] tracking-tight">
                       {scheme.benefitAmount}
                     </span>
                   </div>
-                  <p className="text-xs text-[#6e6e73] leading-relaxed">
+                  <p className="text-[14px] text-[#7a7a7a] leading-relaxed">
                     {localizedDesc}
                   </p>
                 </div>
 
                 {/* Eligibility Criteria */}
-                <div className="space-y-1 text-xs">
-                  <span className="font-semibold text-[#1d1d1f] flex items-center gap-1">
-                    <CheckSquare size={13} className="text-[#0071e3]" /> {t.eligibilityCriteria}
+                <div className="space-y-1.5 text-[14px]">
+                  <span className="font-semibold text-[#1d1d1f] flex items-center gap-1.5 text-[13px]">
+                    <CheckSquare size={14} className="text-[#0066cc]" /> {t.eligibilityCriteria}
                   </span>
-                  <ul className="space-y-1 text-[#6e6e73] pl-4 list-disc">
-                    {localizedEligibility.map((el, idx) => (
-                      <li key={idx} className="leading-snug">{el}</li>
+                  <ul className="space-y-1 text-[#7a7a7a] pl-4 list-disc text-[13px]">
+                    {localizedEligibility.map((el, elIdx) => (
+                      <li key={elIdx} className="leading-snug">{el}</li>
                     ))}
                   </ul>
                 </div>
 
                 {/* Required Documents */}
-                <div className="space-y-1 text-xs">
-                  <span className="font-semibold text-[#1d1d1f] flex items-center gap-1">
-                    <FileText size={13} className="text-[#0071e3]" /> {t.requiredDocuments}
+                <div className="space-y-1.5 text-[14px]">
+                  <span className="font-semibold text-[#1d1d1f] flex items-center gap-1.5 text-[13px]">
+                    <FileText size={14} className="text-[#0066cc]" /> {t.requiredDocuments}
                   </span>
                   <div className="flex flex-wrap gap-1.5 pt-0.5">
-                    {scheme.documents.map((doc, idx) => (
-                      <span key={idx} className="px-2.5 py-0.5 rounded-full bg-[#f5f5f7] border border-[#d2d2d7]/60 text-[10px] font-medium text-[#6e6e73]">
+                    {scheme.documents.map((doc, docIdx) => (
+                      <span key={docIdx} className="px-3 py-1 rounded-full bg-[#f5f5f7] border border-[#e0e0e0] text-[12px] font-medium text-[#7a7a7a]">
                         📄 {doc}
                       </span>
                     ))}
@@ -629,20 +625,20 @@ export default function GovtSchemes({ currentLang, onNavigate }) {
 
               </div>
 
-              {/* Bottom Direct Link Action (Direct Government Portal Redirection) */}
+              {/* Bottom Action Bar (DESIGN.md button-primary pill) */}
               <div className="pt-4 border-t border-[#f0f0f0] flex items-center justify-between gap-3">
-                <div className="text-[11px] text-[#86868b] flex items-center gap-1">
-                  <Clock size={12} /> {scheme.processingDays} {t.reviewDays}
+                <div className="text-[12px] text-[#7a7a7a] flex items-center gap-1">
+                  <Clock size={13} /> {scheme.processingDays} {t.reviewDays}
                 </div>
 
                 <a
                   href={scheme.officialUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-5 py-2.5 rounded-full bg-[#0071e3] hover:bg-[#0077ed] active:scale-95 text-white text-xs font-medium tracking-tight shadow-xs transition-all flex items-center space-x-1.5 cursor-pointer no-underline"
+                  className="px-6 py-2.5 rounded-full bg-[#0066cc] hover:bg-[#0071e3] active:scale-95 text-white text-[14px] font-medium tracking-tight shadow-sm transition-all flex items-center space-x-1.5 cursor-pointer no-underline apple-btn-active"
                 >
                   <span>{t.applyOfficialPortal}</span>
-                  <ExternalLink size={13} />
+                  <ExternalLink size={14} />
                 </a>
               </div>
 

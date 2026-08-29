@@ -12,7 +12,7 @@
     overflow-x: hidden;
   }
 
-  /* Smooth scroll & momentum */
+  /* Smooth scroll & momentum physics */
   html {
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
@@ -21,41 +21,41 @@
 
 /* Apple style backdrop blur */
 .apple-glass {
-  background: rgba(245, 245, 247, 0.85);
-  backdrop-filter: saturate(180%) blur(20px);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  background: rgba(245, 245, 247, 0.88);
+  backdrop-filter: saturate(190%) blur(24px);
+  -webkit-backdrop-filter: saturate(190%) blur(24px);
 }
 
 .apple-glass-dark {
-  background: rgba(29, 29, 31, 0.85);
-  backdrop-filter: saturate(180%) blur(20px);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  background: rgba(29, 29, 31, 0.88);
+  backdrop-filter: saturate(190%) blur(24px);
+  -webkit-backdrop-filter: saturate(190%) blur(24px);
 }
 
 .apple-card-glass {
-  background: rgba(255, 255, 255, 0.94);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: saturate(180%) blur(16px);
   -webkit-backdrop-filter: saturate(180%) blur(16px);
-  border: 1px solid rgba(0, 0, 0, 0.07);
+  border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 /* Custom subtle scrollbar */
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.12);
+  background: rgba(0, 0, 0, 0.15);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.3);
 }
 
-/* Hide scrollbar for clean horizontal tab rails */
+/* Hide scrollbar utility */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -64,31 +64,29 @@
   scrollbar-width: none;
 }
 
-/* Apple Motion & Physics Keyframes */
-@keyframes apple-slide-up {
+/* =========================================================
+   RICH APPLE MOTION & SPRING PHYSICS KEYFRAMES
+========================================================= */
+
+@keyframes apple-spring-up {
   0% {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(28px) scale(0.97);
+  }
+  60% {
+    opacity: 0.9;
+    transform: translateY(-2px) scale(1.005);
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
 @keyframes apple-fade-in {
   0% {
     opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes apple-scale-up {
-  0% {
-    opacity: 0;
-    transform: scale(0.95);
+    transform: scale(0.98);
   }
   100% {
     opacity: 1;
@@ -96,25 +94,45 @@
   }
 }
 
+@keyframes apple-popover-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.92) translateY(-6px);
+  }
+  70% {
+    transform: scale(1.02) translateY(1px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
 @keyframes apple-float {
   0%, 100% {
-    transform: translateY(0px);
+    transform: translateY(0px) rotate(0deg);
   }
   50% {
-    transform: translateY(-6px);
+    transform: translateY(-8px) rotate(1.5deg);
   }
 }
 
-@keyframes apple-pulse-glow {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(0, 102, 204, 0.25);
+@keyframes apple-pulse-ring {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 102, 204, 0.35);
   }
-  50% {
-    box-shadow: 0 0 0 10px rgba(0, 102, 204, 0);
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 14px rgba(0, 102, 204, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 102, 204, 0);
   }
 }
 
-@keyframes shimmer {
+@keyframes apple-shimmer {
   0% {
     background-position: -200% 0;
   }
@@ -123,47 +141,83 @@
   }
 }
 
-/* Animation utility classes */
+@keyframes radar-sweep {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   ANIMATION CLASS HELPERS
+========================================================= */
+
 .animate-apple-in {
-  animation: apple-slide-up 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: apple-spring-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .animate-apple-fade {
-  animation: apple-fade-in 0.4s ease-out forwards;
+  animation: apple-fade-in 0.45s ease-out both;
 }
 
 .animate-apple-scale {
-  animation: apple-scale-up 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: apple-popover-in 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
 .animate-apple-float {
-  animation: apple-float 4s ease-in-out infinite;
+  animation: apple-float 4.5s ease-in-out infinite;
 }
 
 .animate-apple-glow {
-  animation: apple-pulse-glow 2.5s infinite;
+  animation: apple-pulse-ring 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+  background-size: 200% 100%;
+  animation: apple-shimmer 2.5s infinite;
 }
 
 /* Stagger Entrance Delays */
-.delay-1 { animation-delay: 50ms; }
-.delay-2 { animation-delay: 100ms; }
-.delay-3 { animation-delay: 150ms; }
-.delay-4 { animation-delay: 200ms; }
-.delay-5 { animation-delay: 250ms; }
-.delay-6 { animation-delay: 300ms; }
+.delay-1 { animation-delay: 60ms; }
+.delay-2 { animation-delay: 120ms; }
+.delay-3 { animation-delay: 180ms; }
+.delay-4 { animation-delay: 240ms; }
+.delay-5 { animation-delay: 300ms; }
+.delay-6 { animation-delay: 360ms; }
+.delay-7 { animation-delay: 420ms; }
+.delay-8 { animation-delay: 480ms; }
 
-/* Micro-interaction physics */
+/* Rich Interactive Card Physics */
 .apple-card-hover {
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.apple-card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 30px -8px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, box-shadow;
 }
 
-.apple-btn-active {
-  transition: transform 0.15s ease, background-color 0.15s ease;
+.apple-card-hover:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 20px 40px -12px rgba(0, 102, 204, 0.12), 0 0 0 1px rgba(0, 102, 204, 0.1);
 }
+
+.apple-card-hover:active {
+  transform: translateY(-2px) scale(0.99);
+  transition-duration: 0.1s;
+}
+
+/* Apple Button Spring Press State (DESIGN.md Spec) */
+.apple-btn-active {
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.18s ease, box-shadow 0.18s ease;
+  will-change: transform;
+}
+
+.apple-btn-active:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.2);
+}
+
 .apple-btn-active:active {
-  transform: scale(0.95);
+  transform: scale(0.94);
+  box-shadow: none;
 }

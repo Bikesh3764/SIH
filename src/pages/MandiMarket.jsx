@@ -519,31 +519,33 @@ export default function MandiMarket({ currentLang }) {
         })}
       </div>
 
-      {/* Nearby Mandi Price Comparison & Arbitrage Module */}
-      <div className="p-6 sm:p-7 rounded-[24px] bg-white border border-[#d2d2d7]/60 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-5 animate-apple-in apple-card-hover">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#f0f0f0]">
+      {/* Nearby Mandi Price Comparison & Arbitrage Module (DESIGN.md Spec) */}
+      <div className="p-6 sm:p-8 rounded-[18px] bg-white border border-[#e0e0e0] space-y-6 animate-apple-in shadow-xs">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#f0f0f0]">
           <div>
             <div className="flex items-center space-x-2">
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-[#0071e3]/10 text-[#0071e3] tracking-wide">
+              <span className="text-[12px] font-semibold uppercase tracking-[0.04em] text-[#0066cc]">
                 Live Price Arbitrage Radar
               </span>
+              <span className="text-[12px] text-[#7a7a7a]">•</span>
+              <span className="text-[12px] text-[#7a7a7a]">Regional Mandi Network</span>
             </div>
-            <h2 className="text-lg sm:text-xl font-semibold text-[#1d1d1f] tracking-tight mt-1">
+            <h2 className="text-[21px] font-semibold text-[#1d1d1f] tracking-[-0.231px] mt-0.5">
               Nearby Mandi Price Comparison ({selectedCropKey})
             </h2>
-            <p className="text-xs text-[#86868b]">
+            <p className="text-[14px] text-[#7a7a7a] leading-relaxed">
               Compare live spot rates across neighboring APMC mandis in {selectedDistrict.name}, factor in transport costs, and find where you get the highest net profit.
             </p>
           </div>
 
-          <div className="px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold self-start sm:self-auto shrink-0 flex items-center space-x-1">
-            <span>🌾 Crop:</span>
-            <span className="font-bold">{selectedCropKey}</span>
+          <div className="px-3.5 py-1.5 rounded-full bg-[#f5f5f7] border border-[#e0e0e0] text-[#1d1d1f] text-[13px] font-medium self-start sm:self-auto shrink-0 flex items-center space-x-1.5">
+            <span className="text-[#0066cc]">🌾 Crop:</span>
+            <span className="font-semibold">{selectedCropKey}</span>
           </div>
         </div>
 
-        {/* Mandi Cards Comparison Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {/* Mandi Cards Comparison Grid (DESIGN.md {component.store-utility-card}) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {selectedDistrict.markets.map((marketName, idx) => {
             const distance = [12, 26, 38, 52, 64, 78][idx % 6];
             const priceVariation = [0, 45, -30, 80, -20, 60][idx % 6];
@@ -564,66 +566,66 @@ export default function MandiMarket({ currentLang }) {
             return (
               <div
                 key={marketName}
-                className={`p-5 rounded-[20px] transition-all flex flex-col justify-between space-y-4 border ${
+                className={`p-6 rounded-[18px] transition-all flex flex-col justify-between space-y-4 border ${
                   isCurrentSelected
-                    ? 'bg-[#0071e3]/5 border-[#0071e3] ring-2 ring-[#0071e3]/20 shadow-sm'
+                    ? 'bg-white border-[#0066cc] ring-2 ring-[#0066cc]/20 shadow-md'
                     : isBestDeal
-                    ? 'bg-emerald-50/50 border-emerald-300 shadow-xs'
-                    : 'bg-[#f5f5f7]/60 hover:bg-[#f5f5f7] border-[#d2d2d7]/60'
-                }`}
+                    ? 'bg-white border-[#30d158] shadow-sm'
+                    : 'bg-white border-[#e0e0e0]'
+                } apple-card-hover animate-apple-in delay-${(idx % 6) + 1}`}
               >
-                <div className="space-y-2.5">
+                <div className="space-y-3">
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       <div className="flex items-center space-x-1.5">
-                        <Store size={14} className={isCurrentSelected ? 'text-[#0071e3]' : 'text-[#86868b]'} />
-                        <h4 className="text-sm font-semibold text-[#1d1d1f]">
+                        <Store size={16} className={isCurrentSelected ? 'text-[#0066cc]' : 'text-[#7a7a7a]'} />
+                        <h4 className="text-[17px] font-semibold text-[#1d1d1f] tracking-[-0.374px]">
                           {marketName}
                         </h4>
                       </div>
-                      <span className="text-[11px] text-[#86868b] block mt-0.5">
+                      <span className="text-[13px] text-[#7a7a7a] block mt-0.5">
                         📍 {distance} km away from farm
                       </span>
                     </div>
 
                     {isBestDeal ? (
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-600 text-white shadow-xs shrink-0">
+                      <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#30d158]/15 text-[#248a3d] border border-[#30d158]/30 shrink-0">
                         🏆 Best Profit
                       </span>
                     ) : isCurrentSelected ? (
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#0071e3] text-white shrink-0">
+                      <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#0066cc] text-white shrink-0">
                         Active Mandi
                       </span>
                     ) : null}
                   </div>
 
-                  {/* Pricing Breakdown */}
-                  <div className="space-y-1.5 pt-2 border-t border-[#d2d2d7]/40 text-xs">
-                    <div className="flex justify-between items-center">
-                      <span className="text-[#6e6e73]">Mandi Spot Rate:</span>
-                      <span className="font-semibold text-[#1d1d1f]">₹{mandiPrice} / unit</span>
+                  {/* Pricing Breakdown (DESIGN.md Spec) */}
+                  <div className="space-y-1.5 pt-3 border-t border-[#f0f0f0] text-[14px]">
+                    <div className="flex justify-between items-center text-[#7a7a7a]">
+                      <span>Mandi Spot Rate:</span>
+                      <span className="font-semibold text-[#1d1d1f]">₹{mandiPrice.toLocaleString()} / qtl</span>
                     </div>
-                    <div className="flex justify-between items-center text-[#86868b]">
+                    <div className="flex justify-between items-center text-[#7a7a7a]">
                       <span>Est. Transport Cost:</span>
-                      <span className="text-rose-600">-₹{transportRatePerUnit}</span>
+                      <span className="text-rose-600 font-medium">-₹{transportRatePerUnit}</span>
                     </div>
-                    <div className="flex justify-between items-center pt-1.5 border-t border-[#d2d2d7]/40">
-                      <span className="font-bold text-[#1d1d1f]">Net In-Hand Payout:</span>
-                      <span className={`text-base font-bold ${isBestDeal ? 'text-emerald-700' : 'text-[#1d1d1f]'}`}>
-                        ₹{netProfitPerUnit}
+                    <div className="flex justify-between items-baseline pt-2 border-t border-[#f0f0f0]">
+                      <span className="font-semibold text-[#1d1d1f]">Net In-Hand Payout:</span>
+                      <span className={`text-[22px] font-semibold tracking-tight ${isBestDeal ? 'text-[#248a3d]' : 'text-[#1d1d1f]'}`}>
+                        ₹{netProfitPerUnit.toLocaleString()}
                       </span>
                     </div>
                   </div>
                 </div>
 
-                {/* Switch / Select Mandi Action */}
+                {/* Switch / Select Mandi Action (DESIGN.md Pill Primary & Utility) */}
                 <button
                   type="button"
                   onClick={() => handleMarketChange(marketName)}
-                  className={`w-full py-2 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+                  className={`w-full py-2.5 rounded-full text-[14px] font-medium transition-all cursor-pointer active:scale-95 ${
                     isCurrentSelected
-                      ? 'bg-[#0071e3] text-white shadow-xs cursor-default'
-                      : 'bg-white hover:bg-[#e8e8ed] text-[#1d1d1f] border border-[#d2d2d7]/70'
+                      ? 'bg-[#0066cc] text-white shadow-sm cursor-default'
+                      : 'bg-[#f5f5f7] hover:bg-[#e8e8ed] text-[#1d1d1f] border border-[#e0e0e0]'
                   }`}
                 >
                   {isCurrentSelected ? '✓ Currently Viewing' : `Switch to ${marketName}`}

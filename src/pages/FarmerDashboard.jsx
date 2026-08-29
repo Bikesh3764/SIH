@@ -239,7 +239,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
             onClick={() => onNavigate('schemes')}
             className="px-5 py-2 rounded-full bg-[#0066cc] hover:bg-[#0071e3] text-white text-[14px] font-medium transition-colors cursor-pointer flex items-center space-x-1.5 shadow-sm"
           >
-            <span>Govt Schemes</span>
+            <span>{t.schemesTitle}</span>
             <ArrowRight size={14} />
           </motion.button>
         </div>
@@ -256,13 +256,13 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
           <div>
             <div className="flex items-center space-x-2">
               <span className="text-[12px] font-medium uppercase tracking-[0.04em] text-[#2997ff]">
-                Early-Warning Intelligence
+                {t.earlyWarning}
               </span>
               <span className="text-[12px] text-[#7a7a7a]">•</span>
-              <span className="text-[12px] text-[#cccccc]">Live FDI Telemetry</span>
+              <span className="text-[12px] text-[#cccccc]">{t.liveFdiTelemetry}</span>
             </div>
             <h2 className="text-[21px] font-semibold tracking-[-0.231px] text-white mt-0.5">
-              Predictive Farm Distress-Risk Index
+              {t.fdiTitle}
             </h2>
           </div>
 
@@ -273,7 +273,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
               className="px-3.5 py-1.5 rounded-full text-[14px] font-semibold bg-[#2997ff]/15 text-[#2997ff] border border-[#2997ff]/30 flex items-center space-x-2"
             >
               <span className="w-2.5 h-2.5 rounded-full bg-[#2997ff] animate-ping"></span>
-              <span>Low Risk (Safe) • {computedDistressScore} / 100</span>
+              <span>{t.lowRiskSafe} • {computedDistressScore} / 100</span>
             </motion.span>
           </div>
         </div>
@@ -287,11 +287,11 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
             className="p-5 rounded-[14px] bg-[#2a2a2c] border border-white/5 space-y-3 transition-colors"
           >
             <div className="flex items-center justify-between text-[14px] text-[#cccccc]">
-              <span>🌧️ Rainfall Variance</span>
-              <span className="text-[12px] text-[#7a7a7a]">Weight 40%</span>
+              <span>🌧️ {t.rainfallVariance}</span>
+              <span className="text-[12px] text-[#7a7a7a]">{t.weight40}</span>
             </div>
             <div className="text-[28px] font-semibold tracking-[-0.28px] text-[#2997ff]">
-              -18% <span className="text-[14px] font-normal text-[#cccccc]">Normal</span>
+              -18% <span className="text-[14px] font-normal text-[#cccccc]">{t.normalStatus}</span>
             </div>
             {/* Animated Progress Bar */}
             <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
@@ -303,7 +303,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
               />
             </div>
             <p className="text-[14px] text-[#7a7a7a] leading-snug">
-              Soil moisture is currently optimal for vegetative crop development.
+              {t.soilMoistureDesc}
             </p>
           </motion.div>
 
@@ -313,11 +313,11 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
             className="p-5 rounded-[14px] bg-[#2a2a2c] border border-white/5 space-y-3 transition-colors"
           >
             <div className="flex items-center justify-between text-[14px] text-[#cccccc]">
-              <span>📉 Mandi Realization</span>
-              <span className="text-[12px] text-[#7a7a7a]">Weight 35%</span>
+              <span>📉 {t.mandiRealization}</span>
+              <span className="text-[12px] text-[#7a7a7a]">{t.weight35}</span>
             </div>
             <div className="text-[28px] font-semibold tracking-[-0.28px] text-[#30d158]">
-              +₹270 <span className="text-[14px] font-normal text-[#cccccc]">Above MSP</span>
+              +₹270 <span className="text-[14px] font-normal text-[#cccccc]">{t.aboveMsp}</span>
             </div>
             {/* Animated Progress Bar */}
             <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
@@ -329,7 +329,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
               />
             </div>
             <p className="text-[14px] text-[#7a7a7a] leading-snug">
-              Spot rates trading above government minimum support price floor.
+              {t.spotRatesDesc}
             </p>
           </motion.div>
 
@@ -343,9 +343,9 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
             className="p-5 rounded-[14px] bg-[#2a2a2c] hover:bg-[#333336] border border-white/5 hover:border-[#2997ff]/40 transition-all space-y-3 cursor-pointer group"
           >
             <div className="flex items-center justify-between text-[14px] text-[#cccccc]">
-              <span>💳 Loan Proximity</span>
+              <span>💳 {t.loanProximity}</span>
               <span className="text-[12px] text-[#2997ff] group-hover:underline flex items-center gap-0.5">
-                <Edit3 size={11} /> Edit
+                <Edit3 size={11} /> {t.editLoan}
               </span>
             </div>
             <div className="text-[28px] font-semibold tracking-[-0.28px]" style={{ color: loanMetrics.colorHex }}>
@@ -373,10 +373,10 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
       <motion.div variants={itemVariants} className="space-y-3">
         <div className="flex items-center justify-between px-1">
           <h3 className="text-[14px] font-semibold text-[#7a7a7a] uppercase tracking-[0.04em]">
-            Core Agricultural AI Services
+            {t.coreServicesTitle}
           </h3>
           <span className="text-[14px] text-[#0066cc] font-medium">
-            5 Services
+            {t.fiveServices}
           </span>
         </div>
 
@@ -414,7 +414,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                 </div>
 
                 <div className="pt-2 border-t border-[#f0f0f0] flex items-center justify-between text-[14px] font-medium text-[#0066cc]">
-                  <span>Open</span>
+                  <span>{t.open}</span>
                   <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
                 </div>
               </motion.div>
@@ -435,10 +435,10 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
             <div className="flex items-center justify-between pb-3 border-b border-[#f0f0f0]">
               <div>
                 <span className="text-[12px] font-medium uppercase tracking-[0.04em] text-[#7a7a7a] block">
-                  APMC Market Radar
+                  {t.apmcRadar}
                 </span>
                 <h3 className="text-[21px] font-semibold tracking-[-0.231px] text-[#1d1d1f]">
-                  Live Mandi Snapshot ({farmer.district || 'Yavatmal'})
+                  {t.liveMandiSnapshot} ({farmer.district || 'Sundargarh'})
                 </h3>
               </div>
               <motion.button
@@ -447,7 +447,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                 onClick={() => onNavigate('market')}
                 className="text-[14px] font-medium text-[#0066cc] hover:underline flex items-center gap-1 cursor-pointer"
               >
-                <span>Full Radar</span>
+                <span>{t.fullRadar}</span>
                 <ChevronRight size={14} />
               </motion.button>
             </div>
@@ -478,12 +478,12 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
           </div>
 
           <div className="pt-3 border-t border-[#f0f0f0] flex items-center justify-between text-[14px]">
-            <span className="text-[#7a7a7a]">Compare transport & spot rates</span>
+            <span className="text-[#7a7a7a]">{t.compareTransport}</span>
             <button
               onClick={() => onNavigate('market')}
               className="text-[#0066cc] font-medium hover:underline cursor-pointer"
             >
-              Mandi Comparison →
+              {t.mandiComparisonBtn}
             </button>
           </div>
         </motion.div>
@@ -497,10 +497,10 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
             <div className="flex items-center justify-between pb-3 border-b border-[#f0f0f0]">
               <div>
                 <span className="text-[12px] font-medium uppercase tracking-[0.04em] text-[#7a7a7a] block">
-                  Hyperlocal Sowing Guidance
+                  {t.hyperlocalGuidance}
                 </span>
                 <h3 className="text-[21px] font-semibold tracking-[-0.231px] text-[#1d1d1f]">
-                  {farmer.district || 'Yavatmal'} Weather
+                  {farmer.district || 'Sundargarh'} {t.weather}
                 </h3>
               </div>
               <motion.button
@@ -509,7 +509,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                 onClick={() => onNavigate('weather')}
                 className="text-[14px] font-medium text-[#0066cc] hover:underline flex items-center gap-1 cursor-pointer"
               >
-                <span>5-Day Forecast</span>
+                <span>{t.fiveDayForecast}</span>
                 <ChevronRight size={14} />
               </motion.button>
             </div>

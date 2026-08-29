@@ -72,7 +72,7 @@ export default function FarmerProfile({ currentLang, currentUser, onUpdateUser }
             </h1>
           </div>
           <p className="text-[14px] text-[#cccccc] mt-0.5">
-            ID: {farmer.id || farmer.farmerId || 'MH-YAV-2026-2509'} • Registered Farmer
+            ID: {farmer.id || farmer.farmerId || 'OR-ROU-2026-108'} • {t.registeredFarmer}
           </p>
         </div>
 
@@ -81,7 +81,7 @@ export default function FarmerProfile({ currentLang, currentUser, onUpdateUser }
           className="px-5 py-2.5 rounded-full bg-[#0066cc] hover:bg-[#0071e3] text-white text-[14px] font-medium tracking-tight shadow-sm active:scale-95 transition-all flex items-center space-x-1.5 cursor-pointer self-start sm:self-auto apple-btn-active"
         >
           <Edit3 size={14} />
-          <span>Edit Profile</span>
+          <span>{t.editProfile}</span>
         </button>
       </div>
 
@@ -90,7 +90,7 @@ export default function FarmerProfile({ currentLang, currentUser, onUpdateUser }
         <div className="pb-3 border-b border-[#f0f0f0]">
           <h2 className="text-base font-semibold text-[#1d1d1f] flex items-center gap-2">
             <User size={18} className="text-[#0071e3]" />
-            {t.personalInfo} & Land Records
+            {t.personalInfoLand}
           </h2>
         </div>
 
@@ -112,8 +112,8 @@ export default function FarmerProfile({ currentLang, currentUser, onUpdateUser }
           </div>
 
           <div className="p-3.5 rounded-[14px] bg-[#f5f5f7] border border-[#d2d2d7]/50 flex justify-between items-center">
-            <span className="text-[#86868b]">Location:</span>
-            <span className="font-semibold text-[#1d1d1f]">{farmer.village || 'Ghatanji'}, {farmer.district || farmer.taluk || 'Yavatmal'}, {farmer.state || 'Maharashtra'}</span>
+            <span className="text-[#86868b]">{t.location}:</span>
+            <span className="font-semibold text-[#1d1d1f]">{farmer.village || 'Panposh'}, {farmer.district || farmer.taluk || 'Sundargarh'}, {farmer.state || 'Odisha'}</span>
           </div>
 
           <div className="p-3.5 rounded-[14px] bg-[#f5f5f7] border border-[#d2d2d7]/50 flex justify-between items-center">
@@ -122,19 +122,19 @@ export default function FarmerProfile({ currentLang, currentUser, onUpdateUser }
           </div>
 
           <div className="p-3.5 rounded-[14px] bg-[#f5f5f7] border border-[#d2d2d7]/50 flex justify-between items-center">
-            <span className="text-[#86868b]">Number of Plots:</span>
-            <span className="font-semibold text-[#1d1d1f]">{farmer.numFarms || '2'} Plots</span>
+            <span className="text-[#86868b]">{t.numPlots}:</span>
+            <span className="font-semibold text-[#1d1d1f]">{farmer.numFarms || '2'}</span>
           </div>
 
           <div className="p-3.5 rounded-[14px] bg-[#f5f5f7] border border-[#d2d2d7]/50 flex justify-between items-center">
             <span className="text-[#86868b]">{t.experience}:</span>
-            <span className="font-semibold text-[#1d1d1f]">{farmer.experience || '8'} Years</span>
+            <span className="font-semibold text-[#1d1d1f]">{farmer.experience || '8'} {t.years}</span>
           </div>
 
           <div className="sm:col-span-2 p-3.5 rounded-[14px] bg-[#f5f5f7] border border-[#d2d2d7]/50 flex justify-between items-center">
-            <span className="text-[#86868b]">Primary Crops Cultivated:</span>
+            <span className="text-[#86868b]">{t.primaryCropsCultivated}:</span>
             <span className="font-semibold text-emerald-700 text-sm">
-              {farmer.activeCrops?.map(c => c.name).join(', ') || 'Cotton, Soybean'}
+              {farmer.activeCrops?.map(c => c.name).join(', ') || 'Paddy, Mustard, Tomato'}
             </span>
           </div>
 

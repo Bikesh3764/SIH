@@ -129,24 +129,24 @@ export default function WeatherAdvisory({ currentLang, currentUser }) {
             <span className="text-[13px] sm:text-base font-semibold text-white">68% Optimal</span>
           </div>
           <div className="p-2.5 sm:p-3 rounded-[12px] sm:rounded-[14px] bg-white/10 backdrop-blur-md border border-white/15">
-            <span className="text-[10px] text-blue-200 uppercase font-semibold block">Rain Chance</span>
-            <span className="text-[13px] sm:text-base font-semibold text-white">74% High</span>
+            <span className="text-[10px] text-blue-200 uppercase font-semibold block">{t.rainChance}</span>
+            <span className="text-[13px] sm:text-base font-semibold text-white">74% {t.high}</span>
           </div>
           <div className="p-2.5 sm:p-3 rounded-[12px] sm:rounded-[14px] bg-white/10 backdrop-blur-md border border-white/15">
-            <span className="text-[10px] text-blue-200 uppercase font-semibold block">Wind Speed</span>
+            <span className="text-[10px] text-blue-200 uppercase font-semibold block">{t.windSpeed}</span>
             <span className="text-[13px] sm:text-base font-semibold text-white">14 km/h WNW</span>
           </div>
           <div className="p-2.5 sm:p-3 rounded-[12px] sm:rounded-[14px] bg-white/10 backdrop-blur-md border border-white/15">
-            <span className="text-[10px] text-blue-200 uppercase font-semibold block">Air Humidity</span>
+            <span className="text-[10px] text-blue-200 uppercase font-semibold block">{t.humidity}</span>
             <span className="text-[13px] sm:text-base font-semibold text-white">78%</span>
           </div>
           <div className="p-2.5 sm:p-3 rounded-[12px] sm:rounded-[14px] bg-white/10 backdrop-blur-md border border-white/15">
-            <span className="text-[10px] text-blue-200 uppercase font-semibold block">Barometric</span>
+            <span className="text-[10px] text-blue-200 uppercase font-semibold block">{t.barometric}</span>
             <span className="text-[13px] sm:text-base font-semibold text-white">1008 hPa</span>
           </div>
           <div className="p-2.5 sm:p-3 rounded-[12px] sm:rounded-[14px] bg-white/10 backdrop-blur-md border border-white/15">
-            <span className="text-[10px] text-blue-200 uppercase font-semibold block">UV Index</span>
-            <span className="text-[13px] sm:text-base font-semibold text-white">4 (Moderate)</span>
+            <span className="text-[10px] text-blue-200 uppercase font-semibold block">{t.uvIndex}</span>
+            <span className="text-[13px] sm:text-base font-semibold text-white">4 ({t.moderate})</span>
           </div>
         </div>
 
@@ -158,30 +158,30 @@ export default function WeatherAdvisory({ currentLang, currentUser }) {
         <div className="p-4 sm:p-5 rounded-[18px] bg-white border border-[#e0e0e0] shadow-xs space-y-2">
           <div className="flex items-center space-x-2 text-[#0066cc]">
             <Droplets size={18} />
-            <h3 className="font-semibold text-sm text-[#1d1d1f]">Watering Advisory</h3>
+            <h3 className="font-semibold text-sm text-[#1d1d1f]">{t.wateringAdvisory}</h3>
           </div>
           <p className="text-xs text-[#7a7a7a] leading-relaxed">
-            Heavy afternoon rain expected (14:00 - 16:00). <b>Hold drip irrigation</b> for the next 24 hours to prevent root waterlogging.
+            {t.wateringAdvisoryDesc}
           </p>
         </div>
 
         <div className="p-4 sm:p-5 rounded-[18px] bg-white border border-[#e0e0e0] shadow-xs space-y-2">
           <div className="flex items-center space-x-2 text-amber-600">
             <AlertTriangle size={18} />
-            <h3 className="font-semibold text-sm text-[#1d1d1f]">Pest & Fungal Alert</h3>
+            <h3 className="font-semibold text-sm text-[#1d1d1f]">{t.pestAlert}</h3>
           </div>
           <p className="text-xs text-[#7a7a7a] leading-relaxed">
-            High humidity (78%) and warm temperature promote <b>early fungal spore germination</b>. Inspect lower crop foliage regularly.
+            {t.pestAlertDesc}
           </p>
         </div>
 
         <div className="p-4 sm:p-5 rounded-[18px] bg-white border border-[#e0e0e0] shadow-xs space-y-2">
           <div className="flex items-center space-x-2 text-emerald-600">
             <ShieldCheck size={18} />
-            <h3 className="font-semibold text-sm text-[#1d1d1f]">Harvesting Window</h3>
+            <h3 className="font-semibold text-sm text-[#1d1d1f]">{t.harvestingWindow}</h3>
           </div>
           <p className="text-xs text-[#7a7a7a] leading-relaxed">
-            Dry clear window available between <b>07:00 - 11:00 AM</b> tomorrow for spraying organic biopesticides and harvesting leafy produce.
+            {t.harvestingDesc}
           </p>
         </div>
 
@@ -192,7 +192,7 @@ export default function WeatherAdvisory({ currentLang, currentUser }) {
         
         <div className="flex items-center justify-between">
           <h2 className="text-sm sm:text-base font-semibold text-[#1d1d1f]">
-            {forecastView === 'hourly' ? '24-Hour Hourly Forecast' : '7-Day Agronomy Forecast'}
+            {forecastView === 'hourly' ? t.hourlyForecast : t.sevenDayForecast}
           </h2>
 
           {/* Apple Segmented Toggle Pill */}
@@ -203,7 +203,7 @@ export default function WeatherAdvisory({ currentLang, currentUser }) {
                 forecastView === 'hourly' ? 'bg-[#0071e3] text-white shadow-xs' : 'text-[#6e6e73] hover:text-[#1d1d1f]'
               }`}
             >
-              Hourly Forecast
+              {t.forecast24h}
             </button>
             <button
               onClick={() => setForecastView('7day')}
@@ -211,7 +211,7 @@ export default function WeatherAdvisory({ currentLang, currentUser }) {
                 forecastView === '7day' ? 'bg-[#0071e3] text-white shadow-xs' : 'text-[#6e6e73] hover:text-[#1d1d1f]'
               }`}
             >
-              7-Day Forecast
+              {t.forecast5d}
             </button>
           </div>
         </div>

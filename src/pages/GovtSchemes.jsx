@@ -478,7 +478,7 @@ export default function GovtSchemes({ currentLang, onNavigate }) {
         <div className="space-y-2">
           <div className="flex items-center space-x-2">
             <span className="px-3 py-1 rounded-full text-[12px] font-semibold uppercase bg-[#2997ff]/15 border border-[#2997ff]/30 text-[#2997ff] tracking-[0.04em]">
-              Central & State Welfare
+              {t.centralStateWelfare}
             </span>
           </div>
           <h1 className="text-[24px] sm:text-[36px] font-semibold tracking-[-0.28px] text-white leading-tight">

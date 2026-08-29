@@ -637,11 +637,11 @@ export default function MandiMarket({ currentLang, currentUser }) {
 
                     {isBestDeal ? (
                       <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#30d158]/15 text-[#248a3d] border border-[#30d158]/30 shrink-0">
-                        🏆 Best Profit
+                        🏆 {t.bestDeal}
                       </span>
                     ) : isCurrentSelected ? (
                       <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#0066cc] text-white shrink-0">
-                        Active Mandi
+                        {t.selectedMarketLabel}
                       </span>
                     ) : null}
                   </div>
@@ -649,15 +649,15 @@ export default function MandiMarket({ currentLang, currentUser }) {
                   {/* Pricing Breakdown (DESIGN.md Spec) */}
                   <div className="space-y-1.5 pt-3 border-t border-[#f0f0f0] text-[14px]">
                     <div className="flex justify-between items-center text-[#7a7a7a]">
-                      <span>Mandi Spot Rate:</span>
+                      <span>{t.spotRate}:</span>
                       <span className="font-semibold text-[#1d1d1f]">₹{mandiPrice.toLocaleString()} / qtl</span>
                     </div>
                     <div className="flex justify-between items-center text-[#7a7a7a]">
-                      <span>Est. Transport Cost:</span>
+                      <span>{t.estTransport}:</span>
                       <span className="text-rose-600 font-medium">-₹{transportRatePerUnit}</span>
                     </div>
                     <div className="flex justify-between items-baseline pt-2 border-t border-[#f0f0f0]">
-                      <span className="font-semibold text-[#1d1d1f]">Net In-Hand Payout:</span>
+                      <span className="font-semibold text-[#1d1d1f]">{t.netRealization}:</span>
                       <span className={`text-[22px] font-semibold tracking-tight ${isBestDeal ? 'text-[#248a3d]' : 'text-[#1d1d1f]'}`}>
                         ₹{netProfitPerUnit.toLocaleString()}
                       </span>
@@ -675,7 +675,7 @@ export default function MandiMarket({ currentLang, currentUser }) {
                       : 'bg-[#f5f5f7] hover:bg-[#e8e8ed] text-[#1d1d1f] border border-[#e0e0e0]'
                   }`}
                 >
-                  {isCurrentSelected ? '✓ Currently Viewing' : `Switch to ${marketName}`}
+                  {isCurrentSelected ? `✓ ${t.selectedMarketLabel}` : `${t.selectMarket} (${marketName})`}
                 </button>
               </div>
             );

@@ -49,7 +49,7 @@ export default function LandingPage({ onOpenSignIn, currentLang, setLang }) {
       icon: Scan,
       color: 'text-emerald-400',
       bg: 'bg-emerald-500/20 border-emerald-500/30',
-      tag: 'AI Vision'
+      tag: t.tagAiVision || 'AI Vision'
     },
     {
       title: t.askAiTitle,
@@ -57,7 +57,7 @@ export default function LandingPage({ onOpenSignIn, currentLang, setLang }) {
       icon: MessageSquareText,
       color: 'text-blue-400',
       bg: 'bg-blue-500/20 border-blue-500/30',
-      tag: 'Voice NLP'
+      tag: t.tagVoiceNlp || 'Voice NLP'
     },
     {
       title: t.mandiRadarTitle,
@@ -65,7 +65,7 @@ export default function LandingPage({ onOpenSignIn, currentLang, setLang }) {
       icon: TrendingUp,
       color: 'text-amber-400',
       bg: 'bg-amber-500/20 border-amber-500/30',
-      tag: 'Live Mandis'
+      tag: t.tagLiveMandis || 'Live Mandis'
     },
     {
       title: t.schemesTitle,
@@ -73,7 +73,7 @@ export default function LandingPage({ onOpenSignIn, currentLang, setLang }) {
       icon: Building2,
       color: 'text-purple-400',
       bg: 'bg-purple-500/20 border-purple-500/30',
-      tag: 'Subsidies'
+      tag: t.tagSubsidies || 'Subsidies'
     }
   ];
 
@@ -132,9 +132,9 @@ export default function LandingPage({ onOpenSignIn, currentLang, setLang }) {
           variants={itemVariants}
           className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1]"
         >
-          Empowering Farmers with <br />
+          {t.heroTitle1} <br />
           <span className="bg-gradient-to-r from-emerald-300 via-teal-300 to-cyan-300 bg-clip-text text-transparent">
-            AI Agronomy & Market Intelligence
+            {t.heroTitle2}
           </span>
         </motion.h2>
 
@@ -143,7 +143,7 @@ export default function LandingPage({ onOpenSignIn, currentLang, setLang }) {
           variants={itemVariants}
           className="text-base sm:text-xl text-neutral-200 font-normal max-w-2xl mx-auto leading-relaxed"
         >
-          An AI-powered agricultural intelligence companion helping farmers diagnose crop diseases, track live Mandi prices, and receive spoken regional advisories.
+          {t.heroSubtitle}
         </motion.p>
 
         {/* Primary Farmer Entry Button */}

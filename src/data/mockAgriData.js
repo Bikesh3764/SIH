@@ -3,6 +3,7 @@
 export const LANGUAGES = [
   { code: 'en', name: 'English', native: 'English', voiceCode: 'en-US' },
   { code: 'hi', name: 'Hindi (हिन्दी)', native: 'हिन्दी', voiceCode: 'hi-IN' },
+  { code: 'or', name: 'Odia (ଓଡ଼ିଆ)', native: 'ଓଡ଼ିଆ', voiceCode: 'or-IN' },
   { code: 'mr', name: 'Marathi (मराठी)', native: 'मराठी', voiceCode: 'mr-IN' },
   { code: 'pa', name: 'Punjabi (ਪੰਜਾਬੀ)', native: 'ਪੰਜਾਬੀ', voiceCode: 'pa-IN' },
   { code: 'te', name: 'Telugu (తెలుగు)', native: 'తెలుగు', voiceCode: 'te-IN' },

@@ -10,7 +10,8 @@ import {
   RefreshCw, 
   User, 
   Copy, 
-  Check 
+  Check,
+  Sparkle
 } from 'lucide-react';
 import { CHATBOT_CONTENT } from '../data/mockAgriData';
 import { TRANSLATIONS } from '../data/translations';
@@ -23,7 +24,7 @@ export default function AgronomyChatbot({ currentLang }) {
     {
       id: 1,
       sender: 'bot',
-      text: chatConfig?.welcomeMessage || "Hello! I am your Kisan Mitra Agronomy AI assistant. Ask me anything about crop diseases, fertilizers, weather alerts, or market prices in your preferred language.",
+      text: chatConfig?.welcomeMessage || "Hello! I am your Kisan Mitra Agronomy AI assistant. Ask me anything about crop diseases, fertilizers, weather alerts, or live mandi prices.",
       time: 'Just now'
     }
   ]);
@@ -34,6 +35,15 @@ export default function AgronomyChatbot({ currentLang }) {
   const [isTyping, setIsTyping] = useState(false);
   const [copiedId, setCopiedId] = useState(null);
   const messagesEndRef = useRef(null);
+
+  // Quick Demo Auto-Questions
+  const quickDemoQuestions = [
+    { label: "🌾 Yellow rust on wheat, what to spray?", query: "Yellow rust on wheat leaves, what to spray?" },
+    { label: "🌧️ Rain expected tomorrow, should I spray?", query: "Rain expected tomorrow, should I spray pesticides today?" },
+    { label: "🧪 Fertilizer dose for Cotton?", query: "What is the recommended fertilizer dose for Cotton?" },
+    { label: "📈 Cotton mandi sell recommendation?", query: "What is the selling recommendation for Cotton today?" },
+    { label: "💧 Irrigation schedule for Soybean?", query: "How much irrigation is needed for Soybean crop?" }
+  ];
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -120,14 +130,16 @@ export default function AgronomyChatbot({ currentLang }) {
         );
         if (found) {
           botResponse = found.answer;
-        } else if (qLower.includes('fertilizer') || qLower.includes('khad') || qLower.includes('dose') || qLower.includes('npk')) {
-          botResponse = "Fertilizer Guidance: For vegetative growth, apply NPK (19:19:19) foliar spray @ 10g/L water. For top-dressing, apply Urea @ 45 kg/acre in split doses with adequate soil moisture.";
-        } else if (qLower.includes('rust') || qLower.includes('disease') || qLower.includes('fungus') || qLower.includes('spray') || qLower.includes('pest')) {
-          botResponse = "Crop Protection Advisory: For foliar fungal rust/blight, spray Propiconazole 25% EC @ 1ml/L or Organic Neem Oil (1500 ppm) @ 5ml/L. Spray during calm morning hours.";
-        } else if (qLower.includes('mandi') || qLower.includes('price') || qLower.includes('rate') || qLower.includes('sell') || qLower.includes('market')) {
-          botResponse = "Mandi Spot Outlook: Spot rates in APMC yards are trading above MSP floor. Best selling window is expected around mid-week due to steady miller procurement.";
-        } else if (qLower.includes('weather') || qLower.includes('rain') || qLower.includes('monsoon')) {
-          botResponse = "Weather & Spraying Notice: Rain is expected within 24-48 hours. Postpone foliar spraying of insecticides/fungicides to avoid rain wash-off.";
+        } else if (qLower.includes('rust') || qLower.includes('wheat') || qLower.includes('yellow')) {
+          botResponse = "🌾 Wheat Yellow Rust Treatment:\nImmediately spray Propiconazole 25% EC (Tilt) @ 1ml per liter of water (200ml in 200L water per acre). Repeat after 12-15 days if stripe fungal spores persist. Spray during clear morning hours for best absorption.";
+        } else if (qLower.includes('fertilizer') || qLower.includes('cotton') || qLower.includes('dose') || qLower.includes('khad')) {
+          botResponse = "🧪 Cotton Fertilizer Recommendation:\nApply N:P:K @ 100:50:50 kg/ha. Top-dress Urea @ 45 kg/acre in 2 split doses at squaring and peak flowering stage. For rapid boll development, apply 19:19:19 foliar spray @ 10g/L.";
+        } else if (qLower.includes('rain') || qLower.includes('spray') || qLower.includes('tomorrow')) {
+          botResponse = "🌧️ Rain & Spraying Notice:\nDo NOT spray chemical pesticides or foliar nutrition today if rain is forecast within 24 hours. Rainfall will wash off the active chemicals. Resume spraying 24 hours after rain once crop foliage is completely dry.";
+        } else if (qLower.includes('mandi') || qLower.includes('cotton') || qLower.includes('sell') || qLower.includes('price')) {
+          botResponse = "📈 Cotton Mandi Outlook:\nCurrent APMC spot modal price is ₹7,120/quintal (MSP is ₹6,620). Market trend is bullish with steady mill demand. Advisory: Sell 50% stock at current high rates and retain the remaining for peak market clearing.";
+        } else if (qLower.includes('irrigation') || qLower.includes('soybean') || qLower.includes('water')) {
+          botResponse = "💧 Soybean Irrigation Advisory:\nCritical growth stages requiring moisture are Flowering (35-40 DAS) and Pod Filling (55-60 DAS). Maintain field capacity without water stagnation. Ensure furrow drainage is clear to prevent root rot.";
         }
       }
 
@@ -193,20 +205,20 @@ export default function AgronomyChatbot({ currentLang }) {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6 text-[#1d1d1f]">
+    <div className="max-w-4xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-4 sm:space-y-6 text-[#1d1d1f]">
       
       {/* 1. Header (DESIGN.md SF Pro Display + Clean Pill CTA) */}
       <motion.div 
         initial={{ opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+        className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4"
       >
         <div>
-          <h1 className="text-[28px] sm:text-[34px] font-semibold tracking-[-0.374px] text-[#1d1d1f]">
+          <h1 className="text-[24px] sm:text-[34px] font-semibold tracking-[-0.374px] text-[#1d1d1f]">
             {t.chatTitle}
           </h1>
-          <p className="text-[15px] sm:text-[17px] text-[#7a7a7a] tracking-[-0.224px] mt-0.5">
+          <p className="text-[13px] sm:text-[16px] text-[#7a7a7a] tracking-[-0.224px] mt-0.5">
             {t.chatSubtitle}
           </p>
         </div>
@@ -220,7 +232,7 @@ export default function AgronomyChatbot({ currentLang }) {
             text: chatConfig?.welcomeMessage || "Hello! I am your Kisan Mitra Agronomy AI assistant. Ask me anything in your regional language.",
             time: 'Just now'
           }])}
-          className="px-4 py-2 rounded-full bg-[#f5f5f7] hover:bg-[#e0e0e0] border border-[#e0e0e0] text-[#1d1d1f] text-[14px] font-medium transition-colors flex items-center space-x-1.5 self-start sm:self-auto cursor-pointer shadow-xs"
+          className="px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-[#f5f5f7] hover:bg-[#e0e0e0] border border-[#e0e0e0] text-[#1d1d1f] text-[13px] sm:text-[14px] font-medium transition-colors flex items-center space-x-1.5 self-start sm:self-auto cursor-pointer shadow-xs"
         >
           <RefreshCw size={13} />
           <span>Reset Session</span>
@@ -232,7 +244,7 @@ export default function AgronomyChatbot({ currentLang }) {
         initial={{ opacity: 0, y: 20, scale: 0.99 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-        className="p-6 sm:p-8 rounded-[18px] bg-white border border-[#e0e0e0] shadow-sm flex flex-col justify-between h-[620px] sm:h-[660px]"
+        className="p-4 sm:p-7 rounded-[18px] bg-white border border-[#e0e0e0] shadow-sm flex flex-col justify-between h-[72vh] sm:h-[640px]"
       >
         
         {/* Messages Feed */}
@@ -248,23 +260,23 @@ export default function AgronomyChatbot({ currentLang }) {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                  className={`flex items-start gap-3 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}
+                  className={`flex items-start gap-2.5 sm:gap-3 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}
                 >
                   {/* Avatar Icon */}
                   <div
-                    className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 text-white font-semibold shadow-xs ${
+                    className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center shrink-0 text-white font-semibold shadow-xs ${
                       isUser
                         ? 'bg-[#0066cc]'
                         : 'bg-[#272729]'
                     }`}
                   >
-                    {isUser ? <User size={16} /> : <Sparkles size={16} className="text-amber-300" />}
+                    {isUser ? <User size={15} /> : <Sparkles size={15} className="text-amber-300" />}
                   </div>
 
                   {/* Message Bubble (Apple iMessage Style) */}
-                  <div className={`space-y-1.5 max-w-[85%] sm:max-w-[78%] ${isUser ? 'items-end text-right' : 'items-start text-left'}`}>
+                  <div className={`space-y-1.5 max-w-[88%] sm:max-w-[78%] ${isUser ? 'items-end text-right' : 'items-start text-left'}`}>
                     <div
-                      className={`px-5 py-3.5 rounded-[18px] text-[15px] leading-[1.47] tracking-[-0.224px] shadow-xs whitespace-pre-line ${
+                      className={`px-4 sm:px-5 py-3 sm:py-3.5 rounded-[18px] text-[14px] sm:text-[15px] leading-[1.47] tracking-[-0.224px] shadow-xs whitespace-pre-line ${
                         isUser
                           ? 'bg-[#0066cc] text-white rounded-tr-[4px]'
                           : 'bg-[#f5f5f7] text-[#1d1d1f] border border-[#e0e0e0] rounded-tl-[4px]'
@@ -274,7 +286,7 @@ export default function AgronomyChatbot({ currentLang }) {
                     </div>
 
                     {/* Controls & Timestamp */}
-                    <div className={`flex items-center space-x-2 text-[12px] text-[#7a7a7a] px-1 ${isUser ? 'justify-end' : 'justify-start'}`}>
+                    <div className={`flex items-center space-x-2 text-[11px] sm:text-[12px] text-[#7a7a7a] px-1 ${isUser ? 'justify-end' : 'justify-start'}`}>
                       <span>{msg.time}</span>
                       {!isUser && (
                         <>
@@ -317,7 +329,7 @@ export default function AgronomyChatbot({ currentLang }) {
             <motion.div 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="flex items-center space-x-2 text-xs text-[#7a7a7a] pl-12"
+              className="flex items-center space-x-2 text-xs text-[#7a7a7a] pl-10"
             >
               <div className="flex space-x-1">
                 <span className="w-2 h-2 rounded-full bg-[#0066cc] animate-bounce"></span>
@@ -331,8 +343,25 @@ export default function AgronomyChatbot({ currentLang }) {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Apple Full-Pill Search / Input Bar (DESIGN.md search-input) */}
-        <div className="pt-3 border-t border-[#f0f0f0]">
+        {/* Bottom Section: Quick Auto-Prompt Chips + Apple Full-Pill Input */}
+        <div className="pt-3 border-t border-[#f0f0f0] space-y-2.5">
+          
+          {/* Quick Auto-Questions Chips Strip */}
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+            {quickDemoQuestions.map((q, idx) => (
+              <motion.button
+                key={idx}
+                whileHover={{ scale: 1.03, y: -1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => handleSendMessage(q.query)}
+                className="shrink-0 px-3.5 py-1.5 rounded-full bg-[#f5f5f7] hover:bg-[#e0e0e0] border border-[#e0e0e0] text-[12px] sm:text-[13px] font-medium text-[#1d1d1f] transition-all cursor-pointer shadow-2xs whitespace-nowrap"
+              >
+                {q.label}
+              </motion.button>
+            ))}
+          </div>
+
+          {/* Apple Full-Pill Search / Input Bar (DESIGN.md search-input) */}
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -346,7 +375,7 @@ export default function AgronomyChatbot({ currentLang }) {
                 value={inputQuery}
                 onChange={(e) => setInputQuery(e.target.value)}
                 placeholder={isListening ? t.listening : t.chatPlaceholder}
-                className="w-full pl-5 pr-14 py-3.5 rounded-full bg-[#f5f5f7] border border-[#e0e0e0] text-[15px] font-normal text-[#1d1d1f] focus:outline-none focus:ring-2 focus:ring-[#0066cc] focus:bg-white transition-all shadow-xs"
+                className="w-full pl-4 sm:pl-5 pr-12 sm:pr-14 py-3 sm:py-3.5 rounded-full bg-[#f5f5f7] border border-[#e0e0e0] text-[14px] sm:text-[15px] font-normal text-[#1d1d1f] focus:outline-none focus:ring-2 focus:ring-[#0066cc] focus:bg-white transition-all shadow-xs"
               />
               
               {/* Voice Mic Button with Apple Glow Pulse */}
@@ -355,14 +384,14 @@ export default function AgronomyChatbot({ currentLang }) {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={handleStartVoiceRecognition}
-                className={`absolute right-2.5 top-1/2 -translate-y-1/2 p-2 rounded-full transition-all cursor-pointer ${
+                className={`absolute right-2 sm:right-2.5 top-1/2 -translate-y-1/2 p-2 rounded-full transition-all cursor-pointer ${
                   isListening
                     ? 'bg-rose-500 text-white animate-pulse shadow-md'
                     : 'text-[#0066cc] hover:bg-black/5'
                 }`}
                 title={t.speakVoice}
               >
-                {isListening ? <MicOff size={18} /> : <Mic size={18} />}
+                {isListening ? <MicOff size={17} /> : <Mic size={17} />}
               </motion.button>
             </div>
 
@@ -372,9 +401,9 @@ export default function AgronomyChatbot({ currentLang }) {
               whileTap={{ scale: 0.92 }}
               type="submit"
               disabled={!inputQuery.trim()}
-              className="w-12 h-12 rounded-full bg-[#0066cc] hover:bg-[#0071e3] text-white disabled:opacity-40 transition-colors shadow-sm flex items-center justify-center cursor-pointer shrink-0"
+              className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#0066cc] hover:bg-[#0071e3] text-white disabled:opacity-40 transition-colors shadow-sm flex items-center justify-center cursor-pointer shrink-0"
             >
-              <Send size={18} />
+              <Send size={17} />
             </motion.button>
           </form>
         </div>

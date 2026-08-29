@@ -10,8 +10,7 @@ import {
   RefreshCw, 
   User, 
   Copy, 
-  Check,
-  Sparkle
+  Check 
 } from 'lucide-react';
 import { CHATBOT_CONTENT } from '../data/mockAgriData';
 import { TRANSLATIONS } from '../data/translations';
@@ -24,7 +23,7 @@ export default function AgronomyChatbot({ currentLang }) {
     {
       id: 1,
       sender: 'bot',
-      text: chatConfig?.welcomeMessage || "Hello! I am your Kisan Mitra Agronomy AI assistant. Ask me anything about crop diseases, fertilizers, weather alerts, or live mandi prices.",
+      text: chatConfig.welcomeMessage,
       time: 'Just now'
     }
   ]);
@@ -36,14 +35,23 @@ export default function AgronomyChatbot({ currentLang }) {
   const [copiedId, setCopiedId] = useState(null);
   const messagesEndRef = useRef(null);
 
-  // Quick Demo Auto-Questions
-  const quickDemoQuestions = [
-    { label: "🌾 Yellow rust on wheat, what to spray?", query: "Yellow rust on wheat leaves, what to spray?" },
-    { label: "🌧️ Rain expected tomorrow, should I spray?", query: "Rain expected tomorrow, should I spray pesticides today?" },
-    { label: "🧪 Fertilizer dose for Cotton?", query: "What is the recommended fertilizer dose for Cotton?" },
-    { label: "📈 Cotton mandi sell recommendation?", query: "What is the selling recommendation for Cotton today?" },
-    { label: "💧 Irrigation schedule for Soybean?", query: "How much irrigation is needed for Soybean crop?" }
-  ];
+  // When language changes, update initial greeting if only 1 message
+  useEffect(() => {
+    setMessages((prev) => {
+      if (prev.length <= 1) {
+        return [{
+          id: Date.now(),
+          sender: 'bot',
+          text: (CHATBOT_CONTENT[currentLang] || CHATBOT_CONTENT.en).welcomeMessage,
+          time: 'Just now'
+        }];
+      }
+      return prev;
+    });
+  }, [currentLang]);
+
+  // Quick Demo Auto-Questions for the Active Language
+  const sampleQueries = (CHATBOT_CONTENT[currentLang] || CHATBOT_CONTENT.en).sampleQueries || CHATBOT_CONTENT.en.sampleQueries;
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -84,7 +92,7 @@ export default function AgronomyChatbot({ currentLang }) {
       };
       
       utterance.lang = langVoiceMap[currentLang] || 'en-US';
-      utterance.rate = 0.95;
+      utterance.rate = 0.92;
 
       utterance.onend = () => {
         setIsSpeakingId(null);
@@ -120,26 +128,33 @@ export default function AgronomyChatbot({ currentLang }) {
     setIsTyping(true);
 
     setTimeout(() => {
-      let botResponse = "I have noted your agronomy query. Based on regional ICAR recommendations for your district, ensure balanced nutrient application and inspect lower crop foliage for early moisture stress.";
+      const activeContent = CHATBOT_CONTENT[currentLang] || CHATBOT_CONTENT.en;
+      let botResponse = activeContent.sampleQueries?.[0]?.answer || "I have noted your agronomy query. Based on regional ICAR recommendations for your district, ensure balanced nutrient application and inspect lower crop foliage for early moisture stress.";
 
-      const qLower = query.toLowerCase();
+      const qLower = query.toLowerCase().trim();
 
-      if (chatConfig?.sampleQueries) {
-        const found = chatConfig.sampleQueries.find(
-          (sq) => sq.text.toLowerCase().includes(qLower) || qLower.includes(sq.text.toLowerCase())
+      // 1. Direct match with language sample queries
+      if (activeContent.sampleQueries) {
+        const found = activeContent.sampleQueries.find(
+          (sq) => sq.text.toLowerCase().includes(qLower) || qLower.includes(sq.text.toLowerCase()) ||
+                  sq.text.toLowerCase().split(' ')[0] === qLower.split(' ')[0]
         );
         if (found) {
-          botResponse = found.answer;
-        } else if (qLower.includes('rust') || qLower.includes('wheat') || qLower.includes('yellow')) {
-          botResponse = "🌾 Wheat Yellow Rust Treatment:\nImmediately spray Propiconazole 25% EC (Tilt) @ 1ml per liter of water (200ml in 200L water per acre). Repeat after 12-15 days if stripe fungal spores persist. Spray during clear morning hours for best absorption.";
-        } else if (qLower.includes('fertilizer') || qLower.includes('cotton') || qLower.includes('dose') || qLower.includes('khad')) {
-          botResponse = "🧪 Cotton Fertilizer Recommendation:\nApply N:P:K @ 100:50:50 kg/ha. Top-dress Urea @ 45 kg/acre in 2 split doses at squaring and peak flowering stage. For rapid boll development, apply 19:19:19 foliar spray @ 10g/L.";
-        } else if (qLower.includes('rain') || qLower.includes('spray') || qLower.includes('tomorrow')) {
-          botResponse = "🌧️ Rain & Spraying Notice:\nDo NOT spray chemical pesticides or foliar nutrition today if rain is forecast within 24 hours. Rainfall will wash off the active chemicals. Resume spraying 24 hours after rain once crop foliage is completely dry.";
-        } else if (qLower.includes('mandi') || qLower.includes('cotton') || qLower.includes('sell') || qLower.includes('price')) {
-          botResponse = "📈 Cotton Mandi Outlook:\nCurrent APMC spot modal price is ₹7,120/quintal (MSP is ₹6,620). Market trend is bullish with steady mill demand. Advisory: Sell 50% stock at current high rates and retain the remaining for peak market clearing.";
-        } else if (qLower.includes('irrigation') || qLower.includes('soybean') || qLower.includes('water')) {
-          botResponse = "💧 Soybean Irrigation Advisory:\nCritical growth stages requiring moisture are Flowering (35-40 DAS) and Pod Filling (55-60 DAS). Maintain field capacity without water stagnation. Ensure furrow drainage is clear to prevent root rot.";
+          botResponse = found.reply || found.answer;
+        } else if (qLower.includes('rust') || qLower.includes('wheat') || qLower.includes('रतुआ') || qLower.includes('तांबेरा') || qLower.includes('கோதுமை') || qLower.includes('कणक') || qLower.includes('গম')) {
+          const match = activeContent.sampleQueries.find((s) => s.text.includes('rust') || s.text.includes('रतुआ') || s.text.includes('तांबेरा') || s.text.includes('Yellow') || s.text.includes('पीला') || s.text.includes('पिवळा'));
+          botResponse = match ? (match.reply || match.answer) : (activeContent.sampleQueries[0]?.reply || activeContent.sampleQueries[0]?.answer);
+        } else if (qLower.includes('rain') || qLower.includes('spray') || qLower.includes('बारिश') || qLower.includes('पाऊस') || qLower.includes('ਮੀਂਹ') || qLower.includes('వర్షం') || qLower.includes('மழை') || qLower.includes('বৃষ্টি')) {
+          const match = activeContent.sampleQueries.find((s) => s.text.includes('rain') || s.text.includes('बारिश') || s.text.includes('पाऊस') || s.text.includes('ਮੀਂਹ') || s.text.includes('వర్షం') || s.text.includes('மழை') || s.text.includes('বৃষ্টি'));
+          botResponse = match ? (match.reply || match.answer) : (activeContent.sampleQueries[1]?.reply || activeContent.sampleQueries[1]?.answer);
+        } else if (qLower.includes('fertilizer') || qLower.includes('cotton') || qLower.includes('खाद') || qLower.includes('खत') || qLower.includes('ਕਪਾਹ') || qLower.includes('పత్తి') || qLower.includes('பருத்தி') || qLower.includes('তুলা') || qLower.includes('उर्वरक')) {
+          const match = activeContent.sampleQueries.find((s) => s.text.includes('fertilizer') || s.text.includes('खाद') || s.text.includes('खत') || s.text.includes('Cotton') || s.text.includes('कपास') || s.text.includes('कापूस'));
+          botResponse = match ? (match.reply || match.answer) : (activeContent.sampleQueries[2]?.reply || activeContent.sampleQueries[2]?.answer);
+        } else if (qLower.includes('mandi') || qLower.includes('price') || qLower.includes('मंडी') || qLower.includes('भाव') || qLower.includes('बाजारभाव') || qLower.includes('ధర') || qLower.includes('விலை') || qLower.includes('দর') || qLower.includes('sell')) {
+          const match = activeContent.sampleQueries.find((s) => s.text.includes('mandi') || s.text.includes('मंडी') || s.text.includes('भाव') || s.text.includes('selling') || s.text.includes('बाजारभाव'));
+          botResponse = match ? (match.reply || match.answer) : (activeContent.sampleQueries[3]?.reply || activeContent.sampleQueries[3]?.answer);
+        } else {
+          botResponse = activeContent.botDefaultReply || "I have noted your agronomy query. Based on regional ICAR recommendations for your district, ensure balanced nutrient application and inspect lower crop foliage for early moisture stress.";
         }
       }
 
@@ -152,7 +167,7 @@ export default function AgronomyChatbot({ currentLang }) {
 
       setIsTyping(false);
       setMessages((prev) => [...prev, botMessage]);
-    }, 550);
+    }, 500);
   };
 
   const handleStartVoiceRecognition = () => {
@@ -205,7 +220,7 @@ export default function AgronomyChatbot({ currentLang }) {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-4 sm:space-y-6 text-[#1d1d1f]">
+    <div className="w-full max-w-4xl mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-4 sm:space-y-6 text-[#1d1d1f]">
       
       {/* 1. Header (DESIGN.md SF Pro Display + Clean Pill CTA) */}
       <motion.div 
@@ -227,9 +242,9 @@ export default function AgronomyChatbot({ currentLang }) {
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setMessages([{
-            id: 1,
+            id: Date.now(),
             sender: 'bot',
-            text: chatConfig?.welcomeMessage || "Hello! I am your Kisan Mitra Agronomy AI assistant. Ask me anything in your regional language.",
+            text: (CHATBOT_CONTENT[currentLang] || CHATBOT_CONTENT.en).welcomeMessage,
             time: 'Just now'
           }])}
           className="px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-[#f5f5f7] hover:bg-[#e0e0e0] border border-[#e0e0e0] text-[#1d1d1f] text-[13px] sm:text-[14px] font-medium transition-colors flex items-center space-x-1.5 self-start sm:self-auto cursor-pointer shadow-xs"
@@ -244,7 +259,7 @@ export default function AgronomyChatbot({ currentLang }) {
         initial={{ opacity: 0, y: 20, scale: 0.99 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-        className="p-4 sm:p-7 rounded-[18px] bg-white border border-[#e0e0e0] shadow-sm flex flex-col justify-between h-[72vh] sm:h-[640px]"
+        className="p-3.5 sm:p-7 rounded-[18px] bg-white border border-[#e0e0e0] shadow-sm flex flex-col justify-between h-[75vh] sm:h-[640px]"
       >
         
         {/* Messages Feed */}
@@ -343,20 +358,20 @@ export default function AgronomyChatbot({ currentLang }) {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Bottom Section: Quick Auto-Prompt Chips + Apple Full-Pill Input */}
+        {/* Bottom Section: Quick Auto-Prompt Chips in Current Language + Apple Full-Pill Input */}
         <div className="pt-3 border-t border-[#f0f0f0] space-y-2.5">
           
           {/* Quick Auto-Questions Chips Strip */}
           <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
-            {quickDemoQuestions.map((q, idx) => (
+            {sampleQueries.map((sq, idx) => (
               <motion.button
                 key={idx}
                 whileHover={{ scale: 1.03, y: -1 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => handleSendMessage(q.query)}
+                onClick={() => handleSendMessage(sq.text)}
                 className="shrink-0 px-3.5 py-1.5 rounded-full bg-[#f5f5f7] hover:bg-[#e0e0e0] border border-[#e0e0e0] text-[12px] sm:text-[13px] font-medium text-[#1d1d1f] transition-all cursor-pointer shadow-2xs whitespace-nowrap"
               >
-                {q.label}
+                {sq.text}
               </motion.button>
             ))}
           </div>

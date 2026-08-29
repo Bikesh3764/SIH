@@ -632,16 +632,22 @@ export const MULTILINGUAL_DISEASES = {
 
 export const DISTRICTS_DATA = [
   {
-    id: 'ernakulam',
-    name: 'Ernakulam',
-    state: 'Kerala',
-    markets: ['Ernakulam Central', 'Aluva APMC', 'Muvattupuzha Market', 'Angamaly Yard', 'Perumbavoor', 'Piravom Agro']
+    id: 'rourkela',
+    name: 'Rourkela (Sundargarh)',
+    state: 'Odisha',
+    markets: ['Rourkela APMC Yard', 'Panposh Mandi', 'Sundargarh RMC', 'Rajgangpur Market', 'Bonai Yard', 'Bargaon Mandi']
   },
   {
     id: 'yavatmal',
     name: 'Yavatmal',
     state: 'Maharashtra',
     markets: ['Yavatmal APMC', 'Ghatanji Mandi', 'Wani Market Yard', 'Pusad APMC', 'Umarkhed', 'Digras Yard']
+  },
+  {
+    id: 'ernakulam',
+    name: 'Ernakulam',
+    state: 'Kerala',
+    markets: ['Ernakulam Central', 'Aluva APMC', 'Muvattupuzha Market', 'Angamaly Yard', 'Perumbavoor', 'Piravom Agro']
   },
   {
     id: 'karnal',
@@ -682,41 +688,39 @@ export const DISTRICTS_DATA = [
 ];
 
 export const CURRENT_FARMER_PROFILE = {
-  name: 'Rameshwar Tukaram Patil',
-  avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80',
-  farmerId: 'MH-YAV-2024-8821',
-  village: 'Ghatanji',
-  taluk: 'Yavatmal',
-  district: 'Yavatmal',
-  state: 'Maharashtra',
-  phone: '9823471234',
-  email: 'rameshwar.patil@agrishield.in',
-  landSize: '4.2 Acres',
-  soilType: 'Medium Black Clayey Loam (Regur)',
-  experience: '12',
+  name: 'Bikesh Ray',
+  farmerId: 'OD-ROU-2026-4412',
+  village: 'Panposh',
+  taluk: 'Rourkela',
+  district: 'Sundargarh',
+  state: 'Odisha',
+  phone: '9861054321',
+  email: 'bikesh.ray@agrishield.in',
+  landSize: '3.5 Acres',
+  experience: '10',
   numFarms: '2',
   soilHealth: {
-    ph: 7.2,
-    organicCarbon: '0.58%',
-    nitrogen: 'Low (Needs Urea)',
+    ph: 6.8,
+    organicCarbon: '0.62%',
+    nitrogen: 'Medium (Balanced)',
     phosphorus: 'Medium',
     potassium: 'High',
-    lastTested: '14 May 2024 (KVK Yavatmal)'
+    lastTested: '12 July 2024 (KVK Rourkela, Sundargarh)'
   },
   activeCrops: [
-    { name: 'Cotton (Bt-II)', area: '2.5 Acres', sowingDate: '18 June 2024', stage: 'Boll Formation', health: 'Risk (Pest Alert)' },
-    { name: 'Soybean (JS-335)', area: '1.7 Acres', sowingDate: '22 June 2024', stage: 'Pod Filling', health: 'Healthy' }
+    { name: 'Paddy / Dhan (Swarna)', area: '2.2 Acres', sowingDate: '25 June 2024', stage: 'Tillering & Vegetative', health: 'Healthy (Optimal Moisture)' },
+    { name: 'Mustard / Rai (Pusa Bold)', area: '1.3 Acres', sowingDate: '05 July 2024', stage: 'Vegetative Growth', health: 'Healthy' }
   ],
   kccLoan: {
-    bank: 'SBI Ghatanji Branch',
-    sanctionedAmount: 200000,
-    outstandingBalance: 185000,
-    dueDate: '10 Sept 2024',
+    bank: 'SBI Panposh Branch, Rourkela',
+    sanctionedAmount: 180000,
+    outstandingBalance: 145000,
+    dueDate: '10 Sept 2026',
     daysRemaining: 12
   },
   pmfbyPolicy: {
-    policyNo: 'PMFBY-MH-2024-998124',
-    insuredSum: 168000,
+    policyNo: 'PMFBY-OD-2026-883194',
+    insuredSum: 165000,
     status: 'Active'
   }
 };

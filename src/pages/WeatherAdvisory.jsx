@@ -23,7 +23,7 @@ import AppleSelect from '../components/AppleSelect';
 export default function WeatherAdvisory({ currentLang }) {
   const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
 
-  const [selectedDistrict, setSelectedDistrict] = useState(DISTRICTS_DATA[1]); // Yavatmal
+  const [selectedDistrict, setSelectedDistrict] = useState(DISTRICTS_DATA[0]); // Rourkela (Sundargarh, Odisha)
   const [forecastView, setForecastView] = useState('hourly'); // 'hourly' | '7day'
 
   const hourlyData = [

@@ -43,8 +43,8 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
   const [loanDetails, setLoanDetails] = useState({
     hasLoan: true,
     loanType: 'Kisan Credit Card (KCC) Crop Loan',
-    bankName: 'State Bank of India (Yavatmal Main)',
-    amount: '1,50,000',
+    bankName: 'State Bank of India (Panposh Branch, Rourkela)',
+    amount: '1,45,000',
     dueDate: '2026-09-10' // 12 days from Aug 29
   });
 
@@ -218,7 +218,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
             {t.welcome}, {farmer.name?.split(' ')[0] || 'Farmer'}! 🌾
           </h1>
           <p className="text-[14px] text-[#7a7a7a] tracking-[-0.224px]">
-            {farmer.village ? `${farmer.village}, ` : ''}{farmer.district || farmer.taluk || 'Yavatmal'}, {farmer.state || 'Maharashtra'} • {t.landHolding}: <strong className="text-[#1d1d1f] font-semibold">{farmer.landSize || '4.2 Acres'}</strong>
+            {farmer.village ? `${farmer.village}, ` : ''}{farmer.district || farmer.taluk || 'Sundargarh'}, {farmer.state || 'Odisha'} • {t.landHolding}: <strong className="text-[#1d1d1f] font-semibold">{farmer.landSize || '3.5 Acres'}</strong>
           </p>
         </div>
 

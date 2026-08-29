@@ -21,6 +21,15 @@ import AppleSelect from '../components/AppleSelect';
 
 // Rich Comprehensive District & Market Crop Catalog
 const DISTRICT_CROPS_CATALOG = {
+  rourkela: {
+    primaryCrop: 'Paddy',
+    featuredCrops: [
+      { key: 'Paddy', name: 'Paddy / Dhan (ଧାନ - Swarna Grade-A)', price: 2420, unit: '₹ / quintal', change: '+4.8%', quality: 'Super Fine Grade A', updatedAgo: '10 min ago', msp: 2183, trend: 'up', base: 2420 },
+      { key: 'Mustard', name: 'Mustard / Rai (ସୋରିଷ - Pusa Bold)', price: 5680, unit: '₹ / quintal', change: '+3.2%', quality: 'High Oil Content (42%)', updatedAgo: '25 min ago', msp: 5050, trend: 'up', base: 5680 },
+      { key: 'Tomato', name: 'Tomato (ଟମାଟର - Utkal Deepti)', price: 32, unit: '₹ / kg', change: '+9.5%', quality: 'Fresh Farm Grade-A', updatedAgo: '45 min ago', msp: 15, trend: 'up', base: 32 }
+    ],
+    cropKeys: ['Paddy', 'Mustard', 'Tomato', 'Groundnut', 'Maize', 'Brinjal']
+  },
   ernakulam: {
     primaryCrop: 'Rice',
     featuredCrops: [
@@ -98,17 +107,17 @@ const DISTRICT_CROPS_CATALOG = {
 export default function MandiMarket({ currentLang }) {
   const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
 
-  const [selectedDistrict, setSelectedDistrict] = useState(DISTRICTS_DATA[0]); // Ernakulam
+  const [selectedDistrict, setSelectedDistrict] = useState(DISTRICTS_DATA[0]); // Rourkela (Sundargarh, Odisha)
   const [selectedMarket, setSelectedMarket] = useState(DISTRICTS_DATA[0].markets[0]);
-  const [selectedCropKey, setSelectedCropKey] = useState('Rice');
-  const [lastUpdatedTime, setLastUpdatedTime] = useState('9/30/2025, 2:08:06 AM');
+  const [selectedCropKey, setSelectedCropKey] = useState('Paddy');
+  const [lastUpdatedTime, setLastUpdatedTime] = useState(new Date().toLocaleString());
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [hoveredDay, setHoveredDay] = useState(null);
-  const [apiStatus, setApiStatus] = useState('Live 🟢 (data.gov.in API 200 OK)');
+  const [apiStatus, setApiStatus] = useState('Live 🟢 (data.gov.in AGMARKNET API 200 OK)');
   const [showRawApiModal, setShowRawApiModal] = useState(false);
   const [rawApiResponse, setRawApiResponse] = useState(null);
 
-  const districtConfig = DISTRICT_CROPS_CATALOG[selectedDistrict.id] || DISTRICT_CROPS_CATALOG.ernakulam;
+  const districtConfig = DISTRICT_CROPS_CATALOG[selectedDistrict.id] || DISTRICT_CROPS_CATALOG.rourkela;
 
   const handleDistrictChange = (districtId) => {
     const found = DISTRICTS_DATA.find((d) => d.id === districtId);

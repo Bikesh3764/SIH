@@ -75,6 +75,9 @@ export default function AgronomyChatbot({ currentLang }) {
         mr: 'mr-IN',
         pa: 'pa-IN',
         te: 'te-IN',
+        ta: 'ta-IN',
+        ml: 'ml-IN',
+        bn: 'bn-IN',
         en: 'en-US'
       };
       

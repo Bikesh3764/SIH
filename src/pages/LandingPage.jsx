@@ -101,9 +101,6 @@ export default function LandingPage({ onOpenSignIn, currentLang, setLang }) {
             <h1 className="text-xl font-bold tracking-tight text-white">
               {t.appName}
             </h1>
-            <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-              SIH 2026
-            </span>
           </div>
         </div>
 
@@ -127,16 +124,8 @@ export default function LandingPage({ onOpenSignIn, currentLang, setLang }) {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 text-center space-y-7"
+        className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 text-center space-y-7"
       >
-        
-        {/* Floating Live Badge */}
-        <motion.div variants={itemVariants} className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-black/50 backdrop-blur-xl border border-white/20 text-xs font-medium text-white shadow-lg">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span>Next-Gen Agricultural AI Platform</span>
-          <span className="text-white/40">•</span>
-          <span className="text-emerald-400 font-semibold">8 Indian Languages</span>
-        </motion.div>
 
         {/* Main Hero Headline */}
         <motion.h2 

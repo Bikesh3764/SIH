@@ -218,7 +218,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
             {t.welcome}, {farmer.name?.split(' ')[0] || 'Farmer'}! 🌾
           </h1>
           <p className="text-[14px] text-[#7a7a7a] tracking-[-0.224px]">
-            {farmer.village || 'Ghatanji'}, {farmer.district || farmer.taluk || 'Yavatmal'}, {farmer.state || 'Maharashtra'} • {t.landHolding}: <strong className="text-[#1d1d1f] font-semibold">{farmer.landSize || '4.2 Acres'}</strong> • {t.soilType}: <strong className="text-[#1d1d1f] font-semibold">{farmer.soilType || 'Black Clay Loam'}</strong>
+            {farmer.village ? `${farmer.village}, ` : ''}{farmer.district || farmer.taluk || 'Yavatmal'}, {farmer.state || 'Maharashtra'} • {t.landHolding}: <strong className="text-[#1d1d1f] font-semibold">{farmer.landSize || '4.2 Acres'}</strong>
           </p>
         </div>
 

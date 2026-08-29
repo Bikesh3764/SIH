@@ -65,22 +65,15 @@ export default function FarmerProfile({ currentLang, currentUser, onUpdateUser }
       
       {/* 1. Profile Header (Apple Banner Card) */}
       <div className="p-7 sm:p-9 rounded-[18px] bg-[#272729] text-white shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 animate-apple-in">
-        <div className="flex items-center space-x-4">
-          <img
-            src={farmer.avatar || CURRENT_FARMER_PROFILE.avatar}
-            alt={farmer.name}
-            className="w-16 h-16 rounded-full object-cover border-2 border-white/20 shadow-md"
-          />
-          <div>
-            <div className="flex items-center space-x-2">
-              <h1 className="text-2xl sm:text-3xl font-semibold tracking-[-0.28px] text-white">
-                {farmer.name}
-              </h1>
-            </div>
-            <p className="text-[14px] text-[#cccccc] mt-0.5">
-              ID: {farmer.id || farmer.farmerId || 'MH-YAV-2026-2509'} • Registered Farmer
-            </p>
+        <div>
+          <div className="flex items-center space-x-2">
+            <h1 className="text-2xl sm:text-3xl font-semibold tracking-[-0.28px] text-white">
+              {farmer.name}
+            </h1>
           </div>
+          <p className="text-[14px] text-[#cccccc] mt-0.5">
+            ID: {farmer.id || farmer.farmerId || 'MH-YAV-2026-2509'} • Registered Farmer
+          </p>
         </div>
 
         <button

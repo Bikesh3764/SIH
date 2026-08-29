@@ -213,32 +213,13 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
         variants={itemVariants}
         className="p-6 sm:p-7 rounded-[18px] bg-white border border-[#e0e0e0] flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xs"
       >
-        <div className="flex items-center space-x-4">
-          <motion.div 
-            whileHover={{ scale: 1.08, rotate: 2 }}
-            className="relative"
-          >
-            <img
-              src={farmer.avatar || CURRENT_FARMER_PROFILE.avatar}
-              alt={farmer.name}
-              className="w-14 h-14 rounded-full object-cover border border-[#e0e0e0] shadow-sm"
-            />
-            <span className="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#30d158] border-2 border-white flex items-center justify-center text-[8px] text-white font-bold">
-              ✓
-            </span>
-          </motion.div>
-
-          <div>
-            <div className="flex items-center space-x-2">
-              <h1 className="text-[24px] sm:text-[28px] font-semibold tracking-[-0.28px] text-[#1d1d1f]">
-                {t.welcome}, {farmer.name?.split(' ')[0] || 'Farmer'}! 🌾
-              </h1>
-            </div>
-            
-            <p className="text-[14px] text-[#7a7a7a] tracking-[-0.224px] mt-0.5">
-              {farmer.village || 'Ghatanji'}, {farmer.district || farmer.taluk || 'Yavatmal'}, {farmer.state || 'Maharashtra'} • {t.landHolding}: <strong className="text-[#1d1d1f] font-semibold">{farmer.landSize || '4.2 Acres'}</strong> • {t.soilType}: <strong className="text-[#1d1d1f] font-semibold">{farmer.soilType || 'Black Clay Loam'}</strong>
-            </p>
-          </div>
+        <div className="space-y-1">
+          <h1 className="text-[24px] sm:text-[28px] font-semibold tracking-[-0.28px] text-[#1d1d1f]">
+            {t.welcome}, {farmer.name?.split(' ')[0] || 'Farmer'}! 🌾
+          </h1>
+          <p className="text-[14px] text-[#7a7a7a] tracking-[-0.224px]">
+            {farmer.village || 'Ghatanji'}, {farmer.district || farmer.taluk || 'Yavatmal'}, {farmer.state || 'Maharashtra'} • {t.landHolding}: <strong className="text-[#1d1d1f] font-semibold">{farmer.landSize || '4.2 Acres'}</strong> • {t.soilType}: <strong className="text-[#1d1d1f] font-semibold">{farmer.soilType || 'Black Clay Loam'}</strong>
+          </p>
         </div>
 
         {/* Action Buttons (DESIGN.md Button Grammar: Pill Primary & Utility) */}

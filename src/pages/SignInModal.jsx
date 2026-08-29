@@ -49,7 +49,6 @@ export default function SignInModal({ isOpen, onClose, onLoginSuccess, currentLa
       role: 'farmer',
       name: fullName,
       email: `${fullName.toLowerCase().replace(/\s+/g, '')}@agrishield.in`,
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80',
       id: `MH-${selectedDistrict.substring(0, 3).toUpperCase()}-2026-${Math.floor(1000 + Math.random() * 9000)}`,
       village: villageName || 'Main Village',
       taluk: selectedDistrict,
@@ -76,7 +75,6 @@ export default function SignInModal({ isOpen, onClose, onLoginSuccess, currentLa
       role: 'farmer',
       name: loginPhone === '9823471234' ? CURRENT_FARMER_PROFILE.name : `Farmer (${loginPhone || 'Verified'})`,
       email: 'rameshwar.patil@agrishield.in',
-      avatar: CURRENT_FARMER_PROFILE.avatar,
       id: CURRENT_FARMER_PROFILE.farmerId,
       village: CURRENT_FARMER_PROFILE.village,
       taluk: CURRENT_FARMER_PROFILE.taluk,
@@ -91,27 +89,6 @@ export default function SignInModal({ isOpen, onClose, onLoginSuccess, currentLa
     };
 
     onLoginSuccess(existingFarmer);
-    onClose();
-  };
-
-  const handleQuickEvaluation = () => {
-    onLoginSuccess({
-      role: 'farmer',
-      name: CURRENT_FARMER_PROFILE.name,
-      email: 'rameshwar.patil@agrishield.in',
-      avatar: CURRENT_FARMER_PROFILE.avatar,
-      id: CURRENT_FARMER_PROFILE.farmerId,
-      village: CURRENT_FARMER_PROFILE.village,
-      taluk: CURRENT_FARMER_PROFILE.taluk,
-      district: 'Yavatmal',
-      state: CURRENT_FARMER_PROFILE.state,
-      phone: CURRENT_FARMER_PROFILE.phone,
-      landSize: CURRENT_FARMER_PROFILE.landSize,
-      soilType: CURRENT_FARMER_PROFILE.soilType,
-      experience: '12',
-      numFarms: '2',
-      activeCrops: CURRENT_FARMER_PROFILE.activeCrops
-    });
     onClose();
   };
 
@@ -326,18 +303,6 @@ export default function SignInModal({ isOpen, onClose, onLoginSuccess, currentLa
               </motion.button>
             </motion.form>
           )}
-
-          {/* 1-Click Fast Demo */}
-          <div className="pt-2 border-t border-[#f0f0f0]">
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.96 }}
-              onClick={handleQuickEvaluation}
-              className="w-full py-2.5 rounded-full bg-[#f5f5f7] hover:bg-[#e0e0e0] border border-[#e0e0e0] text-[14px] font-medium text-[#0066cc] text-center transition-colors cursor-pointer"
-            >
-              ⚡ Quick 1-Click Demo (Rameshwar Patil)
-            </motion.button>
-          </div>
 
         </motion.div>
       </div>

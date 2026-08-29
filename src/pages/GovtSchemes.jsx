@@ -1,0 +1,656 @@
+import React, { useState } from 'react';
+import { 
+  Building2, 
+  Search, 
+  Filter, 
+  CheckCircle, 
+  FileText, 
+  ArrowRight, 
+  Sparkles, 
+  ShieldCheck, 
+  Coins, 
+  Sun, 
+  Tractor, 
+  Sprout, 
+  Droplets, 
+  ChevronRight, 
+  X, 
+  Clock, 
+  CheckSquare,
+  ExternalLink
+} from 'lucide-react';
+import { TRANSLATIONS } from '../data/translations';
+
+export const GOVT_SCHEMES_CATALOG = [
+  {
+    id: 'pm-kisan',
+    code: 'PM-KISAN',
+    name: 'Pradhan Mantri Kisan Samman Nidhi',
+    localizedNames: {
+      en: 'Pradhan Mantri Kisan Samman Nidhi',
+      hi: 'प्रधानमंत्री किसान सम्मान निधि योजना',
+      mr: 'प्रधानमंत्री किसान सन्मान निधी योजना',
+      pa: 'ਪ੍ਰਧਾਨ ਮੰਤਰੀ ਕਿਸਾਨ ਸੰਮਾਨ ਨਿਧੀ ਯੋਜਨਾ',
+      te: 'ప్రధాన మంత్రి కిసాన్ సమ్మాన్ నిధి',
+      ta: 'பிரதான் மந்திரி கிசான் சம்மான் நிதி',
+      ml: 'പ്രധാനമന്ത്രി കിസാൻ സമ്മാൻ നിധി',
+      bn: 'প্রধানমন্ত্রী কিষাণ সম্মান নিধি'
+    },
+    category: 'financial',
+    categoryLabel: 'Direct Income Support',
+    benefitAmount: '₹6,000 / Year',
+    benefitDesc: {
+      en: 'Direct benefit transfer in 3 equal installments of ₹2,000 credited directly into bank account.',
+      hi: '₹2,000 की 3 समान किस्तों में प्रति वर्ष ₹6,000 की प्रत्यक्ष बैंक हस्तांतरण सहायता।',
+      mr: 'दरवर्षी ₹२,००० च्या ३ हप्त्यांमध्ये ₹६,००० थेट बँक खात्यात जमा.',
+      pa: 'ਹਰ ਸਾਲ ₹2,000 ਦੀਆਂ 3 ਕਿਸ਼ਤਾਂ ਵਿੱਚ ₹6,000 ਸਿੱਧੇ ਬੈਂਕ ਖਾਤੇ ਵਿੱਚ।',
+      te: 'ఏడాదికి ₹2,000 చొప్పున 3 విడతల్లో ₹6,000 నేరుగా బ్యాంక్ ఖాతాలో జమ.',
+      ta: 'ஆண்டுக்கு ₹2,000 வீதம் 3 தவணைகளில் ₹6,000 நேரடியாக வங்கிக் கணக்கில்.',
+      ml: 'വർഷത്തിൽ ₹2,000 വീതം 3 ഗഡുക്കളായി ₹6,000 ബാങ്ക് അക്കൗണ്ടിലേക്ക് നേരിട്ട്.',
+      bn: 'বছরে ₹২,০০০ করে ৩টি কিস্তিতে ₹৬,০০০ সরাসরি ব্যাংক অ্যাকাউন্টে জমা।'
+    },
+    icon: Coins,
+    color: 'emerald',
+    eligibility: {
+      en: [
+        'All landholding farmer families with cultivable land registered in state land records.',
+        'Small and marginal farmers holding land up to 2 hectares (5 acres) get full benefit.',
+        'Must have active bank account linked with Aadhaar and e-KYC verified.'
+      ],
+      hi: [
+        'राज्य के भू-अभिलेखों में दर्ज कृषि भूमि वाले सभी किसान परिवार।',
+        '2 हेक्टेयर (5 एकड़) तक भूमि वाले लघु और सीमांत किसानों को पूर्ण लाभ।',
+        'आधार से जुड़ा बैंक खाता और ई-केवाईसी सत्यापित होना अनिवार्य है।'
+      ],
+      mr: [
+        'जमीन धारक सर्व शेतकरी कुटुंबे ज्यांच्या नावे ७/१२ नोंद आहे.',
+        '२ हेक्टरपर्यंत (५ एकर) शेती असणारे अल्प व अत्यल्प भूधारक शेतकरी पात्र.',
+        'आधार लिंक असलेले बँक खाते आणि ई-केवायसी पूर्ण असणे आवश्यक.'
+      ],
+      pa: [
+        'ਜ਼ਮੀਨ ਦੇ ਰਿਕਾਰਡ ਵਿੱਚ ਦਰਜ ਸਾਰੇ ਖੇਤੀਬਾੜੀ ਕਿਸਾਨ ਪਰਿਵਾਰ।',
+        '2 ਹੈਕਟੇਅਰ (5 ਏਕੜ) ਤੱਕ ਜ਼ਮੀਨ ਵਾਲੇ ਛੋਟੇ ਕਿਸਾਨ ਪੂਰਾ ਲਾਭ ਲੈ ਸਕਦੇ ਹਨ।',
+        'ਆਧਾਰ ਲਿੰਕ ਬੈਂਕ ਖਾਤਾ ਅਤੇ ਈ-ਕੇਵਾਈਸੀ ਲਾਜ਼ਮੀ ਹੈ।'
+      ],
+      te: [
+        'భూమి రికార్డుల్లో పేరున్న రైతు కుటుంబాలందరూ అర్హులు.',
+        '5 ఎకరాల లోపు భూమి ఉన్న చిన్న, సన్నకారు రైతులకు పూర్తి ప్రయోజనం.',
+        'ఆధార్ లింక్ అయిన బ్యాంక్ ఖాతా మరియు ఇ-కేవైసీ తప్పనిసరి.'
+      ],
+      ta: [
+        'பட்டா நிலம் வைத்துள்ள அனைத்து விவசாயக் குடும்பங்களும்.',
+        '5 ஏக்கர் வரை நிலம் வைத்துள்ள சிறு மற்றும் குறு விவசாயிகள்.',
+        'ஆதார் இணைக்கப்பட்ட வங்கிக் கணக்கு மற்றும் e-KYC சரிபார்ப்பு.'
+      ],
+      ml: [
+        'ഭൂമിയുള്ള എല്ലാ കർഷക കുടുംബങ്ങളും അർഹരാണ്.',
+        '5 ഏക്കർ വരെ കൃഷിഭൂമിയുള്ള ചെറുകിട കർഷകർക്ക് പൂർണ്ണ ആനുകൂല്യം.',
+        'ആധാർ ലിങ്ക് ചെയ്ത ബാങ്ക് അക്കൗണ്ടും ഇ-കെവൈസിയും നിർബന്ധം.'
+      ],
+      bn: [
+        'জমির রেকর্ডভুক্ত সমস্ত কৃষক পরিবার।',
+        '৫ একর পর্যন্ত কৃষিজমি থাকা ক্ষুদ্র ও প্রান্তিক কৃষকগণ।',
+        'আধার লিংকযুক্ত ব্যাংক অ্যাকাউন্ট ও ই-কেওয়াইসি থাকা বাধ্যতামূলক।'
+      ]
+    },
+    documents: [
+      'Aadhaar Card',
+      'Land Ownership Record (7/12 / Khatauni / Patta)',
+      'Bank Passbook with IFSC',
+      'Aadhaar Linked Mobile Number'
+    ],
+    processingDays: '15 Days',
+    officialUrl: 'https://pmkisan.gov.in/'
+  },
+  {
+    id: 'pmfby',
+    code: 'PMFBY',
+    name: 'Pradhan Mantri Fasal Bima Yojana',
+    localizedNames: {
+      en: 'Pradhan Mantri Fasal Bima Yojana',
+      hi: 'प्रधानमंत्री फसल बीमा योजना',
+      mr: 'प्रधानमंत्री पीक विमा योजना',
+      pa: 'ਪ੍ਰਧਾਨ ਮੰਤਰੀ ਫ਼ਸਲ ਬੀਮਾ ਯੋਜਨਾ',
+      te: 'ప్రధాన మంత్రి ఫసల్ బీమా యోజన',
+      ta: 'பிரதான் மந்திரி பயிர் காப்பீட்டுத் திட்டம்',
+      ml: 'പ്രധാനമന്ത്രി ഫസൽ ബീമാ യോജന',
+      bn: 'প্রধানমন্ত্রী ফসল বীমা যোজনা'
+    },
+    category: 'insurance',
+    categoryLabel: 'Crop Insurance & Disaster Relief',
+    benefitAmount: 'Up to ₹2,00,000 / Acre Cover',
+    benefitDesc: {
+      en: 'Comprehensive crop insurance covering drought, floods, pest attack, hailstorm with nominal 1.5% (Rabi) & 2% (Kharif) premium.',
+      hi: 'सूखा, बाढ़, ओलावृष्टि व कीट प्रकोप से फसल क्षति पर संपूर्ण वित्तीय सुरक्षा व बीमा क्लेम।',
+      mr: 'दुष्काळ, अतिवृष्टी, गारपीट आणि कीड रोगांपासून पिकांचे संपूर्ण विमा संरक्षण.',
+      pa: 'ਸੋਕਾ, ਹੜ੍ਹ, ਗੜੇਮਾਰੀ ਅਤੇ ਕੀੜਿਆਂ ਦੇ ਹਮਲੇ ਤੋਂ ਫ਼ਸਲਾਂ ਦਾ ਪੂਰਾ ਬੀਮਾ ਕਵਰ।',
+      te: 'కరువు, వరదలు, తెగుళ్లు మరియు వడగండ్ల వాన వల్ల పంట నష్టానికి పూర్తి బీమా రక్షణ.',
+      ta: 'வறட்சி, வெள்ளம், பூச்சித் தாக்குதல் மற்றும் ஆலங்கட்டி மழையிலிருந்து முழு பயிர் காப்பீடு.',
+      ml: 'വരൾച്ച, പ്രളയം, കീടബാധ എന്നിവയിൽ നിന്നുള്ള സമഗ്ര വിള ഇൻഷുറൻസ് പരിരക്ഷ.',
+      bn: 'খরা, বন্যা, শিলাবৃষ্টি ও পোকার আক্রমণে ফসল ক্ষতির সম্পূর্ণ বীমা সুরক্ষা।'
+    },
+    icon: ShieldCheck,
+    color: 'blue',
+    eligibility: {
+      en: [
+        'All farmers cultivating notified crops in notified areas.',
+        'Applicable for both loanee (KCC holders) and non-loanee farmers.',
+        'Sharecroppers and tenant farmers eligible with lease agreement or village cert.'
+      ],
+      hi: [
+        'अधिसूचित क्षेत्रों में अधिसूचित फसलें उगाने वाले सभी किसान।',
+        'केसीसी धारक ऋणी एवं गैर-ऋणी किसान दोनों के लिए लागू।',
+        'बटाईदार एवं पट्टेदार किसान भी ग्राम प्रमाणपत्र के साथ पात्र।'
+      ],
+      mr: [
+        'अधिसूचित पिके घेणारे सर्व शेतकरी (कर्जदार व बिगर-कर्जदार).',
+        'कसेल त्याची जमीन किंवा भाडेकरू शेतकरी सुद्धा पात्र.'
+      ],
+      pa: [
+        'ਨੋਟੀਫਾਈਡ ਫ਼ਸਲਾਂ ਉਗਾਉਣ ਵਾਲੇ ਸਾਰੇ ਕਿਸਾਨ (ਲੋਨੀ ਅਤੇ ਗੈਰ-ਲੋਨੀ)।',
+        'ਠੇਕੇ ਤੇ ਜ਼ਮੀਨ ਲੈ ਕੇ ਖੇਤੀ ਕਰਨ ਵਾਲੇ ਕਿਸਾਨ ਵੀ ਯੋਗ।'
+      ],
+      te: [
+        'నోటిఫైడ్ పంటలు సాగు చేసే రైతులందరూ (రుణం తీసుకున్నవారు మరియు తీసుకోనివారు).',
+        'కౌలు రైతులు కూడా గ్రామ ధ్రువీకరణతో అర్హులు.'
+      ],
+      ta: [
+        'அறிவிக்கப்பட்ட பயிர்களை பயிரிடும் அனைத்து விவசாயிகளும்.',
+        'குத்தகை விவசாயிகளும் கிராம சான்றிதழுடன் தகுதியுடையவர்கள்.'
+      ],
+      ml: [
+        'വിജ്ഞാപനം ചെയ്ത വിളകൾ കൃഷി ചെയ്യുന്ന എല്ലാ കർഷകരും.',
+        'പാട്ടക്കർഷകർക്കും വില്ലേജ് സർട്ടിഫിക്കറ്റോടെ അപേക്ഷിക്കാം.'
+      ],
+      bn: [
+        'বিজ্ঞাপিত ফসল চাষকারী সমস্ত কৃষক (ঋণগ্রহীতা ও অ-ঋণগ্রহীতা)।',
+        'ভাগচাষী ও লিজ নেওয়া কৃষকরাও আবেদনের যোগ্য।'
+      ]
+    },
+    documents: [
+      'Crop Sowing Certificate (Patwari / Talaat)',
+      'Land Revenue Extract (7/12 / RoR)',
+      'Aadhaar Card & Bank Details',
+      'Crop Loss Photo (within 72 hours of disaster)'
+    ],
+    processingDays: '7-14 Days',
+    officialUrl: 'https://pmfby.gov.in/'
+  },
+  {
+    id: 'pm-kusum',
+    code: 'PM-KUSUM',
+    name: 'Pradhan Mantri Kisan Urja Suraksha (Solar Pump)',
+    localizedNames: {
+      en: 'Pradhan Mantri Kisan Urja Suraksha (Solar Pump)',
+      hi: 'पीएम-कुसुम सौर कृषि पंप योजना',
+      mr: 'पीएम-कुसुम सौर कृषी पंप योजना',
+      pa: 'ਪੀਐਮ-ਕੁਸੁਮ ਸੋਲਰ ਐਗਰੀ ਪੰਪ ਯੋਜਨਾ',
+      te: 'పీఎం-కుసుమ్ సోలార్ అగ్రికల్చర్ పంప్',
+      ta: 'பிஎம்-குசும் சோலார் விவசாய பம்ப் திட்டம்',
+      ml: 'പിഎം-കുസും സോളാർ പമ്പ് പദ്ധതി',
+      bn: 'পিএম-কুসুম সৌর সেচ পাম্প প্রকল্প'
+    },
+    category: 'solar',
+    categoryLabel: 'Solar Energy & Free Irrigation',
+    benefitAmount: '60% to 90% Subsidy',
+    benefitDesc: {
+      en: 'Get standalone solar agriculture pumps (3HP to 7.5HP) with up to 90% government subsidy + zero electricity bill.',
+      hi: '3HP से 7.5HP तक स्टैंडअलोन सोलर एग्रीकल्चर पंपों पर 90% तक सरकारी अनुदान + शून्य बिजली बिल।',
+      mr: '३ एचपी ते ७.५ एचपी सौर कृषी पंपांवर ९०% पर्यंत सरकारी अनुदान + मोफत दिवसा वीज.',
+      pa: '3HP ਤੋਂ 7.5HP ਸੋਲਰ ਪੰਪਾਂ ਉੱਤੇ 90% ਤੱਕ ਸਰਕਾਰੀ ਸਬਸਿਡੀ।',
+      te: '3HP నుండి 7.5HP సౌర వ్యవసాయ పంపులపై 90% వరకు ప్రభుత్వ రాయితీ.',
+      ta: '3HP முதல் 7.5HP வரை சோலார் பம்புகளுக்கு 90% வரை அரசு மானியம்.',
+      ml: '3HP മുതൽ 7.5HP വരെയുള്ള സോളാർ പമ്പുകൾക്ക് 90% വരെ സബ്‌സിഡി.',
+      bn: '৩HP থেকে ৭.৫HP সৌর পাম্পের উপর ৯০% পর্যন্ত সরকারি ভর্তুকি।'
+    },
+    icon: Sun,
+    color: 'amber',
+    eligibility: {
+      en: [
+        'Individual farmers, cooperatives, panchayats with cultivable land.',
+        'Must have an existing open well, borewell, or surface water source on farm.',
+        'Farmers without existing electric pump connection given highest priority.'
+      ],
+      hi: [
+        'खेती योग्य जमीन वाले व्यक्तिगत किसान, सहकारी समितियां और पंचायतें।',
+        'खेत में खुला कुआं, बोरवेल या जल स्रोत होना चाहिए।',
+        'जिनके पास बिजली कनेक्शन नहीं है, उन्हें पहली प्राथमिकता।'
+      ],
+      mr: [
+        'शेतीयोग्य जमीन असलेले शेतकरी व शेतकरी गट.',
+        'शेतात विहीर, कूपनलिका किंवा पाण्याचा स्त्रोत असणे आवश्यक.'
+      ],
+      pa: [
+        'ਖੇਤੀਬਾੜੀ ਵਾਲੀ ਜ਼ਮੀਨ ਵਾਲੇ ਕਿਸਾਨ ਜਿਨ੍ਹਾਂ ਕੋਲ ਪਾਣੀ ਦਾ ਸਰੋਤ ਹੈ।',
+        'ਬਿਜਲੀ ਕੁਨੈਕਸ਼ਨ ਨਾ ਹੋਣ ਵਾਲੇ ਕਿਸਾਨਾਂ ਨੂੰ ਪਹਿਲ।'
+      ],
+      te: [
+        'సాగు భూమి మరియు నీటి వనరు (బోరుబావి/బావి) ఉన్న రైతులు.',
+        'విద్యుత్ కనెక్షన్ లేని రైతులకు మొదటి ప్రాధాన్యత.'
+      ],
+      ta: [
+        'விவசாய நிலமும் நீர் ஆதாரமும் கொண்ட விவசாயிகள்.',
+        'மின் இணைப்பு இல்லாத விவசாயிகளுக்கு முன்னுரிமை.'
+      ],
+      ml: [
+        'കൃഷിഭൂമിയും ജലസ്രോതസ്സുമുള്ള കർഷകർ.',
+        'വൈദ്യുതി കണക്ഷൻ ഇല്ലാത്ത കർഷകർക്ക് മുൻഗണന.'
+      ],
+      bn: [
+        'চাষযোগ্য জমি ও জলের উৎস (কূপ/বোরওয়েল) থাকা কৃষকগণ।',
+        'বিদ্যুৎ সংযোগহীন কৃষকদের অগ্রাধিকার।'
+      ]
+    },
+    documents: [
+      'Land Ownership Proof (Khasra/Khatauni/7-12)',
+      'Water Source Feasibility Certificate',
+      'Aadhaar Card & Bank Passbook',
+      'Passport size Photograph'
+    ],
+    processingDays: '30 Days',
+    officialUrl: 'https://pmkusum.mnre.gov.in/'
+  },
+  {
+    id: 'smam',
+    code: 'SMAM',
+    name: 'Sub-Mission on Agricultural Mechanization (Tractor & Drone)',
+    localizedNames: {
+      en: 'Sub-Mission on Agricultural Mechanization (Tractor & Drone)',
+      hi: 'कृषि यंत्रीकरण उप-मिशन (ट्रैक्टर व ड्रोन सब्सिडी)',
+      mr: 'कृषी यांत्रिकीकरण उप-अभियान (ट्रॅक्टर व अवजारे अनुदान)',
+      pa: 'ਖੇਤੀਬਾੜੀ ਮਸ਼ੀਨਰੀ ਸਬਸਿਡੀ ਮਿਸ਼ਨ',
+      te: 'వ్యవసాయ యాంత్రీకరణ సబ్-మిషన్ (ట్రాక్టర్ & డ్రోన్)',
+      ta: 'விவசாய இயந்திரமயமாக்கல் துணை இயக்கம்',
+      ml: 'കാർഷിക യന്ത്രവൽക്കരണ പദ്ധതി',
+      bn: 'কৃষি যান্ত্রিকীকরণ মিশন (ট্রাক্টর ও ড্রোন ভর্তুকি)'
+    },
+    category: 'machinery',
+    categoryLabel: 'Farm Machinery Subsidy',
+    benefitAmount: '40% to 80% Subsidy',
+    benefitDesc: {
+      en: 'Direct financial subsidy on Tractors, Power Tillers, Rotavators, Harvesters, and Kisan Drone Sprayers.',
+      hi: 'ट्रैक्टर, पावर टिलर, रोटावेटर, रीपर और किसान ड्रोन स्प्रेयर की खरीद पर 40% से 80% तक की भारी छूट।',
+      mr: 'ट्रॅक्टर, पॉवर टिलर, रोटाव्हेटर आणि कृषी ड्रोन खरेदीवर ४०% ते ८०% थेट अनुदान.',
+      pa: 'ਟਰੈਕਟਰ, ਰੋਟਾਵੇਟਰ ਅਤੇ ਡਰੋਨ ਸਪਰੇਅਰ ਦੀ ਖਰੀਦ ਤੇ 40% ਤੋਂ 80% ਸਬਸਿਡੀ।',
+      te: 'ట్రాక్టర్లు, రోటవేటర్లు మరియు డ్రోన్ స్ప్రేయర్లపై 40% నుండి 80% వరకు రాయితీ.',
+      ta: 'டிராக்டர்கள், ரோட்டாவேட்டர்கள் மற்றும் ட்ரோன்களுக்கு 40% முதல் 80% மானியம்.',
+      ml: 'ട്രാക്ടറുകൾ, റോട്ടാവേറ്ററുകൾ, ഡ്രോൺ എന്നിവയ്ക്ക് 40% മുതൽ 80% വരെ സബ്‌സിഡി.',
+      bn: 'ট্রাক্টর, রোটাভেটর ও কিষাণ ড্রোনের ওপর ৪০% থেকে ৮০% পর্যন্ত ভর্তুকি।'
+    },
+    icon: Tractor,
+    color: 'purple',
+    eligibility: {
+      en: [
+        'Small & marginal landholders get up to 50% subsidy.',
+        'Women farmers, SC/ST, and Farmer Producer Organizations (FPOs) receive up to 80% grant.',
+        'Must purchase equipment from authorized government empaneled dealers.'
+      ],
+      hi: [
+        'लघु एवं सीमांत किसानों को 50% तक सब्सिडी।',
+        'महिला किसानों, एससी/एसटी एवं किसान उत्पादक संगठनों (FPO) को 80% तक अनुदान।',
+        'सरकारी अधिकृत डीलर से उपकरण खरीदना अनिवार्य।'
+      ],
+      mr: [
+        'अल्प व अत्यल्प भूधारक शेतकऱ्यांना ५०% पर्यंत अनुदान.',
+        'महिला शेतकरी, मागासवर्गीय व शेतकरी उत्पादक कंपन्यांना (FPO) ८०% पर्यंत अनुदान.'
+      ],
+      pa: [
+        'ਛੋਟੇ ਕਿਸਾਨਾਂ ਨੂੰ 50% ਅਤੇ ਮਹਿਲਾ ਕਿਸਾਨਾਂ/FPO ਨੂੰ 80% ਤੱਕ ਸਬਸਿਡੀ।',
+        'ਸਰਕਾਰੀ ਮਾਨਤਾ ਪ੍ਰਾਪਤ ਡੀਲਰਾਂ ਤੋਂ ਖਰੀਦ ਲਾਜ਼ਮੀ।'
+      ],
+      te: [
+        'చిన్న రైతులకు 50%, మహిళా రైతులకు & FPO లకు 80% వరకు రాయితీ.',
+        'అధికారిక డీలర్ల వద్ద కొనుగోలు చేయాలి.'
+      ],
+      ta: [
+        'சிறு விவசாயிகளுக்கு 50%, பெண் விவசாயிகளுக்கு 80% வரை மானியம்.',
+        'அரசு அங்கீகாரம் பெற்ற டீலர்களிடம் வாங்க வேண்டும்.'
+      ],
+      ml: [
+        'ചെറുകിട കർഷകർക്ക് 50%, വനിതാ കർഷകർക്ക് 80% വരെ സബ്‌സിഡി.',
+        'അംഗീകൃത ഡീലർമാരിൽ നിന്ന് വാങ്ങണം.'
+      ],
+      bn: [
+        'ক্ষুদ্র কৃষকদের ৫০% এবং মহিলা কৃষক/FPO-দের ৮০% পর্যন্ত অনুদান।'
+      ]
+    },
+    documents: [
+      'Aadhaar Card & Land Record',
+      'Authorized Dealer Machinery Quotation / Proforma Invoice',
+      'Caste Certificate (if claiming bonus subsidy)',
+      'Bank Cancelled Cheque'
+    ],
+    processingDays: '21 Days',
+    officialUrl: 'https://agrimachinery.nic.in/'
+  },
+  {
+    id: 'kcc',
+    code: 'KCC Loan',
+    name: 'Kisan Credit Card (Low Interest Agri Loan)',
+    localizedNames: {
+      en: 'Kisan Credit Card (Low Interest Agri Loan)',
+      hi: 'किसान क्रेडिट कार्ड (सस्ता कृषि ऋण @ 4%)',
+      mr: 'किसान क्रेडिट कार्ड (सवलतीचा पीक कर्ज दर)',
+      pa: 'ਕਿਸਾਨ ਕ੍ਰੈਡਿਟ ਕਾਰਡ (ਸਸਤਾ ਖੇਤੀਬਾੜੀ ਕਰਜ਼ਾ)',
+      te: 'కిసాన్ క్రెడిట్ కార్డ్ (తక్కువ వడ్డీ రుణం)',
+      ta: 'கிசான் கிரெடிட் கார்டு (குறைந்த வட்டி விவசாய கடன்)',
+      ml: 'കിസാൻ ക്രെഡിറ്റ് കാർഡ് (കുറഞ്ഞ പലിശ വായ്പ)',
+      bn: 'কিষাণ ক্রেডিট কার্ড (স্বল্প সুদের কৃষি ঋণ)'
+    },
+    category: 'financial',
+    categoryLabel: 'Concessional Credit',
+    benefitAmount: 'Up to ₹3,00,000 @ 4% Interest',
+    benefitDesc: {
+      en: 'Instant working capital loan for seeds, fertilizers, and diesel at an effective 4% annual interest with 3% prompt repayment subvention.',
+      hi: 'बीज, खाद और डीजल के लिए 4% की रियायती वार्षिक ब्याज दर पर ₹3 लाख तक का आसान फसली ऋण।',
+      mr: 'वेळेवर परतफेडीवर केवळ ४% व्याजदराने ₹३ लाखांपर्यंत तात्काळ पीक कर्ज.',
+      pa: 'ਸਮੇਂ ਸਿਰ ਅਦਾਇਗੀ ਤੇ ਸਿਰਫ 4% ਵਿਆਜ ਦਰ ਨਾਲ ₹3 ਲੱਖ ਤੱਕ ਫ਼ਸਲੀ ਕਰਜ਼ਾ।',
+      te: 'సకాలంలో చెల్లింపుపై కేవలం 4% వార్షిక వడ్డీతో ₹3 లక్షల వరకు పంట రుణం.',
+      ta: 'நேரத்திற்கு திருப்பிச் செலுத்தினால் 4% வட்டியில் ₹3 லட்சம் வரை பயிர் கடன்.',
+      ml: 'സമയബന്ധിതമായി തിരിച്ചടയ്ക്കുമ്പോൾ 4% പലിശയിൽ ₹3 ലക്ഷം വരെ വായ്പ.',
+      bn: 'সময়মতো পরিশোধে মাত্র ৪% সুদে ₹৩ লাখ পর্যন্ত ফসল ঋণ।'
+    },
+    icon: Coins,
+    color: 'emerald',
+    eligibility: {
+      en: [
+        'All owner-cultivators, tenant farmers, oral lessees, and sharecroppers.',
+        'Animal husbandry, dairy, and fisheries farmers also eligible up to ₹2 Lakh without collateral.'
+      ],
+      hi: [
+        'सभी काश्तकार, पट्टेदार और बटाईदार किसान।',
+        'पशुपालन, डेयरी और मत्स्य पालन किसान भी बिना गारंटी ₹2 लाख तक पात्र।'
+      ],
+      mr: [
+        'सर्व जमीनधारक, कुळ आणि भाडेकरू शेतकरी.',
+        'पशुपालन, दुग्धव्यवसाय आणि मत्स्यपालक शेतकरी सुद्धा पात्र.'
+      ],
+      pa: [
+        'ਸਾਰੇ ਖੇਤੀਬਾੜੀ, ਪਸ਼ੂ ਪਾਲਣ, ਡੇਅਰੀ ਅਤੇ ਮੱਛੀ ਪਾਲਣ ਵਾਲੇ ਕਿਸਾਨ।',
+        'ਬਿਨਾਂ ਗਾਰੰਟੀ ₹2 ਲੱਖ ਤੱਕ ਕਰਜ਼ਾ ਉਪਲਬਧ।'
+      ],
+      te: [
+        'భూమి ఉన్న రైతులు, కౌలు రైతులు మరియు పాడి, మత్స్య రైతులు అర్హులు.'
+      ],
+      ta: [
+        'விவசாயிகள், குத்தகை விவசாயிகள் மற்றும் கால்நடை வளர்ப்பவர்கள்.'
+      ],
+      ml: [
+        'എല്ലാ കർഷകരും കന്നുകാലി വളർത്തൽ, മത്സ്യത്തൊഴിലാളികളും.'
+      ],
+      bn: [
+        'সমস্ত কৃষক, ভাগচাষী এবং পশুপালন ও মৎস্যচাষীগণ।'
+      ]
+    },
+    documents: [
+      'One-Page KCC Application Form',
+      'Land Record (7/12 / Pahani / Jamabandi)',
+      'Aadhaar Card & PAN Card',
+      'No Dues Certificate / Self Declaration'
+    ],
+    processingDays: '7 Days',
+    officialUrl: 'https://myscheme.gov.in/schemes/kcc'
+  },
+  {
+    id: 'pmksy',
+    code: 'PMKSY',
+    name: 'Pradhan Mantri Krishi Sinchayee Yojana (Drip & Sprinkler)',
+    localizedNames: {
+      en: 'Pradhan Mantri Krishi Sinchayee Yojana (Drip & Sprinkler)',
+      hi: 'प्रधानमंत्री कृषि सिंचाई योजना (ड्रिप व स्प्रिंकलर)',
+      mr: 'प्रधानमंत्री कृषी सिंचन योजना (ठिबक व तुषार सिंचन)',
+      pa: 'ਪ੍ਰਧਾਨ ਮੰਤਰੀ ਤੁਪਕਾ ਸਿੰਚਾਈ ਯੋਜਨਾ',
+      te: 'ప్రధాన మంత్రి కృషి సించాయి యోజన (బిందు సేద్యం)',
+      ta: 'பிரதான் மந்திரி சொட்டு நீர் பாசனத் திட்டம்',
+      ml: 'പ്രധാനമന്ത്രി തുള്ളിനന പദ്ധതി',
+      bn: 'প্রধানমন্ত্রী কৃষি সেচ যোজনা (ড্রিপ ও স্প্রিংকলার)'
+    },
+    category: 'solar',
+    categoryLabel: 'Micro-Irrigation Subsidy',
+    benefitAmount: '55% to 75% Subsidy',
+    benefitDesc: {
+      en: 'Substantial grant for installing Drip Irrigation and Sprinkler systems, saving 60% water while boosting yield by 35%.',
+      hi: 'ड्रिप (टपक) और स्प्रिंकलर सिंचाई सिस्टम लगाने पर 55% से 75% तक सरकारी सब्सिडी।',
+      mr: 'ठिबक आणि तुषार सिंचन संच बसवण्यासाठी ५५% ते ७५% थेट शासकीय अनुदान.',
+      pa: 'ਤੁਪਕਾ ਅਤੇ ਫੁਹਾਰਾ ਸਿੰਚਾਈ ਸਿਸਟਮ ਲਗਾਉਣ ਤੇ 75% ਤੱਕ ਸਬਸਿਡੀ।',
+      te: 'బిందు మరియు తుంపర సేద్యం పరికరాల కొనుగోలుపై 75% వరకు రాయితీ.',
+      ta: 'சொட்டு நீர் மற்றும் தெளிப்பு நீர் பாசனக் கருவிகளுக்கு 75% வரை மானியம்.',
+      ml: 'തുള്ളിനന ഉപകരണങ്ങൾ സ്ഥാപിക്കുന്നതിന് 75% വരെ സബ്‌സിഡി.',
+      bn: 'ড্রিপ ও স্প্রিংকলার সেচ ব্যবস্থা স্থাপনে ৭৫% পর্যন্ত সরকারি ভর্তুকি।'
+    },
+    icon: Droplets,
+    color: 'blue',
+    eligibility: {
+      en: [
+        'Farmers possessing agricultural land with assured irrigation water source.',
+        'Small and marginal farmers eligible for up to 75% total subsidy.'
+      ],
+      hi: [
+        'सिंचाई जल स्रोत वाले सभी कृषि भूमि धारक किसान।',
+        'लघु एवं सीमांत किसानों को 75% तक का उच्चतम लाभ।'
+      ],
+      mr: [
+        'पाण्याचा स्त्रोत उपलब्ध असलेले सर्व शेतकरी.'
+      ],
+      pa: [
+        'ਪਾਣੀ ਦੇ ਸਰੋਤ ਵਾਲੇ ਸਾਰੇ ਖੇਤੀਬਾੜੀ ਕਿਸਾਨ।'
+      ],
+      te: [
+        'సాగునీటి వనరు ఉన్న రైతు కుటుంబాలందరూ.'
+      ],
+      ta: [
+        'பாசன நீர் ஆதாரமுள்ள அனைத்து விவசாயிகளும்.'
+      ],
+      ml: [
+        'ജലസ്രോതസ്സുള്ള കൃഷിഭൂമിയുള്ള എല്ലാ കർഷകരും.'
+      ],
+      bn: [
+        'সেচ জলের উৎস থাকা সমস্ত চাষযোগ্য জমির মালিক কৃষক।'
+      ]
+    },
+    documents: [
+      'Land Title / 7-12 / Khatauni Record',
+      'Water Source Proof (Well/Canal/Borewell)',
+      'Aadhaar Card & Bank Passbook',
+      'Micro-irrigation System Layout Quotation'
+    ],
+    processingDays: '20 Days',
+    officialUrl: 'https://pmksy.gov.in/'
+  }
+];
+
+export default function GovtSchemes({ currentLang, onNavigate }) {
+  const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+
+  const filteredSchemes = GOVT_SCHEMES_CATALOG.filter((scheme) => {
+    const matchesCategory = selectedCategory === 'all' || scheme.category === selectedCategory;
+    const localizedName = scheme.localizedNames[currentLang] || scheme.name;
+    const matchesSearch = 
+      scheme.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      localizedName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      scheme.code.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6 animate-apple-fade text-[#1d1d1f]">
+      
+      {/* 1. Header Banner (Apple Dark Tile with Stats) */}
+      <div className="p-7 sm:p-9 rounded-[26px] bg-[#1d1d1f] text-white shadow-[0_12px_32px_rgba(0,0,0,0.12)] flex flex-col md:flex-row items-start md:items-center justify-between gap-6 animate-apple-in">
+        <div className="space-y-2">
+          <div className="flex items-center space-x-2">
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase bg-white/10 border border-white/20 text-[#2997ff] tracking-wide">
+              Central & State Portal
+            </span>
+          </div>
+          <h1 className="text-2xl sm:text-4xl font-semibold tracking-[-0.03em] text-white">
+            {t.schemesPageTitle}
+          </h1>
+          <p className="text-xs sm:text-sm text-[#86868b] font-normal max-w-2xl leading-relaxed">
+            {t.schemesPageSubtitle}
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3 shrink-0 w-full sm:w-auto">
+          <div className="p-3.5 rounded-[16px] bg-white/5 border border-white/10 text-center">
+            <span className="text-[10px] uppercase font-semibold text-[#86868b] block">{t.totalGrantPool}</span>
+            <span className="text-lg font-semibold text-white">₹1.24 Lakh Cr</span>
+          </div>
+          <div className="p-3.5 rounded-[16px] bg-white/5 border border-white/10 text-center">
+            <span className="text-[10px] uppercase font-semibold text-[#86868b] block">{t.activePrograms}</span>
+            <span className="text-lg font-semibold text-white">6 Schemes</span>
+          </div>
+        </div>
+      </div>
+
+      {/* 2. Search & Category Filter Toolbar */}
+      <div className="p-4 rounded-[20px] bg-white border border-[#d2d2d7]/60 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-3">
+        
+        {/* Search Input */}
+        <div className="relative">
+          <Search size={15} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#86868b]" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder={t.searchSchemesPlaceholder}
+            className="w-full pl-10 pr-8 py-2.5 rounded-full bg-[#f5f5f7] border border-[#d2d2d7]/70 text-xs font-medium text-[#1d1d1f] focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:bg-white transition-all shadow-xs"
+          />
+          {searchQuery && (
+            <button onClick={() => setSearchQuery('')} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#86868b] hover:text-[#1d1d1f]">
+              <X size={13} />
+            </button>
+          )}
+        </div>
+
+        {/* Filter Category Pills */}
+        <div className="flex items-center space-x-2 overflow-x-auto no-scrollbar pb-0.5">
+          {[
+            { id: 'all', label: t.allSchemes },
+            { id: 'financial', label: t.catFinancial },
+            { id: 'insurance', label: t.catInsurance },
+            { id: 'solar', label: t.catSolar },
+            { id: 'machinery', label: t.catMachinery },
+            { id: 'soil', label: t.catSoil }
+          ].map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => setSelectedCategory(cat.id)}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+                selectedCategory === cat.id
+                  ? 'bg-[#0071e3] text-white shadow-xs'
+                  : 'bg-[#f5f5f7] hover:bg-[#e8e8ed] text-[#1d1d1f] border border-[#d2d2d7]/60'
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* 3. Schemes Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {filteredSchemes.map((scheme) => {
+          const IconComp = scheme.icon;
+          const localizedTitle = scheme.localizedNames[currentLang] || scheme.name;
+          const localizedDesc = scheme.benefitDesc[currentLang] || scheme.benefitDesc.en;
+          const localizedEligibility = scheme.eligibility[currentLang] || scheme.eligibility.en;
+
+          return (
+            <div
+              key={scheme.id}
+              className="p-6 sm:p-7 rounded-[24px] bg-white border border-[#d2d2d7]/60 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-md transition-all space-y-4 flex flex-col justify-between apple-card-hover"
+            >
+              <div className="space-y-4">
+                
+                {/* Header */}
+                <div className="flex items-start space-x-3">
+                  <div className="w-11 h-11 rounded-[14px] bg-[#f5f5f7] text-[#0071e3] flex items-center justify-center font-bold shrink-0 border border-[#d2d2d7]/60">
+                    <IconComp size={20} />
+                  </div>
+                  <div>
+                    <div className="flex items-center space-x-2">
+                      <span className="px-2 py-0.2 rounded-md text-[10px] font-bold bg-[#f5f5f7] text-[#1d1d1f] border border-[#d2d2d7]/70">
+                        {scheme.code}
+                      </span>
+                      <span className="text-[11px] text-[#86868b]">
+                        {scheme.categoryLabel}
+                      </span>
+                    </div>
+                    <h3 className="text-[15px] font-semibold text-[#1d1d1f] mt-1 leading-snug">
+                      {localizedTitle}
+                    </h3>
+                  </div>
+                </div>
+
+                {/* Benefit Highlight Box */}
+                <div className="p-4 rounded-[16px] bg-[#f5f5f7] border border-[#d2d2d7]/50 space-y-1">
+                  <div className="flex justify-between items-baseline">
+                    <span className="text-[10px] font-semibold uppercase text-[#86868b] tracking-wider">
+                      {t.subsidyBenefit}
+                    </span>
+                    <span className="text-sm font-semibold text-emerald-700">
+                      {scheme.benefitAmount}
+                    </span>
+                  </div>
+                  <p className="text-xs text-[#6e6e73] leading-relaxed">
+                    {localizedDesc}
+                  </p>
+                </div>
+
+                {/* Eligibility Criteria */}
+                <div className="space-y-1 text-xs">
+                  <span className="font-semibold text-[#1d1d1f] flex items-center gap-1">
+                    <CheckSquare size={13} className="text-[#0071e3]" /> {t.eligibilityCriteria}
+                  </span>
+                  <ul className="space-y-1 text-[#6e6e73] pl-4 list-disc">
+                    {localizedEligibility.map((el, idx) => (
+                      <li key={idx} className="leading-snug">{el}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Required Documents */}
+                <div className="space-y-1 text-xs">
+                  <span className="font-semibold text-[#1d1d1f] flex items-center gap-1">
+                    <FileText size={13} className="text-[#0071e3]" /> {t.requiredDocuments}
+                  </span>
+                  <div className="flex flex-wrap gap-1.5 pt-0.5">
+                    {scheme.documents.map((doc, idx) => (
+                      <span key={idx} className="px-2.5 py-0.5 rounded-full bg-[#f5f5f7] border border-[#d2d2d7]/60 text-[10px] font-medium text-[#6e6e73]">
+                        📄 {doc}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Bottom Direct Link Action (Direct Government Portal Redirection) */}
+              <div className="pt-4 border-t border-[#f0f0f0] flex items-center justify-between gap-3">
+                <div className="text-[11px] text-[#86868b] flex items-center gap-1">
+                  <Clock size={12} /> {scheme.processingDays} {t.reviewDays}
+                </div>
+
+                <a
+                  href={scheme.officialUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-5 py-2.5 rounded-full bg-[#0071e3] hover:bg-[#0077ed] active:scale-95 text-white text-xs font-medium tracking-tight shadow-xs transition-all flex items-center space-x-1.5 cursor-pointer no-underline"
+                >
+                  <span>{t.applyOfficialPortal}</span>
+                  <ExternalLink size={13} />
+                </a>
+              </div>
+
+            </div>
+          );
+        })}
+      </div>
+
+    </div>
+  );
+}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   CloudSun, 
   CloudRain, 
@@ -20,11 +20,26 @@ import { DISTRICTS_DATA, WEATHER_FORECAST_DATA } from '../data/mockAgriData';
 import { TRANSLATIONS } from '../data/translations';
 import AppleSelect from '../components/AppleSelect';
 
-export default function WeatherAdvisory({ currentLang }) {
+export default function WeatherAdvisory({ currentLang, currentUser }) {
   const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
 
   const [selectedDistrict, setSelectedDistrict] = useState(DISTRICTS_DATA[0]); // Rourkela (Sundargarh, Odisha)
   const [forecastView, setForecastView] = useState('hourly'); // 'hourly' | '7day'
+
+  // Sync with user's selected district from Sign In / Registration
+  useEffect(() => {
+    if (currentUser?.district || currentUser?.taluk) {
+      const userDistName = (currentUser.district || currentUser.taluk).toLowerCase();
+      const match = DISTRICTS_DATA.find(d => 
+        userDistName.includes(d.id.toLowerCase()) || 
+        userDistName.includes(d.name.toLowerCase()) || 
+        d.name.toLowerCase().includes(userDistName)
+      );
+      if (match) {
+        setSelectedDistrict(match);
+      }
+    }
+  }, [currentUser]);
 
   const hourlyData = [
     { time: '00:00', temp: '26°C', rain: '20%', icon: CloudSun, condition: 'Clear' },

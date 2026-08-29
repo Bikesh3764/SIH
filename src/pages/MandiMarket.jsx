@@ -104,10 +104,10 @@ const DISTRICT_CROPS_CATALOG = {
   }
 };
 
-export default function MandiMarket({ currentLang }) {
+export default function MandiMarket({ currentLang, currentUser }) {
   const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
 
-  const [selectedDistrict, setSelectedDistrict] = useState(DISTRICTS_DATA[0]); // Rourkela (Sundargarh, Odisha)
+  const [selectedDistrict, setSelectedDistrict] = useState(DISTRICTS_DATA[0]);
   const [selectedMarket, setSelectedMarket] = useState(DISTRICTS_DATA[0].markets[0]);
   const [selectedCropKey, setSelectedCropKey] = useState('Paddy');
   const [lastUpdatedTime, setLastUpdatedTime] = useState(new Date().toLocaleString());
@@ -116,6 +116,24 @@ export default function MandiMarket({ currentLang }) {
   const [apiStatus, setApiStatus] = useState('Live 🟢 (data.gov.in AGMARKNET API 200 OK)');
   const [showRawApiModal, setShowRawApiModal] = useState(false);
   const [rawApiResponse, setRawApiResponse] = useState(null);
+
+  // Sync with user's selected district from Sign In / Registration
+  useEffect(() => {
+    if (currentUser?.district || currentUser?.taluk) {
+      const userDistName = (currentUser.district || currentUser.taluk).toLowerCase();
+      const match = DISTRICTS_DATA.find(d => 
+        userDistName.includes(d.id.toLowerCase()) || 
+        userDistName.includes(d.name.toLowerCase()) || 
+        d.name.toLowerCase().includes(userDistName)
+      );
+      if (match) {
+        setSelectedDistrict(match);
+        setSelectedMarket(match.markets[0]);
+        const config = DISTRICT_CROPS_CATALOG[match.id] || DISTRICT_CROPS_CATALOG.rourkela;
+        setSelectedCropKey(config.primaryCrop);
+      }
+    }
+  }, [currentUser]);
 
   const districtConfig = DISTRICT_CROPS_CATALOG[selectedDistrict.id] || DISTRICT_CROPS_CATALOG.rourkela;
 

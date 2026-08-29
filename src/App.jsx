@@ -186,11 +186,11 @@ export default function App() {
               )}
 
               {activePage === 'market' && (
-                <MandiMarket currentLang={currentLang} />
+                <MandiMarket currentLang={currentLang} currentUser={currentUser} />
               )}
 
               {activePage === 'weather' && (
-                <WeatherAdvisory currentLang={currentLang} />
+                <WeatherAdvisory currentLang={currentLang} currentUser={currentUser} />
               )}
 
               {activePage === 'schemes' && (

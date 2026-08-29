@@ -55,11 +55,10 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
     if (!loanDetails.hasLoan || loanDetails.loanType === 'None') {
       return {
         score: 0,
-        label: 'No Active Debt (0%)',
-        statusDesc: 'No active repayment liability on farm',
-        colorClass: 'text-emerald-400',
-        badgeBg: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
-        barClass: 'from-emerald-400 to-teal-400',
+        daysText: 'No Active Loan',
+        subText: 'Zero debt liability',
+        colorHex: '#30d158', // Apple Green
+        pillBg: 'bg-[#30d158]/15 text-[#30d158] border-[#30d158]/30',
         barWidth: '0%'
       };
     }
@@ -72,59 +71,45 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
     if (diffDays < 0) {
       return {
         score: 100,
-        label: `Overdue by ${Math.abs(diffDays)} Days`,
-        statusDesc: `Immediate DAO debt subvention alert triggered`,
-        colorClass: 'text-rose-400',
-        badgeBg: 'bg-rose-500/25 text-rose-300 border-rose-500/40',
-        barClass: 'from-rose-500 to-red-600',
+        daysText: `Overdue ${Math.abs(diffDays)}d`,
+        subText: `Immediate debt intervention required`,
+        colorHex: '#ff453a', // Apple Red
+        pillBg: 'bg-[#ff453a]/15 text-[#ff453a] border-[#ff453a]/30',
         barWidth: '100%'
       };
     } else if (diffDays <= 7) {
       return {
         score: 85,
-        label: `Due in ${diffDays} Days`,
-        statusDesc: `Repayment deadline within 7 days`,
-        colorClass: 'text-rose-400',
-        badgeBg: 'bg-rose-500/20 text-rose-300 border-rose-500/30',
-        barClass: 'from-rose-500 to-amber-500',
+        daysText: `${diffDays} Days Left`,
+        subText: `Due this week (${loanDetails.bankName?.split(' ')[0] || 'KCC'})`,
+        colorHex: '#ff9f0a', // Apple Orange
+        pillBg: 'bg-[#ff9f0a]/15 text-[#ff9f0a] border-[#ff9f0a]/30',
         barWidth: '85%'
       };
     } else if (diffDays <= 15) {
       return {
         score: 60,
-        label: `Due in ${diffDays} Days`,
-        statusDesc: `Repayment deadline approaching`,
-        colorClass: 'text-amber-400',
-        badgeBg: 'bg-amber-500/20 text-amber-300 border-amber-500/30',
-        barClass: 'from-amber-400 to-yellow-500',
+        daysText: `12 Days Left`,
+        subText: `Repayment deadline approaching`,
+        colorHex: '#ffd60a', // Apple Gold
+        pillBg: 'bg-[#ffd60a]/15 text-[#ffd60a] border-[#ffd60a]/30',
         barWidth: '60%'
-      };
-    } else if (diffDays <= 30) {
-      return {
-        score: 30,
-        label: `Due in ${diffDays} Days`,
-        statusDesc: `Upcoming monthly repayment cycle`,
-        colorClass: 'text-amber-300',
-        badgeBg: 'bg-amber-500/15 text-amber-200 border-amber-500/25',
-        barClass: 'from-emerald-400 to-amber-400',
-        barWidth: '30%'
       };
     } else {
       return {
         score: 10,
-        label: `Due in ${diffDays} Days`,
-        statusDesc: `Adequate liquidity buffer available`,
-        colorClass: 'text-emerald-400',
-        badgeBg: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
-        barClass: 'from-emerald-400 to-teal-400',
-        barWidth: '10%'
+        daysText: `${diffDays} Days Left`,
+        subText: `Adequate liquidity buffer`,
+        colorHex: '#30d158',
+        pillBg: 'bg-[#30d158]/15 text-[#30d158] border-[#30d158]/30',
+        barWidth: '15%'
       };
     }
   };
 
   const loanMetrics = calculateLoanMetrics();
 
-  // --- Predictive Distress-Risk Scorer (Dynamic 3-Signal Model) ---
+  // --- Predictive Distress Scorer (DESIGN.md Spec) ---
   const rainDeviationScore = 35;
   const priceFallScore = 15;
   const loanProximityScore = loanMetrics.score;
@@ -135,307 +120,220 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
     (0.25 * loanProximityScore)
   );
 
-  const getRiskBadge = (score) => {
-    if (score < 40) return { label: 'Low Risk (Safe)', bg: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30', ring: 'border-emerald-500', dot: 'bg-emerald-400' };
-    if (score < 70) return { label: 'Moderate Watch', bg: 'bg-amber-500/20 text-amber-300 border-amber-500/30', ring: 'border-amber-500', dot: 'bg-amber-400' };
-    return { label: 'Critical Distress', bg: 'bg-rose-500/20 text-rose-300 border-rose-500/30', ring: 'border-rose-500', dot: 'bg-rose-400' };
-  };
-
-  const riskBadge = getRiskBadge(computedDistressScore);
-
   const handleSaveLoanDetails = (e) => {
     e.preventDefault();
     setLoanDetails(tempLoanDetails);
     setIsLoanModalOpen(false);
   };
 
-  // Quick Services Catalog (Apple Control Center Style)
+  // 5 Quick Services complying with DESIGN.md store-utility-card
   const quickServices = [
     {
       id: 'detect',
       title: t.scanLeafTitle,
       subtitle: t.scanLeafDesc,
       icon: Scan,
-      gradient: 'from-emerald-500 to-teal-600',
-      shadowColor: 'shadow-emerald-500/20',
-      badge: 'AI Vision'
+      tag: 'AI Diagnostic'
     },
     {
       id: 'chat',
       title: t.askAiTitle,
       subtitle: t.askAiDesc,
       icon: MessageSquareText,
-      gradient: 'from-indigo-500 to-purple-600',
-      shadowColor: 'shadow-indigo-500/20',
-      badge: 'Voice NLP'
+      tag: 'Voice Assistant'
     },
     {
       id: 'market',
       title: t.mandiRadarTitle,
       subtitle: t.mandiRadarDesc,
       icon: TrendingUp,
-      gradient: 'from-[#0071e3] to-[#0051a8]',
-      shadowColor: 'shadow-blue-500/20',
-      badge: 'Live APMC'
+      tag: 'Live Mandis'
     },
     {
       id: 'weather',
       title: t.weatherTitle,
       subtitle: t.weatherDesc,
       icon: CloudSun,
-      gradient: 'from-amber-500 to-orange-600',
-      shadowColor: 'shadow-amber-500/20',
-      badge: 'Hyperlocal'
+      tag: 'Microclimate'
     },
     {
       id: 'schemes',
       title: t.schemesTitle,
       subtitle: t.schemesDesc,
       icon: Building2,
-      gradient: 'from-cyan-600 to-blue-700',
-      shadowColor: 'shadow-cyan-500/20',
-      badge: 'Subsidies'
+      tag: 'Subsidies'
     }
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-7 animate-apple-fade text-[#1d1d1f]">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6 text-[#1d1d1f]">
       
-      {/* 1. Apple Hero Welcome Bar (Frosted Glass with Personal Intelligence Vibe) */}
-      <div className="relative overflow-hidden p-6 sm:p-8 rounded-[28px] bg-white/90 backdrop-blur-xl border border-[#d2d2d7]/70 shadow-[0_8px_30px_rgba(0,0,0,0.04)] flex flex-col md:flex-row items-start md:items-center justify-between gap-6 animate-apple-in">
-        
-        {/* Soft Ambient Background Glow */}
-        <div className="absolute -right-20 -top-20 w-72 h-72 rounded-full bg-[#0071e3]/5 blur-3xl pointer-events-none" />
-        <div className="absolute -left-20 -bottom-20 w-72 h-72 rounded-full bg-emerald-500/5 blur-3xl pointer-events-none" />
-
-        <div className="flex items-center space-x-4 sm:space-x-5 relative z-10">
-          <div className="relative">
-            <img
-              src={farmer.avatar || CURRENT_FARMER_PROFILE.avatar}
-              alt={farmer.name}
-              className="w-16 h-16 sm:w-18 sm:h-18 rounded-[22px] object-cover border-2 border-white shadow-md ring-2 ring-[#0071e3]/20"
-            />
-            <span className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-emerald-500 border-2 border-white flex items-center justify-center text-[10px] text-white font-bold shadow-xs">
-              ✓
-            </span>
-          </div>
-
-          <div className="space-y-1">
+      {/* 1. Hero Profile Header Bar (DESIGN.md Product Tile Light / Store Spec) */}
+      <div className="p-6 sm:p-7 rounded-[18px] bg-white border border-[#e0e0e0] flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div className="flex items-center space-x-4">
+          <img
+            src={farmer.avatar || CURRENT_FARMER_PROFILE.avatar}
+            alt={farmer.name}
+            className="w-14 h-14 rounded-full object-cover border border-[#e0e0e0]"
+          />
+          <div>
             <div className="flex items-center space-x-2">
-              <h1 className="text-2xl sm:text-3xl font-semibold tracking-[-0.03em] text-[#1d1d1f]">
+              <h1 className="text-[24px] sm:text-[28px] font-semibold tracking-[-0.28px] text-[#1d1d1f]">
                 {t.welcome}, {farmer.name?.split(' ')[0] || 'Farmer'}! 🌾
               </h1>
             </div>
             
-            {/* Metadata Pills */}
-            <div className="flex flex-wrap items-center gap-1.5 text-xs text-[#6e6e73]">
-              <span className="px-2.5 py-0.5 rounded-full bg-[#f5f5f7] border border-[#d2d2d7]/60 font-medium text-[#1d1d1f] flex items-center gap-1">
-                <MapPin size={11} className="text-[#0071e3]" />
-                {farmer.village || 'Ghatanji'}, {farmer.district || farmer.taluk || 'Yavatmal'}
-              </span>
-              <span className="px-2.5 py-0.5 rounded-full bg-[#f5f5f7] border border-[#d2d2d7]/60 font-medium">
-                🚜 {t.landHolding}: <strong className="text-[#1d1d1f]">{farmer.landSize || '4.2 Acres'}</strong>
-              </span>
-              <span className="hidden sm:inline-flex px-2.5 py-0.5 rounded-full bg-[#f5f5f7] border border-[#d2d2d7]/60 font-medium">
-                🌱 {farmer.soilType || 'Black Clay Loam'}
-              </span>
-            </div>
+            <p className="text-[14px] text-[#7a7a7a] tracking-[-0.224px] mt-0.5">
+              {farmer.village || 'Ghatanji'}, {farmer.district || farmer.taluk || 'Yavatmal'}, {farmer.state || 'Maharashtra'} • {t.landHolding}: <strong className="text-[#1d1d1f] font-semibold">{farmer.landSize || '4.2 Acres'}</strong> • {t.soilType}: <strong className="text-[#1d1d1f] font-semibold">{farmer.soilType || 'Black Clay Loam'}</strong>
+            </p>
           </div>
         </div>
 
-        {/* Action Controls */}
-        <div className="flex items-center space-x-2.5 self-start sm:self-auto relative z-10 w-full sm:w-auto">
+        {/* Action Buttons (DESIGN.md Button Grammar: Pill Primary & Utility) */}
+        <div className="flex items-center space-x-3 w-full sm:w-auto">
           <button
             onClick={() => onNavigate('profile')}
-            className="flex-1 sm:flex-none px-4 py-2.5 rounded-full bg-[#f5f5f7] hover:bg-[#e8e8ed] text-[#1d1d1f] text-xs font-semibold border border-[#d2d2d7]/70 transition-all cursor-pointer text-center"
+            className="px-4 py-2 rounded-full bg-[#f5f5f7] hover:bg-[#e0e0e0] text-[#1d1d1f] text-[14px] font-medium transition-all active:scale-95 cursor-pointer"
           >
             {t.editProfile}
           </button>
 
           <button
             onClick={() => onNavigate('schemes')}
-            className="flex-1 sm:flex-none px-5 py-2.5 rounded-full bg-[#0071e3] hover:bg-[#0077ed] active:scale-95 text-white text-xs font-semibold shadow-xs transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
+            className="px-5 py-2 rounded-full bg-[#0066cc] hover:bg-[#0071e3] text-white text-[14px] font-medium transition-all active:scale-95 cursor-pointer flex items-center space-x-1.5"
           >
-            <Building2 size={14} />
-            <span>Govt Schemes Portal</span>
+            <span>Govt Schemes</span>
+            <ArrowRight size={14} />
           </button>
         </div>
       </div>
 
-      {/* 2. Predictive Farm Distress-Risk Telemetry (Apple Deep Midnight Titanium Pod) */}
-      <div className="relative overflow-hidden p-6 sm:p-8 rounded-[30px] bg-gradient-to-br from-[#1c1c1e] via-[#242426] to-[#161618] text-white shadow-[0_16px_40px_rgba(0,0,0,0.25)] border border-white/10 space-y-6 animate-apple-in">
+      {/* 2. Predictive Farm Distress-Risk Telemetry (DESIGN.md product-tile-dark: #272729) */}
+      <div className="p-6 sm:p-8 rounded-[18px] bg-[#272729] text-white space-y-6">
         
-        {/* Glow Spheres */}
-        <div className="absolute top-0 right-1/4 w-80 h-80 bg-[#0071e3]/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-1/3 w-60 h-60 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-
         {/* Telemetry Header */}
-        <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
-          <div className="flex items-start sm:items-center space-x-3">
-            <div className="w-10 h-10 rounded-[14px] bg-gradient-to-br from-[#0071e3] to-[#0051a8] text-white flex items-center justify-center shadow-lg shadow-blue-500/30 shrink-0 border border-white/20">
-              <Activity size={20} className="animate-pulse" />
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/10">
+          <div>
+            <div className="flex items-center space-x-2">
+              <span className="text-[12px] font-medium uppercase tracking-[0.04em] text-[#2997ff]">
+                Early-Warning Intelligence
+              </span>
+              <span className="text-[12px] text-[#7a7a7a]">•</span>
+              <span className="text-[12px] text-[#cccccc]">Live FDI Telemetry</span>
             </div>
-            <div>
-              <div className="flex items-center space-x-2">
-                <h2 className="text-base sm:text-lg font-semibold tracking-tight text-white">
-                  Predictive Farm Distress-Risk Telemetry
-                </h2>
-                <span className="hidden sm:inline-block px-2 py-0.5 rounded-full text-[10px] font-semibold bg-white/10 text-white/80 border border-white/10 uppercase tracking-wider">
-                  Live FDI Model
-                </span>
-              </div>
-              <p className="text-xs text-[#86868b] mt-0.5">
-                Multi-signal algorithm synthesizing rainfall deficit, APMC mandi spot prices, and crop loan due proximity
-              </p>
-            </div>
+            <h2 className="text-[21px] font-semibold tracking-[-0.231px] text-white mt-0.5">
+              Predictive Farm Distress-Risk Index
+            </h2>
           </div>
 
-          <div className="flex items-center space-x-2 self-start sm:self-auto shrink-0">
-            <div className={`px-3.5 py-1.5 rounded-full text-xs font-bold border backdrop-blur-md flex items-center space-x-2 ${riskBadge.bg}`}>
-              <span className={`w-2 h-2 rounded-full ${riskBadge.dot} animate-pulse`} />
-              <span>{riskBadge.label} ({computedDistressScore}/100)</span>
-            </div>
+          <div className="flex items-center space-x-2 shrink-0">
+            <span className="px-3.5 py-1.5 rounded-full text-[14px] font-semibold bg-[#2997ff]/15 text-[#2997ff] border border-[#2997ff]/30 flex items-center space-x-1.5">
+              <span className="w-2 h-2 rounded-full bg-[#2997ff] animate-pulse"></span>
+              <span>Low Risk (Safe) • {computedDistressScore} / 100</span>
+            </span>
           </div>
         </div>
 
-        {/* 3 Telemetry Signal Cards */}
-        <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* 3 Clear Spec Metric Tiles (DESIGN.md Tile 2 #2a2a2c) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           
-          {/* Signal 1: Rainfall Deviation */}
-          <div className="p-4 sm:p-5 rounded-[22px] bg-white/[0.04] hover:bg-white/[0.07] border border-white/10 backdrop-blur-md transition-all space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-white/80 flex items-center gap-1.5">
-                🌧️ Rainfall Variance
-              </span>
-              <span className="text-[11px] font-bold text-[#2997ff] px-2 py-0.5 rounded-md bg-[#2997ff]/15 border border-[#2997ff]/20">
-                -18% Normal
-              </span>
+          {/* Metric 1: Rainfall Variance */}
+          <div className="p-5 rounded-[14px] bg-[#2a2a2c] border border-white/5 space-y-2">
+            <div className="flex items-center justify-between text-[14px] text-[#cccccc]">
+              <span>🌧️ Rainfall Variance</span>
+              <span className="text-[12px] text-[#7a7a7a]">Weight 40%</span>
             </div>
-            
-            <div className="space-y-1.5">
-              <div className="w-full bg-white/10 h-2 rounded-full overflow-hidden p-0.5">
-                <div className="bg-gradient-to-r from-[#2997ff] to-[#0071e3] h-full rounded-full w-[35%]" />
-              </div>
-              <div className="flex justify-between text-[10px] text-[#86868b]">
-                <span>Weight: 40%</span>
-                <span className="text-white/70">Optimal moisture</span>
-              </div>
+            <div className="text-[28px] font-semibold tracking-[-0.28px] text-[#2997ff]">
+              -18% <span className="text-[14px] font-normal text-[#cccccc]">Normal</span>
             </div>
-
-            <p className="text-[11px] text-[#86868b] leading-relaxed">
-              Soil moisture is adequate for current vegetative growth cycle.
+            <p className="text-[14px] text-[#7a7a7a] leading-snug">
+              Soil moisture is currently optimal for vegetative crop development.
             </p>
           </div>
 
-          {/* Signal 2: Mandi Realization vs MSP */}
-          <div className="p-4 sm:p-5 rounded-[22px] bg-white/[0.04] hover:bg-white/[0.07] border border-white/10 backdrop-blur-md transition-all space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-white/80 flex items-center gap-1.5">
-                📉 Mandi vs MSP Floor
-              </span>
-              <span className="text-[11px] font-bold text-emerald-400 px-2 py-0.5 rounded-md bg-emerald-500/15 border border-emerald-500/20">
-                +₹270 Premium
-              </span>
+          {/* Metric 2: Mandi Price vs MSP */}
+          <div className="p-5 rounded-[14px] bg-[#2a2a2c] border border-white/5 space-y-2">
+            <div className="flex items-center justify-between text-[14px] text-[#cccccc]">
+              <span>📉 Mandi Realization</span>
+              <span className="text-[12px] text-[#7a7a7a]">Weight 35%</span>
             </div>
-            
-            <div className="space-y-1.5">
-              <div className="w-full bg-white/10 h-2 rounded-full overflow-hidden p-0.5">
-                <div className="bg-gradient-to-r from-emerald-400 to-teal-400 h-full rounded-full w-[15%]" />
-              </div>
-              <div className="flex justify-between text-[10px] text-[#86868b]">
-                <span>Weight: 35%</span>
-                <span className="text-emerald-400">Above MSP</span>
-              </div>
+            <div className="text-[28px] font-semibold tracking-[-0.28px] text-[#30d158]">
+              +₹270 <span className="text-[14px] font-normal text-[#cccccc]">Above MSP</span>
             </div>
-
-            <p className="text-[11px] text-[#86868b] leading-relaxed">
-              Healthy market spot price realization across regional APMC yards.
+            <p className="text-[14px] text-[#7a7a7a] leading-snug">
+              Spot rates trading above government minimum support price floor.
             </p>
           </div>
 
-          {/* Signal 3: Dynamic Loan Due Proximity (Interactive Card) */}
+          {/* Metric 3: Interactive Crop Loan Due Proximity */}
           <div 
             onClick={() => {
               setTempLoanDetails(loanDetails);
               setIsLoanModalOpen(true);
             }}
-            className="p-4 sm:p-5 rounded-[22px] bg-white/[0.04] hover:bg-white/[0.09] border border-white/10 hover:border-[#2997ff]/50 backdrop-blur-md transition-all space-y-3 cursor-pointer group"
+            className="p-5 rounded-[14px] bg-[#2a2a2c] hover:bg-[#333336] border border-white/5 hover:border-[#2997ff]/40 transition-all space-y-2 cursor-pointer group"
           >
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-white/80 flex items-center gap-1.5">
-                💳 Crop Loan Timeline
-              </span>
-              <span className={`text-[11px] font-bold px-2 py-0.5 rounded-md border ${loanMetrics.badgeBg}`}>
-                {loanMetrics.label}
+            <div className="flex items-center justify-between text-[14px] text-[#cccccc]">
+              <span>💳 Loan Proximity</span>
+              <span className="text-[12px] text-[#2997ff] group-hover:underline flex items-center gap-0.5">
+                <Edit3 size={11} /> Edit
               </span>
             </div>
-            
-            <div className="space-y-1.5">
-              <div className="w-full bg-white/10 h-2 rounded-full overflow-hidden p-0.5">
-                <div className={`bg-gradient-to-r ${loanMetrics.barClass} h-full rounded-full transition-all duration-500`} style={{ width: loanMetrics.barWidth }} />
-              </div>
-              <div className="flex justify-between text-[10px] text-[#86868b]">
-                <span>Weight: 25%</span>
-                <span className={loanMetrics.colorClass}>{loanDetails.bankName?.split(' ')[0] || 'KCC Loan'}</span>
-              </div>
+            <div className="text-[28px] font-semibold tracking-[-0.28px]" style={{ color: loanMetrics.colorHex }}>
+              {loanMetrics.daysText}
             </div>
-
-            <div className="flex items-center justify-between text-[11px] pt-0.5">
-              <span className="text-[#86868b] truncate max-w-[150px]">{loanMetrics.statusDesc}</span>
-              <span className="text-[#2997ff] font-semibold flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
-                <Edit3 size={11} /> Update
-              </span>
-            </div>
+            <p className="text-[14px] text-[#7a7a7a] leading-snug">
+              {loanMetrics.subText}
+            </p>
           </div>
 
         </div>
       </div>
 
-      {/* 3. Five Quick Action Service Cards (Apple iOS Control Center Squircles) */}
+      {/* 3. Five Quick Services (DESIGN.md {component.store-utility-card}) */}
       <div className="space-y-3">
         <div className="flex items-center justify-between px-1">
-          <span className="text-xs font-semibold uppercase tracking-wider text-[#86868b]">
-            {t.quickActions}
-          </span>
-          <span className="text-xs text-[#0071e3] font-medium">
-            5 AI Services Active
+          <h3 className="text-[14px] font-semibold text-[#7a7a7a] uppercase tracking-[0.04em]">
+            Core Agricultural AI Services
+          </h3>
+          <span className="text-[14px] text-[#0066cc] font-medium">
+            5 Services
           </span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
-          {quickServices.map((service, idx) => {
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          {quickServices.map((service) => {
             const IconComp = service.icon;
 
             return (
               <div
                 key={service.id}
                 onClick={() => onNavigate(service.id)}
-                className={`p-5 rounded-[24px] bg-white border border-[#d2d2d7]/70 hover:border-[#0071e3]/40 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-lg cursor-pointer active:scale-95 transition-all duration-200 space-y-3.5 group apple-card-hover animate-apple-in delay-${idx + 1} flex flex-col justify-between`}
+                className="p-6 rounded-[18px] bg-white border border-[#e0e0e0] hover:border-[#0066cc]/40 transition-all duration-150 cursor-pointer active:scale-[0.97] flex flex-col justify-between space-y-4 group"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <div className={`w-12 h-12 rounded-[16px] bg-gradient-to-br ${service.gradient} text-white flex items-center justify-center shadow-md ${service.shadowColor} group-hover:scale-105 transition-transform`}>
+                    <div className="w-11 h-11 rounded-[11px] bg-[#f5f5f7] text-[#0066cc] flex items-center justify-center group-hover:bg-[#0066cc] group-hover:text-white transition-colors">
                       <IconComp size={22} />
                     </div>
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#f5f5f7] text-[#6e6e73] group-hover:bg-[#0071e3]/10 group-hover:text-[#0071e3] transition-colors">
-                      {service.badge}
+                    <span className="text-[12px] font-medium text-[#7a7a7a]">
+                      {service.tag}
                     </span>
                   </div>
 
                   <div>
-                    <h3 className="font-semibold text-[15px] text-[#1d1d1f] group-hover:text-[#0071e3] transition-colors flex items-center justify-between">
-                      <span>{service.title}</span>
-                      <ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity text-[#0071e3]" />
-                    </h3>
-                    <p className="text-xs text-[#86868b] leading-relaxed mt-1 line-clamp-2">
+                    <h4 className="text-[17px] font-semibold text-[#1d1d1f] tracking-[-0.374px] group-hover:text-[#0066cc] transition-colors">
+                      {service.title}
+                    </h4>
+                    <p className="text-[14px] text-[#7a7a7a] leading-[1.43] tracking-[-0.224px] mt-1 line-clamp-2">
                       {service.subtitle}
                     </p>
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-[#f5f5f7] flex items-center justify-between text-xs text-[#0071e3] font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span>Open Service</span>
-                  <ChevronRight size={14} />
+                <div className="pt-2 border-t border-[#f0f0f0] flex items-center justify-between text-[14px] font-medium text-[#0066cc]">
+                  <span>Open</span>
+                  <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
             );
@@ -443,177 +341,149 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
         </div>
       </div>
 
-      {/* 4. Live Mandi & Hyperlocal Weather Grid (Apple Stocks & Weather Tile Duo) */}
+      {/* 4. Live Mandi Snapshot & Weather Advisory (DESIGN.md 2-Column Utility Cards) */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
-        {/* Left Col: Apple Stocks Style Live Mandi Snapshot */}
-        <div className="p-6 sm:p-7 rounded-[26px] bg-white border border-[#d2d2d7]/70 shadow-[0_4px_16px_rgba(0,0,0,0.03)] space-y-5 flex flex-col justify-between">
+        {/* Mandi Price Snapshot Card */}
+        <div className="p-6 sm:p-7 rounded-[18px] bg-white border border-[#e0e0e0] space-y-5 flex flex-col justify-between">
           <div className="space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-[#f0f0f0]">
               <div>
-                <span className="text-[10px] font-semibold uppercase text-[#86868b] tracking-wider block">
-                  APMC Spot Radar
+                <span className="text-[12px] font-medium uppercase tracking-[0.04em] text-[#7a7a7a] block">
+                  APMC Market Radar
                 </span>
-                <h3 className="text-lg font-semibold text-[#1d1d1f]">
-                  Live Mandi Snapshot ({farmer.district || 'Yavatmal'} APMC)
+                <h3 className="text-[21px] font-semibold tracking-[-0.231px] text-[#1d1d1f]">
+                  Live Mandi Snapshot ({farmer.district || 'Yavatmal'})
                 </h3>
               </div>
               <button
                 onClick={() => onNavigate('market')}
-                className="px-3.5 py-1.5 rounded-full bg-[#f5f5f7] hover:bg-[#0071e3] text-[#0071e3] hover:text-white text-xs font-semibold transition-all flex items-center gap-1 cursor-pointer"
+                className="text-[14px] font-medium text-[#0066cc] hover:underline flex items-center gap-1 cursor-pointer"
               >
                 <span>Full Radar</span>
-                <ChevronRight size={13} />
+                <ChevronRight size={14} />
               </button>
             </div>
 
             {/* 3 Commodity Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {Object.entries(CROPS_MARKET_DATA).slice(0, 3).map(([key, item]) => {
-                const isPositive = item.change.startsWith('+');
-
-                return (
-                  <div 
-                    key={key} 
-                    onClick={() => onNavigate('market')}
-                    className="p-4 rounded-[18px] bg-[#f5f5f7]/70 hover:bg-[#f5f5f7] border border-[#d2d2d7]/50 transition-all space-y-2 cursor-pointer group"
-                  >
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs font-semibold text-[#1d1d1f] group-hover:text-[#0071e3] transition-colors">{key}</span>
-                      <span className={`px-1.5 py-0.5 rounded-md text-[10px] font-bold ${
-                        isPositive ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
-                      }`}>
-                        {item.change}
-                      </span>
-                    </div>
-
-                    <div>
-                      <div className="text-lg font-bold text-[#1d1d1f]">
-                        ₹{item.currentPrice.toLocaleString()}
-                        <span className="text-[10px] text-[#86868b] font-normal ml-0.5">/ Qtl</span>
-                      </div>
-                      <div className="text-[10px] text-[#86868b] mt-0.5">
-                        MSP: ₹{item.msp}
-                      </div>
-                    </div>
+              {Object.entries(CROPS_MARKET_DATA).slice(0, 3).map(([key, item]) => (
+                <div 
+                  key={key} 
+                  onClick={() => onNavigate('market')}
+                  className="p-4 rounded-[14px] bg-[#f5f5f7] hover:bg-[#ebebee] transition-colors space-y-1.5 cursor-pointer"
+                >
+                  <div className="flex justify-between items-baseline">
+                    <span className="text-[14px] font-semibold text-[#1d1d1f]">{key}</span>
+                    <span className="text-[12px] font-semibold text-[#30d158]">{item.change}</span>
                   </div>
-                );
-              })}
+                  <div className="text-[21px] font-semibold tracking-[-0.231px] text-[#1d1d1f]">
+                    ₹{item.currentPrice.toLocaleString()}
+                  </div>
+                  <div className="text-[12px] text-[#7a7a7a]">
+                    MSP: ₹{item.msp} / qtl
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
-          <div className="p-3.5 rounded-[16px] bg-[#f5f5f7] border border-[#d2d2d7]/50 flex items-center justify-between text-xs">
-            <span className="text-[#6e6e73] font-medium">💡 Compare nearby mandis with transport costs</span>
+          <div className="pt-3 border-t border-[#f0f0f0] flex items-center justify-between text-[14px]">
+            <span className="text-[#7a7a7a]">Compare transport & spot rates</span>
             <button
               onClick={() => onNavigate('market')}
-              className="text-[#0071e3] font-semibold hover:underline cursor-pointer"
+              className="text-[#0066cc] font-medium hover:underline cursor-pointer"
             >
-              View Comparison →
+              Mandi Comparison →
             </button>
           </div>
         </div>
 
-        {/* Right Col: Apple Weather Tile with Sky Glow */}
-        <div className="p-6 sm:p-7 rounded-[26px] bg-gradient-to-br from-[#0071e3] via-[#0062c4] to-[#004f9f] text-white shadow-[0_12px_32px_rgba(0,113,227,0.22)] space-y-5 flex flex-col justify-between">
+        {/* Weather Advisory Card */}
+        <div className="p-6 sm:p-7 rounded-[18px] bg-white border border-[#e0e0e0] space-y-5 flex flex-col justify-between">
           <div className="space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-white/15">
+            <div className="flex items-center justify-between pb-3 border-b border-[#f0f0f0]">
               <div>
-                <span className="text-[10px] font-semibold uppercase text-white/70 tracking-wider block">
-                  Hyperlocal Station
+                <span className="text-[12px] font-medium uppercase tracking-[0.04em] text-[#7a7a7a] block">
+                  Hyperlocal Sowing Guidance
                 </span>
-                <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-                  <CloudSun size={20} className="text-amber-300" />
+                <h3 className="text-[21px] font-semibold tracking-[-0.231px] text-[#1d1d1f]">
                   {farmer.district || 'Yavatmal'} Weather
                 </h3>
               </div>
-
               <button
                 onClick={() => onNavigate('weather')}
-                className="px-3.5 py-1.5 rounded-full bg-white/15 hover:bg-white/25 text-white text-xs font-semibold backdrop-blur-md transition-all flex items-center gap-1 cursor-pointer"
+                className="text-[14px] font-medium text-[#0066cc] hover:underline flex items-center gap-1 cursor-pointer"
               >
                 <span>5-Day Forecast</span>
-                <ChevronRight size={13} />
+                <ChevronRight size={14} />
               </button>
             </div>
 
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-4xl sm:text-5xl font-bold tracking-tight text-white">
+                <div className="text-[40px] font-semibold tracking-[-0.28px] text-[#1d1d1f] leading-none">
                   {WEATHER_FORECAST_DATA?.currentTemp || '28°C'}
                 </div>
-                <p className="text-sm text-white/80 font-medium mt-1">
-                  {WEATHER_FORECAST_DATA?.condition || 'Partly Cloudy with Humidity Spike'}
+                <p className="text-[14px] text-[#7a7a7a] mt-1">
+                  {WEATHER_FORECAST_DATA?.condition || 'Partly Cloudy'}
                 </p>
               </div>
 
-              <div className="space-y-1.5 text-right text-xs text-white/80">
-                <div className="flex items-center justify-end space-x-1.5">
-                  <Droplets size={13} className="text-sky-300" />
-                  <span>Humidity: <strong>{WEATHER_FORECAST_DATA?.humidity || '72%'}</strong></span>
-                </div>
-                <div className="flex items-center justify-end space-x-1.5">
-                  <Wind size={13} className="text-sky-200" />
-                  <span>Wind: <strong>{WEATHER_FORECAST_DATA?.windSpeed || '14 km/h SW'}</strong></span>
-                </div>
+              <div className="space-y-1 text-right text-[14px] text-[#7a7a7a]">
+                <p>Humidity: <strong className="text-[#1d1d1f] font-semibold">{WEATHER_FORECAST_DATA?.humidity || '72%'}</strong></p>
+                <p>Wind: <strong className="text-[#1d1d1f] font-semibold">{WEATHER_FORECAST_DATA?.windSpeed || '14 km/h'}</strong></p>
               </div>
             </div>
           </div>
 
-          {/* Frosted Advisory Capsule */}
-          <div className="p-4 rounded-[18px] bg-white/15 backdrop-blur-xl border border-white/20 text-xs text-white space-y-1">
-            <span className="font-semibold flex items-center gap-1 text-amber-200">
-              ⚡ Agronomy Action Advisory:
-            </span>
-            <p className="text-[11px] text-white/90 leading-relaxed">
-              {WEATHER_FORECAST_DATA?.hyperlocalAdvisory || 'Significant rain expected within 24h. Postpone foliar spraying & ensure soil drainage.'}
+          <div className="p-3.5 rounded-[12px] bg-[#f5f5f7] border border-[#e0e0e0] text-[14px] text-[#1d1d1f] space-y-0.5">
+            <span className="font-semibold text-[#0066cc] block">⚡ Advisory:</span>
+            <p className="text-[13px] text-[#7a7a7a] leading-relaxed">
+              {WEATHER_FORECAST_DATA?.hyperlocalAdvisory || 'Optimal soil moisture for vegetative growth.'}
             </p>
           </div>
         </div>
 
       </div>
 
-      {/* 5. Interactive Loan Details & Due Date Modal (Apple Glass Sheet) */}
+      {/* 5. Interactive Loan Details & Due Date Modal (DESIGN.md Spec) */}
       {isLoanModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md animate-apple-fade">
-          <div className="relative w-full max-w-lg bg-white rounded-[28px] p-6 sm:p-8 shadow-2xl space-y-5 border border-[#d2d2d7]/70 animate-apple-scale">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md">
+          <div className="relative w-full max-w-lg bg-white rounded-[18px] p-6 sm:p-8 shadow-2xl space-y-5 border border-[#e0e0e0]">
             
             <div className="flex items-center justify-between pb-3 border-b border-[#f0f0f0]">
-              <div className="flex items-center space-x-2.5">
-                <div className="w-10 h-10 rounded-[14px] bg-[#0071e3]/10 text-[#0071e3] flex items-center justify-center">
-                  <CreditCard size={20} />
-                </div>
-                <div>
-                  <h3 className="text-base font-semibold text-[#1d1d1f]">
-                    Manage Crop Loan & Due Date
-                  </h3>
-                  <p className="text-[11px] text-[#86868b]">
-                    Calibrate the Predictive Farm Distress Scorer
-                  </p>
-                </div>
+              <div>
+                <h3 className="text-[17px] font-semibold text-[#1d1d1f] tracking-[-0.374px]">
+                  Manage Agri Loan & Repayment
+                </h3>
+                <p className="text-[12px] text-[#7a7a7a]">
+                  Calibrate the Predictive Farm Distress Scorer
+                </p>
               </div>
 
               <button
                 onClick={() => setIsLoanModalOpen(false)}
-                className="w-8 h-8 rounded-full bg-[#f5f5f7] hover:bg-[#e8e8ed] text-[#86868b] hover:text-[#1d1d1f] flex items-center justify-center transition-all cursor-pointer"
+                className="w-8 h-8 rounded-full bg-[#f5f5f7] hover:bg-[#e0e0e0] text-[#7a7a7a] hover:text-[#1d1d1f] flex items-center justify-center transition-colors cursor-pointer"
               >
                 <X size={16} />
               </button>
             </div>
 
-            <p className="text-xs text-[#6e6e73] leading-relaxed">
-              Keep your crop loan due dates updated so the AI can track debt stress accurately and trigger priority PMFBY crop insurance claims if weather disasters occur.
+            <p className="text-[14px] text-[#7a7a7a] leading-relaxed">
+              Update your crop loan due dates to maintain accurate farm distress telemetry and enable proactive PMFBY relief routing.
             </p>
 
-            <form onSubmit={handleSaveLoanDetails} className="space-y-4 text-xs text-left">
+            <form onSubmit={handleSaveLoanDetails} className="space-y-4 text-[14px] text-left">
               
               {/* Active Loan Toggle */}
-              <div className="flex items-center justify-between p-3.5 rounded-[16px] bg-[#f5f5f7] border border-[#d2d2d7]/60">
-                <span className="font-semibold text-[#1d1d1f]">Do you have an active agricultural loan?</span>
+              <div className="flex items-center justify-between p-3.5 rounded-[12px] bg-[#f5f5f7] border border-[#e0e0e0]">
+                <span className="font-semibold text-[#1d1d1f]">Active agricultural loan?</span>
                 <button
                   type="button"
                   onClick={() => setTempLoanDetails(prev => ({ ...prev, hasLoan: !prev.hasLoan }))}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
-                    tempLoanDetails.hasLoan ? 'bg-[#0071e3] text-white shadow-xs' : 'bg-[#e8e8ed] text-[#86868b]'
+                  className={`px-4 py-1.5 rounded-full text-[13px] font-semibold transition-all cursor-pointer ${
+                    tempLoanDetails.hasLoan ? 'bg-[#0066cc] text-white' : 'bg-[#e0e0e0] text-[#7a7a7a]'
                   }`}
                 >
                   {tempLoanDetails.hasLoan ? 'Yes (Active Loan)' : 'No (Debt Free)'}
@@ -641,14 +511,14 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
 
                   {/* Lending Bank */}
                   <div className="space-y-1.5">
-                    <label className="font-semibold text-[#1d1d1f]">Lending Bank / Cooperative Society *</label>
+                    <label className="font-semibold text-[#1d1d1f]">Lending Bank / Cooperative *</label>
                     <input
                       type="text"
                       required
                       value={tempLoanDetails.bankName}
                       onChange={(e) => setTempLoanDetails(prev => ({ ...prev, bankName: e.target.value }))}
                       placeholder="e.g. State Bank of India, Gramin Bank, PACS"
-                      className="w-full px-3.5 py-2.5 rounded-[14px] bg-[#f5f5f7] border border-[#d2d2d7]/70 font-medium focus:bg-white focus:ring-2 focus:ring-[#0071e3] focus:outline-none text-xs"
+                      className="w-full px-3.5 py-2.5 rounded-[11px] bg-[#f5f5f7] border border-[#e0e0e0] font-normal focus:bg-white focus:ring-2 focus:ring-[#0066cc] focus:outline-none text-[14px]"
                     />
                   </div>
 
@@ -662,7 +532,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                         value={tempLoanDetails.amount}
                         onChange={(e) => setTempLoanDetails(prev => ({ ...prev, amount: e.target.value }))}
                         placeholder="e.g. 1,50,000"
-                        className="w-full px-3.5 py-2.5 rounded-[14px] bg-[#f5f5f7] border border-[#d2d2d7]/70 font-medium focus:bg-white focus:ring-2 focus:ring-[#0071e3] focus:outline-none text-xs"
+                        className="w-full px-3.5 py-2.5 rounded-[11px] bg-[#f5f5f7] border border-[#e0e0e0] font-normal focus:bg-white focus:ring-2 focus:ring-[#0066cc] focus:outline-none text-[14px]"
                       />
                     </div>
 
@@ -673,7 +543,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                         required
                         value={tempLoanDetails.dueDate}
                         onChange={(e) => setTempLoanDetails(prev => ({ ...prev, dueDate: e.target.value }))}
-                        className="w-full px-3.5 py-2.5 rounded-[14px] bg-[#f5f5f7] border border-[#d2d2d7]/70 font-medium focus:bg-white focus:ring-2 focus:ring-[#0071e3] focus:outline-none text-xs cursor-pointer"
+                        className="w-full px-3.5 py-2.5 rounded-[11px] bg-[#f5f5f7] border border-[#e0e0e0] font-normal focus:bg-white focus:ring-2 focus:ring-[#0066cc] focus:outline-none text-[14px] cursor-pointer"
                       />
                     </div>
                   </div>
@@ -684,16 +554,16 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                 <button
                   type="button"
                   onClick={() => setIsLoanModalOpen(false)}
-                  className="px-5 py-2.5 rounded-full bg-[#f5f5f7] text-[#1d1d1f] font-semibold hover:bg-[#e8e8ed] transition-all cursor-pointer text-xs"
+                  className="px-4 py-2 rounded-full bg-[#f5f5f7] text-[#1d1d1f] font-medium hover:bg-[#e0e0e0] transition-colors cursor-pointer text-[14px]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2.5 rounded-full bg-[#0071e3] hover:bg-[#0077ed] text-white font-semibold transition-all shadow-xs flex items-center space-x-1.5 cursor-pointer text-xs active:scale-95"
+                  className="px-5 py-2 rounded-full bg-[#0066cc] hover:bg-[#0071e3] text-white font-medium transition-all cursor-pointer text-[14px] active:scale-95 flex items-center space-x-1.5"
                 >
                   <CheckCircle2 size={14} />
-                  <span>Save & Recalculate Risk</span>
+                  <span>Save Changes</span>
                 </button>
               </div>
 

@@ -1,5 +1,5 @@
 // Live data.gov.in AGMARKNET Mandi Price Service
-const DATAGOV_API_KEY = import.meta.env.VITE_DATAGOV_API_KEY || '579b464db66ec23bdd00000187e425eb33e94b207a311b47b6fabacc';
+const DATAGOV_API_KEY = import.meta.env.VITE_DATAGOV_API_KEY || '';
 
 // Resource ID for Daily Mandi Price and Arrivals on data.gov.in
 const RESOURCE_ID = '9ef84268-d588-465a-a308-a864a43d0070';

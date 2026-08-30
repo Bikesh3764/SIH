@@ -1,14 +1,14 @@
-// Google Gemini AI Agronomy & Vision Service (Gemini 3.5 Flash Lite)
+// Google Gemini AI Agronomy & Vision Service (Gemini 3.5 Flash Lite & Gemini 3.6 Flash)
 
 export function getGeminiApiKey() {
   const envKey = import.meta.env.VITE_GEMINI_API_KEY;
   if (envKey && envKey.trim().length > 10) return envKey.trim();
   const localKey = typeof window !== 'undefined' ? localStorage.getItem('user_gemini_api_key') : null;
   if (localKey && localKey.trim().length > 10) return localKey.trim();
-  return 'AIzaSyBlBjq_dryGV5WOgHLn37LnvbmmgipFoDw';
+  return '';
 }
 
-// Google Gemini 3.5 Flash Lite & Gemini 3.6 Flash
+// Google Gemini 3.5 Flash Lite & 3.6 Flash
 const MODELS = [
   'gemini-3.5-flash-lite',
   'gemini-3.6-flash',
@@ -119,7 +119,7 @@ export async function diagnoseCropDisease({ imageBase64, mimeType = 'image/jpeg'
     en: 'English',
     hi: 'Hindi (हिन्दी)',
     or: 'Odia (ଓଡ଼ିଆ)',
-    mr: 'Marathi (मराठी)',
+    mr: 'Marathi (मraठी)',
     pa: 'Punjabi (ਪੰਜਾਬੀ)',
     te: 'Telugu (తెలుగు)',
     ta: 'Tamil (தமிழ்)',
@@ -176,8 +176,7 @@ Return ONLY a valid JSON object matching this schema without markdown code block
       ]
     }],
     generationConfig: {
-      temperature: 0.2,
-      responseMimeType: "application/json"
+      temperature: 0.2
     }
   };
 

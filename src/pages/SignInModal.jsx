@@ -97,7 +97,7 @@ export default function SignInModal({ isOpen, onClose, onLoginSuccess, currentLa
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 15 }}
           transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full max-w-lg bg-white text-[#1d1d1f] rounded-[22px] shadow-2xl overflow-hidden p-6 sm:p-8 space-y-5 border border-[#e0e0e0] my-8"
+          className="relative w-full max-w-lg liquid-glass text-[#1d1d1f] rounded-[32px] shadow-2xl overflow-hidden p-6 sm:p-8 space-y-5 border border-white/80 my-8"
         >
           
           {/* Top Header: Apple Language Popover + Close Button */}

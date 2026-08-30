@@ -371,10 +371,12 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
       className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6 text-[#1d1d1f]"
     >
       
-      {/* 1. Hero Profile Header Bar (Apple SF-Pro Design) */}
+      {/* 1. Hero Profile Header Bar (Apple SF-Pro Design with Liquid Glass & Hover) */}
       <motion.div 
         variants={itemVariants}
-        className="p-6 sm:p-7 rounded-[24px] bg-white border border-[#d2d2d7]/70 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)]"
+        whileHover={{ y: -5, scale: 1.01 }}
+        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+        className="p-6 sm:p-7 rounded-[28px] liquid-glass border border-white/90 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-[0_8px_28px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_48px_rgba(0,113,227,0.12)] cursor-default transition-all"
       >
         <div className="flex items-center space-x-4">
           <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-[#0071e3] to-[#005bb5] text-white flex items-center justify-center text-xl font-bold shadow-md shadow-blue-500/20 shrink-0">
@@ -410,7 +412,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
             whileHover={{ scale: 1.03, y: -1 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => onNavigate('schemes')}
-            className="px-5 py-2 rounded-full bg-[#0071e3] hover:bg-[#0077ed] text-white text-[13px] font-semibold shadow-md shadow-blue-500/20 active:scale-95 transition-all cursor-pointer flex items-center space-x-1.5"
+            className="px-5 py-2 rounded-full liquid-pill-btn text-white text-[13px] font-semibold shadow-md shadow-blue-500/20 active:scale-95 transition-all cursor-pointer flex items-center space-x-1.5"
           >
             <span>{t.schemesTitle || 'Govt Schemes'}</span>
             <ArrowRight size={14} />
@@ -421,10 +423,10 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
       {/* 2. Predictive Farm Distress-Risk Telemetry (Apple Vision Glassmorphism) */}
       <motion.div 
         variants={itemVariants}
-        className="p-6 sm:p-8 rounded-[26px] bg-gradient-to-br from-[#1c1c1e] via-[#161618] to-[#111113] text-white space-y-6 shadow-[0_24px_50px_rgba(0,0,0,0.3)] border border-white/10 relative overflow-hidden backdrop-blur-2xl"
+        className="p-6 sm:p-8 rounded-[26px] liquid-glass-dark text-white space-y-6 relative overflow-hidden"
       >
         {/* Ambient Apple Glow Orbs */}
-        <div className="absolute -top-24 -right-24 w-80 h-80 bg-[#0071e3]/15 rounded-full blur-[90px] pointer-events-none" />
+        <div className="absolute -top-24 -right-24 w-80 h-80 liquid-pill-btn/15 rounded-full blur-[90px] pointer-events-none" />
         <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-[#30d158]/10 rounded-full blur-[90px] pointer-events-none" />
 
         {/* Telemetry Header */}
@@ -439,7 +441,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
           <div className="flex items-center space-x-2 shrink-0">
             <motion.div 
               whileHover={{ scale: 1.05 }}
-              className="px-4 py-2 rounded-full bg-white/[0.08] hover:bg-white/[0.12] border border-white/15 backdrop-blur-xl shadow-lg flex items-center space-x-2.5 transition-all cursor-default"
+              className="px-4 py-2 rounded-full liquid-glass/[0.08] hover:liquid-glass/[0.12] border border-white/15 backdrop-blur-xl shadow-lg flex items-center space-x-2.5 transition-all cursor-default"
             >
               <span className="w-2.5 h-2.5 rounded-full bg-[#2997ff] animate-ping" />
               <span className="text-sm font-semibold tracking-tight text-white">
@@ -456,7 +458,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
           <motion.div 
             whileHover={{ y: -5, scale: 1.015 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="p-5 sm:p-6 rounded-[22px] bg-white/[0.04] hover:bg-white/[0.07] border border-white/10 hover:border-white/20 backdrop-blur-xl shadow-md flex flex-col justify-between space-y-4 transition-colors group"
+            className="p-5 sm:p-6 rounded-[22px] liquid-glass/[0.04] hover:liquid-glass/[0.07] border border-white/10 hover:border-white/20 backdrop-blur-xl shadow-md flex flex-col justify-between space-y-4 transition-colors group"
           >
             <div className="space-y-2">
               <div className="flex items-center justify-between text-xs text-white/70">
@@ -464,7 +466,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                   <span>🌧️</span>
                   <span>{t.rainfallVariance || 'Rainfall Telemetry'}</span>
                 </span>
-                <span className="px-2 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-[10px] text-white/60 font-semibold">
+                <span className="px-2 py-0.5 rounded-full liquid-glass/[0.06] border border-white/10 text-[10px] text-white/60 font-semibold">
                   40% Impact
                 </span>
               </div>
@@ -480,7 +482,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
 
               {/* Exact Proportional Progress Bar */}
               <div className="space-y-1">
-                <div className="w-full bg-white/10 h-2 rounded-full overflow-hidden p-0.5">
+                <div className="w-full liquid-glass/10 h-2 rounded-full overflow-hidden p-0.5">
                   <motion.div 
                     initial={{ width: 0 }}
                     animate={{ width: `${Math.min(100, Math.max(5, parseInt(currentRainProb)))}%` }}
@@ -508,7 +510,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
           <motion.div 
             whileHover={{ y: -5, scale: 1.015 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="p-5 sm:p-6 rounded-[22px] bg-white/[0.04] hover:bg-white/[0.07] border border-white/10 hover:border-white/20 backdrop-blur-xl shadow-md flex flex-col justify-between space-y-4 transition-colors group"
+            className="p-5 sm:p-6 rounded-[22px] liquid-glass/[0.04] hover:liquid-glass/[0.07] border border-white/10 hover:border-white/20 backdrop-blur-xl shadow-md flex flex-col justify-between space-y-4 transition-colors group"
           >
             <div className="space-y-2">
               <div className="flex items-center justify-between text-xs text-white/70">
@@ -516,7 +518,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                   <span>📈</span>
                   <span>{t.mandiRealization || 'Crop Realization'}</span>
                 </span>
-                <span className="px-2 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-[10px] text-white/60 font-semibold">
+                <span className="px-2 py-0.5 rounded-full liquid-glass/[0.06] border border-white/10 text-[10px] text-white/60 font-semibold">
                   35% Impact
                 </span>
               </div>
@@ -532,7 +534,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
 
               {/* Exact Proportional Progress Bar: 37% width for +37% margin */}
               <div className="space-y-1">
-                <div className="w-full bg-white/10 h-2 rounded-full overflow-hidden p-0.5">
+                <div className="w-full liquid-glass/10 h-2 rounded-full overflow-hidden p-0.5">
                   <motion.div 
                     initial={{ width: 0 }}
                     animate={{ width: `${Math.min(100, Math.max(5, avgMarginPct))}%` }}
@@ -553,7 +555,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
               {cropPerformanceList.map((c, idx) => (
                 <span 
                   key={idx}
-                  className="text-[10.5px] font-medium px-2 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-white/90"
+                  className="text-[10.5px] font-medium px-2 py-0.5 rounded-full liquid-glass/[0.06] border border-white/10 text-white/90"
                 >
                   {c.key}: <strong className="text-[#30d158]">+{c.marginPct}%</strong>
                 </span>
@@ -569,7 +571,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
               setTempLoanDetails(loanDetails);
               setIsLoanModalOpen(true);
             }}
-            className="p-5 sm:p-6 rounded-[22px] bg-white/[0.04] hover:bg-white/[0.07] border border-white/10 hover:border-[#ffd60a]/40 backdrop-blur-xl shadow-md flex flex-col justify-between space-y-4 transition-all cursor-pointer group"
+            className="p-5 sm:p-6 rounded-[22px] liquid-glass/[0.04] hover:liquid-glass/[0.07] border border-white/10 hover:border-[#ffd60a]/40 backdrop-blur-xl shadow-md flex flex-col justify-between space-y-4 transition-all cursor-pointer group"
           >
             <div className="space-y-2">
               <div className="flex items-center justify-between text-xs text-white/70">
@@ -590,7 +592,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
 
               {/* Exact Proportional Progress Bar */}
               <div className="space-y-1">
-                <div className="w-full bg-white/10 h-2 rounded-full overflow-hidden p-0.5">
+                <div className="w-full liquid-glass/10 h-2 rounded-full overflow-hidden p-0.5">
                   <motion.div 
                     initial={{ width: 0 }}
                     animate={{ width: loanMetrics.barWidth }}
@@ -609,7 +611,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
 
             <div className="pt-2 border-t border-white/[0.06] text-xs text-white/60 flex items-center justify-between">
               <span className="truncate">{loanMetrics.subText}</span>
-              <span className="px-2 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-[10px] text-white/60 font-semibold shrink-0">
+              <span className="px-2 py-0.5 rounded-full liquid-glass/[0.06] border border-white/10 text-[10px] text-white/60 font-semibold shrink-0">
                 25% Impact
               </span>
             </div>
@@ -643,7 +645,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                 whileTap={{ scale: 0.96 }}
                 transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                 onClick={() => onNavigate(service.id)}
-                className={`p-6 rounded-[24px] bg-white border border-[#d2d2d7]/70 ${service.hoverGlow} shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.08)] transition-all duration-300 cursor-pointer flex flex-col justify-between space-y-5 group relative overflow-hidden`}
+                className={`p-6 rounded-[24px] liquid-glass border border-white/80 ${service.hoverGlow} shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.08)] transition-all duration-300 cursor-pointer flex flex-col justify-between space-y-5 group relative overflow-hidden`}
               >
                 {/* Top Row: Apple Vibrant Squircle Icon & Tag */}
                 <div className="space-y-3.5">
@@ -651,7 +653,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                     <div className={`w-12 h-12 rounded-[16px] bg-gradient-to-br ${service.iconGrad} text-white flex items-center justify-center shadow-md transition-transform duration-300 group-hover:scale-110`}>
                       <IconComp size={22} className="stroke-[2.2]" />
                     </div>
-                    <span className="px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-[#f5f5f7] group-hover:bg-white text-[#86868b] border border-[#d2d2d7]/60 transition-colors">
+                    <span className="px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-[#f5f5f7] group-hover:bg-white group-hover:text-[#0071e3] text-[#86868b] border border-[#d2d2d7]/60 transition-colors">
                       {service.tag}
                     </span>
                   </div>
@@ -670,7 +672,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
 
                 {/* Bottom Row: Apple Interactive Capsule Button */}
                 <div className="pt-2">
-                  <div className="w-full py-2 px-3 rounded-full bg-[#f5f5f7] group-hover:bg-[#0071e3] text-[#1d1d1f] group-hover:text-white text-xs font-semibold flex items-center justify-between transition-all duration-300 shadow-2xs">
+                  <div className="w-full py-2.5 px-3.5 rounded-full bg-[#f5f5f7] group-hover:bg-gradient-to-r group-hover:from-[#0077ed] group-hover:to-[#0066cc] text-[#1d1d1f] group-hover:text-white text-xs font-semibold flex items-center justify-between transition-all duration-300 shadow-xs group-hover:shadow-[0_6px_18px_rgba(0,113,227,0.4)] border border-transparent group-hover:border-white/30">
                     <span>{t.open || 'Launch'}</span>
                     <ChevronRight size={13} className="group-hover:translate-x-1 transition-transform" />
                   </div>
@@ -681,53 +683,61 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
         </div>
       </motion.div>
 
-      {/* 4. Live Mandi Snapshot & Weather Guidance (Directly Connected to APIs) */}
+      {/* 4. Live Mandi Snapshot & Weather Guidance (Apple Vision Liquid Glass Cards) */}
       <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
-        {/* Mandi Price Snapshot Card */}
+        {/* 1. AGMARKNET Live Mandi Snapshot Liquid Glass Card */}
         <motion.div 
-          whileHover={{ y: -4 }}
-          className="p-6 sm:p-7 rounded-[22px] bg-white border border-[#d2d2d7]/60 space-y-5 flex flex-col justify-between shadow-[0_2px_12px_rgba(0,0,0,0.03)]"
+          whileHover={{ y: -6, scale: 1.01 }}
+          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="p-6 sm:p-7 rounded-[28px] liquid-glass border border-white/80 space-y-5 flex flex-col justify-between shadow-[0_8px_32px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_48px_rgba(0,113,227,0.12)] transition-all"
         >
           <div className="space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-[#f0f0f0]">
-              <div>
-                <span className="text-[11px] font-semibold uppercase tracking-wider text-emerald-700 block">
-                  AGMARKNET Live Stream
+            <div className="flex items-center justify-between pb-3.5 border-b border-black/[0.06]">
+              <div className="space-y-0.5">
+                <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 font-bold text-[10px] tracking-wider uppercase border border-emerald-500/20 inline-block">
+                  {t.agmarknetStream || "AGMARKNET LIVE STREAM"}
                 </span>
-                <h3 className="text-[20px] font-semibold tracking-tight text-[#1d1d1f]">
+                <h3 className="text-[19px] sm:text-[21px] font-bold tracking-tight text-[#1d1d1f]">
                   {t.liveMandiSnapshot || 'Live Mandi Snapshot'} ({districtData.name})
                 </h3>
               </div>
+              
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => onNavigate('market')}
-                className="text-[13px] font-semibold text-[#0066cc] hover:underline flex items-center gap-1 cursor-pointer"
+                className="liquid-pill-light px-3.5 py-1.5 rounded-full text-xs font-semibold text-[#0071e3] flex items-center gap-1 cursor-pointer shadow-xs"
               >
                 <span>{t.fullRadar || 'Full Radar'}</span>
-                <ChevronRight size={14} />
+                <ChevronRight size={13} />
               </motion.button>
             </div>
 
-            {/* 3 Real Mandi Commodity Cards */}
+            {/* 3 Real Mandi Liquid Commodity Pods */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {districtData.crops.map((item, idx) => (
                 <motion.div 
                   key={idx} 
-                  whileHover={{ scale: 1.04, y: -2 }}
+                  whileHover={{ scale: 1.05, y: -3 }}
                   whileTap={{ scale: 0.96 }}
                   onClick={() => onNavigate('market')}
-                  className="p-4 rounded-[16px] bg-[#f5f5f7] hover:bg-[#ebebee] transition-colors space-y-1.5 cursor-pointer shadow-xs border border-[#e0e0e0]/70"
+                  className="p-4 rounded-[20px] liquid-glass hover:bg-white/95 transition-all space-y-1.5 cursor-pointer shadow-xs border border-white/90 group"
                 >
-                  <div className="flex justify-between items-baseline">
-                    <span className="text-[13px] font-semibold text-[#1d1d1f] truncate">{item.key}</span>
-                    <span className={`text-[11px] font-bold ${item.trend === 'up' ? 'text-emerald-700' : 'text-rose-700'}`}>{item.change}</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-[13px] font-bold text-[#1d1d1f] truncate">{item.key}</span>
+                    <span className={`text-[10.5px] font-bold px-1.5 py-0.5 rounded-full ${
+                      item.trend === 'up' 
+                        ? 'bg-emerald-100/80 text-emerald-800' 
+                        : 'bg-rose-100/80 text-rose-800'
+                    }`}>
+                      {item.change}
+                    </span>
                   </div>
-                  <div className="text-[20px] font-bold tracking-tight text-[#1d1d1f]">
-                    ₹{item.price.toLocaleString()} <span className="text-[10px] font-normal text-[#86868b]">{item.unit}</span>
+                  <div className="text-[21px] font-extrabold tracking-tight text-[#1d1d1f] group-hover:text-[#0071e3] transition-colors">
+                    ₹{item.price.toLocaleString()} <span className="text-[10px] font-medium text-[#86868b]">{item.unit}</span>
                   </div>
-                  <div className="text-[11px] text-[#7a7a7a]">
+                  <div className="text-[11px] text-[#86868b] font-medium pt-0.5 border-t border-black/[0.04]">
                     MSP: ₹{item.msp.toLocaleString()}
                   </div>
                 </motion.div>
@@ -735,64 +745,76 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
             </div>
           </div>
 
-          <div className="pt-3 border-t border-[#f0f0f0] flex items-center justify-between text-[13px]">
-            <span className="text-[#7a7a7a]">{t.compareTransport || 'Compare regional APMC spot prices'}</span>
+          <div className="pt-3.5 border-t border-black/[0.06] flex items-center justify-between text-xs">
+            <span className="text-[#86868b]">{t.compareTransport || 'Compare regional APMC spot prices'}</span>
             <button
               onClick={() => onNavigate('market')}
-              className="text-[#0066cc] font-semibold hover:underline cursor-pointer"
+              className="text-[#0071e3] font-bold hover:underline cursor-pointer flex items-center gap-1"
             >
-              {t.mandiComparisonBtn || 'Mandi Radar →'}
+              <span>{t.mandiComparisonBtn || 'Mandi Comparison →'}</span>
             </button>
           </div>
         </motion.div>
 
-        {/* Weather Advisory Card */}
+        {/* 2. OPEN-METEO Live Microclimate Liquid Glass Card */}
         <motion.div 
-          whileHover={{ y: -4 }}
-          className="p-6 sm:p-7 rounded-[22px] bg-white border border-[#d2d2d7]/60 space-y-5 flex flex-col justify-between shadow-[0_2px_12px_rgba(0,0,0,0.03)]"
+          whileHover={{ y: -6, scale: 1.01 }}
+          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="p-6 sm:p-7 rounded-[28px] liquid-glass border border-white/80 space-y-5 flex flex-col justify-between shadow-[0_8px_32px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_48px_rgba(0,113,227,0.12)] transition-all"
         >
           <div className="space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-[#f0f0f0]">
-              <div>
-                <span className="text-[11px] font-semibold uppercase tracking-wider text-[#0066cc] block">
-                  Open-Meteo Station
+            <div className="flex items-center justify-between pb-3.5 border-b border-black/[0.06]">
+              <div className="space-y-0.5">
+                <span className="px-2.5 py-0.5 rounded-full bg-blue-500/10 text-[#0071e3] font-bold text-[10px] tracking-wider uppercase border border-blue-500/20 inline-block">
+                  {t.openMeteoStation || "OPEN-METEO STATION"}
                 </span>
-                <h3 className="text-[20px] font-semibold tracking-tight text-[#1d1d1f]">
+                <h3 className="text-[19px] sm:text-[21px] font-bold tracking-tight text-[#1d1d1f]">
                   {districtData.name} {t.weather || 'Weather'}
                 </h3>
               </div>
+
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => onNavigate('weather')}
-                className="text-[13px] font-semibold text-[#0066cc] hover:underline flex items-center gap-1 cursor-pointer"
+                className="liquid-pill-light px-3.5 py-1.5 rounded-full text-xs font-semibold text-[#0071e3] flex items-center gap-1 cursor-pointer shadow-xs"
               >
-                <span>{t.fiveDayForecast || '7-Day Forecast'}</span>
-                <ChevronRight size={14} />
+                <span>{t.fiveDayForecast || '5-Day Forecast'}</span>
+                <ChevronRight size={13} />
               </motion.button>
             </div>
 
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-[38px] font-bold tracking-tight text-[#1d1d1f] leading-none flex items-center gap-2">
+                <div className="text-[40px] font-extrabold tracking-tight text-[#1d1d1f] leading-none flex items-center gap-2.5">
                   <span>{currentTemp}</span>
-                  <span className="text-2xl">{currentConditionIcon}</span>
+                  <span className="text-3xl animate-bounce">{currentConditionIcon}</span>
                 </div>
-                <p className="text-[13px] text-[#7a7a7a] mt-1 font-medium">
-                  {currentCondition} • Rain Chance: <strong className="text-[#0066cc]">{currentRainProb}</strong>
+                <p className="text-xs text-[#86868b] mt-1.5 font-medium">
+                  {currentCondition} • Rain Chance: <strong className="text-[#0071e3] font-bold">{currentRainProb}</strong>
                 </p>
               </div>
 
-              <div className="space-y-1 text-right text-[13px] text-[#7a7a7a]">
-                <p>Humidity: <strong className="text-[#1d1d1f] font-semibold">{currentHumidity}</strong></p>
-                <p>Wind: <strong className="text-[#1d1d1f] font-semibold">{currentWindSpeed}</strong></p>
+              <div className="space-y-1.5 text-right text-xs">
+                <div className="px-2.5 py-1 rounded-full bg-black/5 text-[#1d1d1f] font-medium inline-block">
+                  💧 Humidity: <strong>{currentHumidity}</strong>
+                </div>
+                <div className="block">
+                  <span className="px-2.5 py-1 rounded-full bg-black/5 text-[#1d1d1f] font-medium inline-block">
+                    💨 Wind: <strong>{currentWindSpeed}</strong>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="p-3.5 rounded-[14px] bg-[#f5f5f7] border border-[#e0e0e0] text-[13px] text-[#1d1d1f] space-y-0.5">
-            <span className="font-semibold text-[#0066cc] block">⚡ {t.hyperlocalAdvTitle || "Hyperlocal Advisory"}:</span>
-            <p className="text-[12px] text-[#7a7a7a] leading-relaxed">
+          {/* Hyperlocal Advisory Liquid Pod */}
+          <div className="p-4 rounded-[20px] bg-gradient-to-r from-blue-50/80 via-blue-50/50 to-indigo-50/60 backdrop-blur-xl border border-blue-200/70 shadow-xs text-xs space-y-1">
+            <div className="flex items-center space-x-1.5 font-bold text-[#0071e3] uppercase tracking-wider">
+              <span>⚡</span>
+              <span>{t.hyperlocalAdvTitle || "Hyperlocal Advisory"}</span>
+            </div>
+            <p className="text-xs text-[#1d1d1f] font-medium leading-relaxed">
               {dynamicAdvisory}
             </p>
           </div>
@@ -808,7 +830,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full max-w-lg bg-white rounded-[22px] p-6 sm:p-8 shadow-2xl space-y-5 border border-[#e0e0e0]"
+            className="relative w-full max-w-lg liquid-glass rounded-[22px] p-6 sm:p-8 shadow-2xl space-y-5 border border-[#e0e0e0]"
           >
             
             <div className="flex items-center justify-between pb-3 border-b border-[#f0f0f0]">
@@ -874,7 +896,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                       value={tempLoanDetails.bankName}
                       onChange={(e) => setTempLoanDetails(prev => ({ ...prev, bankName: e.target.value }))}
                       placeholder="e.g. State Bank of India, Gramin Bank, PACS"
-                      className="w-full px-3.5 py-2.5 rounded-[12px] bg-[#f5f5f7] border border-[#e0e0e0] font-normal focus:bg-white focus:ring-2 focus:ring-[#0066cc] focus:outline-none text-[13px]"
+                      className="w-full px-3.5 py-2.5 rounded-[12px] bg-[#f5f5f7] border border-[#e0e0e0] font-normal focus:liquid-glass focus:ring-2 focus:ring-[#0066cc] focus:outline-none text-[13px]"
                     />
                   </div>
 
@@ -887,7 +909,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                         value={tempLoanDetails.amount}
                         onChange={(e) => setTempLoanDetails(prev => ({ ...prev, amount: e.target.value }))}
                         placeholder="e.g. 1,50,000"
-                        className="w-full px-3.5 py-2.5 rounded-[12px] bg-[#f5f5f7] border border-[#e0e0e0] font-normal focus:bg-white focus:ring-2 focus:ring-[#0066cc] focus:outline-none text-[13px]"
+                        className="w-full px-3.5 py-2.5 rounded-[12px] bg-[#f5f5f7] border border-[#e0e0e0] font-normal focus:liquid-glass focus:ring-2 focus:ring-[#0066cc] focus:outline-none text-[13px]"
                       />
                     </div>
 
@@ -898,7 +920,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                         required
                         value={tempLoanDetails.dueDate}
                         onChange={(e) => setTempLoanDetails(prev => ({ ...prev, dueDate: e.target.value }))}
-                        className="w-full px-3.5 py-2.5 rounded-[12px] bg-[#f5f5f7] border border-[#e0e0e0] font-normal focus:bg-white focus:ring-2 focus:ring-[#0066cc] focus:outline-none text-[13px] cursor-pointer"
+                        className="w-full px-3.5 py-2.5 rounded-[12px] bg-[#f5f5f7] border border-[#e0e0e0] font-normal focus:liquid-glass focus:ring-2 focus:ring-[#0066cc] focus:outline-none text-[13px] cursor-pointer"
                       />
                     </div>
                   </div>
@@ -915,7 +937,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-full bg-[#0066cc] hover:bg-[#0071e3] text-white font-medium transition-all cursor-pointer text-[13px] active:scale-95 flex items-center space-x-1.5"
+                  className="px-5 py-2 rounded-full bg-[#0066cc] hover:liquid-pill-btn text-white font-medium transition-all cursor-pointer text-[13px] active:scale-95 flex items-center space-x-1.5"
                 >
                   <CheckCircle2 size={14} />
                   <span>Save Changes</span>

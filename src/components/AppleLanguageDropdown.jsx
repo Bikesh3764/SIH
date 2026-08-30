@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ChevronDown, Check } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDown, Check, Globe } from 'lucide-react';
 import { LANGUAGES } from '../data/mockAgriData';
 
 export default function AppleLanguageDropdown({ currentLang, setLang, variant = 'light' }) {
@@ -24,18 +25,18 @@ export default function AppleLanguageDropdown({ currentLang, setLang, variant = 
   const isDark = variant === 'dark';
 
   return (
-    <div className="relative inline-block text-left" ref={dropdownRef}>
+    <div className="relative inline-block text-left z-50" ref={dropdownRef}>
       {/* Apple Capsule Trigger */}
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center space-x-2 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-tight transition-all duration-200 cursor-pointer shadow-xs active:scale-95 ${
+        className={`flex items-center space-x-1.5 sm:space-x-2 px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-tight transition-all duration-200 cursor-pointer shadow-xs active:scale-95 ${
           isDark
-            ? 'bg-black/50 hover:bg-black/70 text-white border border-white/20 backdrop-blur-md'
-            : 'bg-white hover:bg-[#f5f5f7] text-[#1d1d1f] border border-[#d2d2d7]/80'
+            ? 'liquid-glass-dark text-white border-white/20'
+            : 'liquid-pill-light text-[#1d1d1f]'
         }`}
       >
-        <span>{selectedLanguage.name}</span>
+        <span className="truncate max-w-[90px] sm:max-w-none">{selectedLanguage.name}</span>
         <ChevronDown
           size={13}
           className={`transition-transform duration-300 ${
@@ -44,47 +45,53 @@ export default function AppleLanguageDropdown({ currentLang, setLang, variant = 
         />
       </button>
 
-      {/* Apple Floating Glass Popover Menu */}
-      {isOpen && (
-        <div
-          className={`absolute right-0 mt-2 w-48 rounded-[18px] p-1.5 shadow-2xl z-50 border backdrop-blur-2xl animate-apple-scale ${
-            isDark
-              ? 'bg-[#1d1d1f]/95 border-white/15 text-white'
-              : 'bg-white/95 border-[#d2d2d7]/80 text-[#1d1d1f]'
-          }`}
-        >
-          <div className="space-y-0.5">
-            {LANGUAGES.map((lang) => {
-              const isSelected = lang.code === currentLang;
+      {/* Apple Framer Motion Popover Menu (100% Mobile Responsive) */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 6, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 4, scale: 0.95 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className={`absolute right-0 top-full mt-2 w-52 sm:w-56 max-w-[calc(100vw-28px)] rounded-[22px] p-2 shadow-[0_24px_60px_rgba(0,0,0,0.22)] z-[99999] border backdrop-blur-3xl max-h-80 overflow-y-auto ${
+              isDark
+                ? 'liquid-glass-dark text-white border-white/20'
+                : 'bg-white/95 text-[#1d1d1f] border-white/90 shadow-2xl'
+            }`}
+          >
+            <div className="space-y-0.5">
+              {LANGUAGES.map((lang) => {
+                const isSelected = lang.code === currentLang;
 
-              return (
-                <button
-                  key={lang.code}
-                  type="button"
-                  onClick={() => {
-                    setLang(lang.code);
-                    setIsOpen(false);
-                  }}
-                  className={`w-full flex items-center justify-between px-3 py-2 rounded-[12px] text-xs font-medium transition-all duration-150 cursor-pointer ${
-                    isSelected
-                      ? isDark
-                        ? 'bg-[#2997ff]/20 text-[#2997ff] font-semibold'
-                        : 'bg-[#0071e3]/10 text-[#0071e3] font-semibold'
-                      : isDark
-                      ? 'hover:bg-white/10 text-white/90'
-                      : 'hover:bg-[#f5f5f7] text-[#1d1d1f]'
-                  }`}
-                >
-                  <span>{lang.name}</span>
-                  {isSelected && (
-                    <Check size={14} className={isDark ? 'text-[#2997ff]' : 'text-[#0071e3]'} />
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      )}
+                return (
+                  <button
+                    key={lang.code}
+                    type="button"
+                    onClick={() => {
+                      setLang(lang.code);
+                      setIsOpen(false);
+                    }}
+                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-[14px] text-xs font-medium transition-all duration-150 cursor-pointer ${
+                      isSelected
+                        ? isDark
+                          ? 'bg-[#2997ff]/20 text-[#2997ff] font-bold border border-[#2997ff]/30'
+                          : 'bg-[#0071e3]/12 text-[#0071e3] font-bold border border-[#0071e3]/20 shadow-2xs'
+                        : isDark
+                        ? 'hover:bg-white/10 text-white/90'
+                        : 'hover:bg-black/5 text-[#1d1d1f]'
+                    }`}
+                  >
+                    <span className="font-semibold">{lang.name}</span>
+                    {isSelected && (
+                      <Check size={14} className={isDark ? 'text-[#2997ff]' : 'text-[#0071e3]'} />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

@@ -30,7 +30,7 @@ export default function OfficerDashboard({ triggerActionNotification, currentLan
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fade-in">
       
       {/* Officer Header */}
-      <div className="p-6 rounded-3xl bg-gradient-to-r from-neutral-900 via-neutral-900 to-[#1d1d1f] text-white shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div className="p-6 sm:p-7 rounded-[28px] liquid-glass-dark text-white shadow-[0_12px_40px_rgba(0,0,0,0.25)] flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border border-white/15">
         <div className="flex items-center space-x-4">
           <div className="w-14 h-14 rounded-2xl bg-rose-600/20 border border-rose-500/40 flex items-center justify-center text-rose-400 text-2xl">
             🏛️
@@ -64,7 +64,7 @@ export default function OfficerDashboard({ triggerActionNotification, currentLan
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
         {/* FDI Formula Simulator */}
-        <div className="lg:col-span-6 p-7 rounded-3xl bg-white border border-emerald-100 shadow-sm space-y-6">
+        <div className="lg:col-span-6 p-6 sm:p-7 rounded-[28px] liquid-glass border border-white/80 shadow-[0_8px_32px_rgba(0,0,0,0.04)] space-y-6">
           <div className="flex items-center justify-between pb-4 border-b border-neutral-100">
             <div className="flex items-center space-x-2.5">
               <Sliders size={20} className="text-rose-600" />
@@ -170,7 +170,7 @@ export default function OfficerDashboard({ triggerActionNotification, currentLan
         </div>
 
         {/* Regional Taluk Heatmap */}
-        <div className="lg:col-span-6 p-7 rounded-3xl bg-white border border-emerald-100 shadow-sm space-y-6">
+        <div className="lg:col-span-6 p-6 sm:p-7 rounded-[28px] liquid-glass border border-white/80 shadow-[0_8px_32px_rgba(0,0,0,0.04)] space-y-6">
           <div className="flex items-center justify-between pb-4 border-b border-neutral-100">
             <div className="flex items-center space-x-2.5">
               <MapPin size={20} className="text-emerald-600" />

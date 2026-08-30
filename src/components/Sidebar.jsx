@@ -59,7 +59,7 @@ export default function Sidebar({
 
       {/* Apple Styled Sidebar Drawer */}
       <aside
-        className={`fixed top-0 left-0 bottom-0 w-64 bg-[#f5f5f7] border-r border-[#d2d2d7]/70 z-50 flex flex-col justify-between transition-transform duration-300 ease-in-out lg:translate-x-0 ${
+        className={`fixed top-0 left-0 bottom-0 w-64 bg-[#f5f5f7]/85 backdrop-blur-2xl border-r border-white/70 shadow-[4px_0_24px_rgba(0,0,0,0.02)] z-50 flex flex-col justify-between transition-transform duration-300 ease-in-out lg:translate-x-0 ${
           isOpenMobile ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
@@ -92,9 +92,9 @@ export default function Sidebar({
           {currentUser && (
             <div 
               onClick={() => handleNavClick('profile')}
-              className="mt-4 p-2.5 rounded-[14px] bg-white border border-[#d2d2d7]/70 shadow-xs flex items-center space-x-2.5 cursor-pointer hover:bg-[#fafafc] transition-colors"
+              className="mt-4 p-2.5 rounded-[14px] liquid-glass flex items-center space-x-2.5 cursor-pointer hover:bg-[#fafafc] transition-colors"
             >
-              <div className="w-7 h-7 rounded-full bg-[#0071e3] text-white flex items-center justify-center font-semibold text-xs shrink-0 shadow-xs">
+              <div className="w-7 h-7 rounded-full liquid-pill-btn text-white flex items-center justify-center font-semibold text-xs shrink-0 shadow-xs">
                 {currentUser.name?.charAt(0) || 'U'}
               </div>
               <div className="overflow-hidden">
@@ -118,7 +118,7 @@ export default function Sidebar({
                 onClick={() => handleNavClick(item.id)}
                 className={`w-full flex items-center justify-between px-3 py-2 rounded-[12px] text-[13px] font-medium transition-all active:scale-[0.97] cursor-pointer ${
                   isActive
-                    ? 'bg-[#0071e3] text-white shadow-xs font-semibold'
+                    ? 'liquid-pill-btn text-white shadow-xs font-semibold'
                     : 'text-[#1d1d1f] hover:bg-black/5'
                 }`}
               >
@@ -147,9 +147,18 @@ export default function Sidebar({
           })}
         </nav>
 
-        {/* Bottom Utility Bar */}
-        <div className="p-3.5 border-t border-[#d2d2d7]/60 space-y-2 bg-[#f5f5f7]">
+        {/* Bottom Utility Bar (100% Mobile Accessible) */}
+        <div className="p-3.5 border-t border-[#d2d2d7]/60 space-y-2 bg-[#f5f5f7]/95">
           
+          {/* Mobile Drawer Language Switcher */}
+          <div className="flex items-center justify-between px-2 py-1 text-xs">
+            <span className="text-[11px] font-medium text-[#6e6e73] flex items-center gap-1.5">
+              <Globe size={13} className="text-[#0071e3]" />
+              <span>Language</span>
+            </span>
+            <AppleLanguageDropdown currentLang={currentLang} setLang={setLang} variant="light" />
+          </div>
+
           {/* Low-Bandwidth Mode */}
           <div className="flex items-center justify-between px-2 py-1 text-xs">
             <span className="text-[11px] font-medium text-[#6e6e73] flex items-center gap-1.5">

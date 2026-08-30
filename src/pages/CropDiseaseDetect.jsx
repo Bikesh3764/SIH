@@ -176,10 +176,10 @@ export default function CropDiseaseDetect({ currentLang, onNavigate }) {
 
       {/* STEP 1: Clean Upload Box (Only Photo Upload / Camera Capture) */}
       {!selectedImage && !diagnosisResult && (
-        <div className="p-8 sm:p-14 rounded-[28px] bg-white border border-[#d2d2d7]/70 shadow-[0_4px_24px_rgba(0,0,0,0.03)] text-center space-y-6 animate-apple-in">
+        <div className="p-8 sm:p-14 rounded-[28px] liquid-glass text-center space-y-6 animate-apple-in">
           <div className="max-w-md mx-auto space-y-4">
             
-            <div className="w-16 h-16 rounded-full bg-[#0071e3]/10 text-[#0071e3] mx-auto flex items-center justify-center shadow-xs">
+            <div className="w-16 h-16 rounded-full liquid-pill-btn/10 text-[#0071e3] mx-auto flex items-center justify-center shadow-xs">
               <UploadCloud size={32} />
             </div>
 
@@ -202,7 +202,7 @@ export default function CropDiseaseDetect({ currentLang, onNavigate }) {
               />
               <button
                 onClick={() => fileInputRef.current?.click()}
-                className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-[#0071e3] hover:bg-[#0077ed] text-white text-sm font-semibold tracking-tight shadow-md shadow-blue-500/25 active:scale-95 transition-all cursor-pointer flex items-center justify-center space-x-2"
+                className="w-full sm:w-auto px-8 py-3.5 rounded-full liquid-pill-btn text-white text-sm font-semibold tracking-tight shadow-md shadow-blue-500/25 active:scale-95 transition-all cursor-pointer flex items-center justify-center space-x-2"
               >
                 <span>{t.choosePhotoBtn || 'Choose Photo from Device'}</span>
               </button>
@@ -214,7 +214,7 @@ export default function CropDiseaseDetect({ currentLang, onNavigate }) {
 
       {/* STEP 2: "Ready for Analysis" Card (Image Selected, Before Diagnosis) */}
       {selectedImage && !diagnosisResult && (
-        <div className="p-6 sm:p-8 rounded-[28px] bg-white border border-[#d2d2d7]/70 shadow-[0_4px_24px_rgba(0,0,0,0.03)] space-y-6">
+        <div className="p-6 sm:p-8 rounded-[28px] liquid-glass space-y-6">
           <div className="flex items-center justify-between pb-3 border-b border-[#f0f0f0]">
             <div>
               <span className="text-[11px] font-bold uppercase text-[#0071e3] tracking-wider block">
@@ -255,7 +255,7 @@ export default function CropDiseaseDetect({ currentLang, onNavigate }) {
               <button
                 onClick={handleRunAnalysis}
                 disabled={analyzing}
-                className="w-full py-4 rounded-full bg-[#0071e3] hover:bg-[#0077ed] disabled:opacity-50 text-white text-sm font-semibold shadow-lg shadow-blue-500/25 active:scale-95 transition-all flex items-center justify-center space-x-2 cursor-pointer"
+                className="w-full py-4 rounded-full liquid-pill-btn hover:bg-[#0077ed] disabled:opacity-50 text-white text-sm font-semibold shadow-lg shadow-blue-500/25 active:scale-95 transition-all flex items-center justify-center space-x-2 cursor-pointer"
               >
                 {analyzing ? (
                   <>
@@ -279,7 +279,7 @@ export default function CropDiseaseDetect({ currentLang, onNavigate }) {
         <div className="space-y-6">
           
           {/* Header Action Bar */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-[20px] bg-white border border-[#d2d2d7]/70 shadow-xs">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-[20px] liquid-glass border border-[#d2d2d7]/70 shadow-xs">
             <div className="flex items-center space-x-3">
               <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${
                 diagnosisResult.isPlant === false 
@@ -302,7 +302,7 @@ export default function CropDiseaseDetect({ currentLang, onNavigate }) {
 
             <button
               onClick={handleReset}
-              className="px-5 py-2 rounded-full bg-[#0071e3] text-white text-xs font-semibold hover:bg-[#0077ed] transition-colors flex items-center space-x-1.5 cursor-pointer self-start sm:self-auto"
+              className="px-5 py-2 rounded-full liquid-pill-btn text-white text-xs font-semibold hover:bg-[#0077ed] transition-colors flex items-center space-x-1.5 cursor-pointer self-start sm:self-auto"
             >
               <RotateCcw size={13} />
               <span>Scan Another Leaf</span>
@@ -314,7 +314,7 @@ export default function CropDiseaseDetect({ currentLang, onNavigate }) {
             
             {/* Left Column: Photo & Severity */}
             <div className="space-y-5 lg:col-span-1">
-              <div className="p-5 rounded-[26px] bg-white border border-[#d2d2d7]/70 shadow-xs space-y-4">
+              <div className="p-5 rounded-[26px] liquid-glass border border-[#d2d2d7]/70 shadow-xs space-y-4">
                 <h4 className="text-xs font-bold uppercase text-[#86868b] tracking-wider">
                   Scanned Specimen
                 </h4>
@@ -336,7 +336,7 @@ export default function CropDiseaseDetect({ currentLang, onNavigate }) {
             <div className="space-y-5 lg:col-span-2">
               
               {/* Symptoms Card */}
-              <div className="p-6 rounded-[26px] bg-white border border-[#d2d2d7]/70 shadow-xs space-y-3">
+              <div className="p-6 rounded-[26px] liquid-glass border border-[#d2d2d7]/70 shadow-xs space-y-3">
                 <div className="flex items-center space-x-2 text-amber-600 font-bold text-sm">
                   <AlertTriangle size={17} />
                   <span>Identified Folia Symptoms</span>
@@ -353,7 +353,7 @@ export default function CropDiseaseDetect({ currentLang, onNavigate }) {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 
                 {/* Organic Treatment */}
-                <div className="p-5 rounded-[22px] bg-emerald-50/70 border border-emerald-200/80 space-y-2.5">
+                <div className="p-5 rounded-[22px] liquid-glass bg-emerald-50/60 border-emerald-300/60 shadow-sm space-y-2.5">
                   <div className="flex items-center space-x-2 text-emerald-800 font-bold text-xs uppercase tracking-wider">
                     <CheckCircle2 size={16} className="text-emerald-600" />
                     <span>Organic & Bio-Cure (ICAR)</span>
@@ -364,7 +364,7 @@ export default function CropDiseaseDetect({ currentLang, onNavigate }) {
                 </div>
 
                 {/* Chemical Treatment */}
-                <div className="p-5 rounded-[22px] bg-blue-50/70 border border-blue-200/80 space-y-2.5">
+                <div className="p-5 rounded-[22px] liquid-glass bg-blue-50/60 border-blue-300/60 shadow-sm space-y-2.5">
                   <div className="flex items-center space-x-2 text-blue-800 font-bold text-xs uppercase tracking-wider">
                     <Zap size={16} className="text-blue-600" />
                     <span>Targeted Chemical Cure</span>

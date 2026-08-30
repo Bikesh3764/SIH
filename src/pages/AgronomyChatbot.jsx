@@ -227,7 +227,7 @@ export default function AgronomyChatbot({ currentLang, currentUser }) {
             text: (CHATBOT_CONTENT[currentLang] || CHATBOT_CONTENT.en).welcomeMessage,
             time: 'Just now'
           }])}
-          className="px-4 py-2 rounded-full bg-white hover:bg-[#f5f5f7] border border-[#d2d2d7]/70 text-[#1d1d1f] text-xs font-semibold transition-all flex items-center space-x-1.5 self-start sm:self-auto cursor-pointer shadow-xs active:scale-95"
+          className="liquid-pill-light px-4 py-2 rounded-full text-[#1d1d1f] text-xs font-semibold transition-all flex items-center space-x-1.5 self-start sm:self-auto cursor-pointer shadow-xs active:scale-95"
         >
           <RotateCcw size={13} />
           <span>{t.newSession || 'Reset Chat'}</span>
@@ -239,7 +239,7 @@ export default function AgronomyChatbot({ currentLang, currentUser }) {
         initial={{ opacity: 0, y: 16, scale: 0.99 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="p-4 sm:p-6 rounded-[28px] bg-white border border-[#d2d2d7]/70 shadow-[0_4px_24px_rgba(0,0,0,0.03)] flex flex-col justify-between h-[72vh] sm:h-[640px]"
+        className="p-5 sm:p-7 rounded-[32px] liquid-glass border border-white/80 shadow-[0_12px_44px_rgba(0,0,0,0.04)] flex flex-col justify-between h-[75vh] sm:h-[680px]"
       >
         
         {/* Messages Feed */}
@@ -272,10 +272,10 @@ export default function AgronomyChatbot({ currentLang, currentUser }) {
                   {/* Message Bubble (Apple SF-Pro Typography) */}
                   <div className={`space-y-1.5 max-w-[88%] sm:max-w-[78%] ${isUser ? 'items-end text-right' : 'items-start text-left'}`}>
                     <div
-                      className={`px-4 sm:px-5 py-3 sm:py-3.5 rounded-[20px] text-[14px] sm:text-[14.5px] leading-[1.5] tracking-tight whitespace-pre-line ${
+                      className={`px-4 sm:px-5 py-3 sm:py-3.5 rounded-[22px] text-[14px] sm:text-[14.5px] leading-[1.55] tracking-tight whitespace-pre-line ${
                         isUser
-                          ? 'bg-[#0071e3] text-white rounded-tr-[4px] shadow-xs font-normal'
-                          : 'bg-[#f5f5f7] text-[#1d1d1f] border border-[#e5e5ea] rounded-tl-[4px] shadow-2xs font-normal'
+                          ? 'bg-gradient-to-r from-[#0077ed] to-[#0066cc] text-white rounded-tr-[4px] shadow-md shadow-blue-500/25 border border-white/30 font-normal'
+                          : 'liquid-glass text-[#1d1d1f] border border-white/90 rounded-tl-[4px] shadow-xs font-normal'
                       }`}
                     >
                       {msg.text}
@@ -294,7 +294,7 @@ export default function AgronomyChatbot({ currentLang, currentUser }) {
                             className={`px-2.5 py-0.5 rounded-full border text-[10.5px] font-semibold flex items-center space-x-1 cursor-pointer transition-all ${
                               isSpeakingId === msg.id 
                                 ? 'bg-rose-50 border-rose-200 text-rose-600 animate-pulse' 
-                                : 'bg-white border-[#d2d2d7]/70 text-[#0071e3] hover:bg-[#f5f5f7]'
+                                : 'liquid-pill-light border border-white/80 text-[#0071e3]'
                             }`}
                             title="Listen Audio"
                           >
@@ -338,7 +338,7 @@ export default function AgronomyChatbot({ currentLang, currentUser }) {
                     whileHover={{ y: -2, scale: 1.01 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => handleSendMessage(sq.text)}
-                    className="p-3.5 rounded-[18px] bg-[#f5f5f7] hover:bg-[#ebebee] border border-[#d2d2d7]/60 text-left transition-all cursor-pointer shadow-2xs group flex items-center justify-between"
+                    className="p-4 rounded-[22px] liquid-glass hover:bg-white/95 border border-white/90 text-left transition-all cursor-pointer shadow-xs hover:shadow-md hover:scale-[1.02] group flex items-center justify-between"
                   >
                     <span className="text-[13px] font-medium text-[#1d1d1f] leading-snug group-hover:text-[#0071e3] transition-colors pr-2">
                       {sq.text}
@@ -384,24 +384,26 @@ export default function AgronomyChatbot({ currentLang, currentUser }) {
                 value={inputQuery}
                 onChange={(e) => setInputQuery(e.target.value)}
                 placeholder={isListening ? (t.listening || 'Listening to your voice...') : (t.chatPlaceholder || 'Ask anything about crops, pests, weather or mandi prices...')}
-                className="w-full pl-4 sm:pl-5 pr-12 sm:pr-14 py-3 sm:py-3.5 rounded-full bg-[#f5f5f7] border border-[#d2d2d7]/70 text-[14px] font-normal text-[#1d1d1f] focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:bg-white transition-all shadow-2xs placeholder:text-[#86868b]"
+                className="w-full pl-5 pr-14 py-3.5 sm:py-4 rounded-full liquid-glass border border-white/90 text-[14px] font-normal text-[#1d1d1f] focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:bg-white transition-all shadow-xs placeholder:text-[#86868b]"
               />
               
-              {/* Mic Button */}
-              <motion.button
-                type="button"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={handleStartVoiceRecognition}
-                className={`absolute right-2 sm:right-2.5 top-1/2 -translate-y-1/2 p-2 rounded-full transition-all cursor-pointer ${
-                  isListening
-                    ? 'bg-rose-500 text-white animate-pulse shadow-md'
-                    : 'text-[#0071e3] hover:bg-black/5'
-                }`}
-                title={t.speakVoice || 'Speak'}
-              >
-                {isListening ? <MicOff size={18} /> : <Mic size={18} />}
-              </motion.button>
+              {/* Mic Button Wrapper (Prevents translate-y collision with Framer Motion) */}
+              <div className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 flex items-center justify-center">
+                <motion.button
+                  type="button"
+                  whileHover={{ scale: 1.15 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={handleStartVoiceRecognition}
+                  className={`p-2 rounded-full transition-all cursor-pointer flex items-center justify-center ${
+                    isListening
+                      ? 'bg-rose-500 text-white animate-pulse shadow-md shadow-rose-500/40'
+                      : 'text-[#0071e3] hover:bg-[#0071e3]/10'
+                  }`}
+                  title={t.speakVoice || 'Speak'}
+                >
+                  {isListening ? <MicOff size={18} /> : <Mic size={18} />}
+                </motion.button>
+              </div>
             </div>
 
             {/* Send Button */}
@@ -410,7 +412,7 @@ export default function AgronomyChatbot({ currentLang, currentUser }) {
               whileTap={{ scale: 0.92 }}
               type="submit"
               disabled={!inputQuery.trim()}
-              className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#0071e3] hover:bg-[#0077ed] text-white disabled:opacity-40 transition-all shadow-md shadow-blue-500/20 flex items-center justify-center cursor-pointer shrink-0"
+              className="w-11 h-11 sm:w-12 sm:h-12 rounded-full liquid-pill-btn text-white disabled:opacity-40 transition-all shadow-md shadow-blue-500/20 flex items-center justify-center cursor-pointer shrink-0"
             >
               <Send size={17} />
             </motion.button>

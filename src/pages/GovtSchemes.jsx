@@ -487,7 +487,7 @@ export default function GovtSchemes({ currentLang, onNavigate }) {
       <div className="p-6 sm:p-8 rounded-[26px] bg-gradient-to-br from-[#1c1c1e] via-[#161618] to-[#111113] text-white shadow-[0_24px_50px_rgba(0,0,0,0.3)] border border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden backdrop-blur-2xl">
         
         {/* Ambient Apple Glow */}
-        <div className="absolute -top-24 -right-24 w-80 h-80 bg-[#0071e3]/15 rounded-full blur-[90px] pointer-events-none" />
+        <div className="absolute -top-24 -right-24 w-80 h-80 liquid-pill-btn/15 rounded-full blur-[90px] pointer-events-none" />
         <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-emerald-500/10 rounded-full blur-[90px] pointer-events-none" />
 
         <div className="relative z-10 space-y-2 max-w-2xl">
@@ -507,11 +507,11 @@ export default function GovtSchemes({ currentLang, onNavigate }) {
 
         {/* 2 Stats Glass Pods */}
         <div className="relative z-10 grid grid-cols-2 gap-3 shrink-0 w-full sm:w-auto">
-          <div className="p-4 rounded-[20px] bg-white/[0.05] border border-white/10 backdrop-blur-xl text-center w-full sm:min-w-[140px] shadow-sm">
+          <div className="p-4 rounded-[20px] liquid-glass/[0.05] border border-white/10 backdrop-blur-xl text-center w-full sm:min-w-[140px] shadow-sm">
             <span className="text-[10.5px] uppercase font-bold text-white/50 block tracking-wider">{t.totalGrantPool || 'Total Budget Pool'}</span>
             <span className="text-lg sm:text-2xl font-bold text-white tracking-tight mt-0.5 block">₹1.24 Lakh Cr</span>
           </div>
-          <div className="p-4 rounded-[20px] bg-white/[0.05] border border-white/10 backdrop-blur-xl text-center w-full sm:min-w-[140px] shadow-sm">
+          <div className="p-4 rounded-[20px] liquid-glass/[0.05] border border-white/10 backdrop-blur-xl text-center w-full sm:min-w-[140px] shadow-sm">
             <span className="text-[10.5px] uppercase font-bold text-white/50 block tracking-wider">{t.activePrograms || 'Active Schemes'}</span>
             <span className="text-lg sm:text-2xl font-bold text-[#2997ff] tracking-tight mt-0.5 block">6 Programs</span>
           </div>
@@ -519,7 +519,7 @@ export default function GovtSchemes({ currentLang, onNavigate }) {
       </div>
 
       {/* 2. Search & Category Filter Toolbar (Apple Glass Pill Bar) */}
-      <div className="p-4 sm:p-5 rounded-[22px] bg-white border border-[#d2d2d7]/70 space-y-3.5 shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
+      <div className="p-4 sm:p-5 rounded-[22px] liquid-glass border border-[#d2d2d7]/70 space-y-3.5 shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
         
         {/* Apple Pill Search Input */}
         <div className="relative">
@@ -529,7 +529,7 @@ export default function GovtSchemes({ currentLang, onNavigate }) {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={t.searchSchemesPlaceholder || 'Search schemes by name, keyword (e.g. PM-KISAN, Tractor, Solar, KCC)...'}
-            className="w-full pl-11 pr-10 py-3 rounded-full bg-[#f5f5f7] border border-[#d2d2d7]/60 text-[13.5px] font-normal text-[#1d1d1f] focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:bg-white transition-all shadow-2xs"
+            className="w-full pl-11 pr-10 py-3 rounded-full bg-[#f5f5f7] border border-[#d2d2d7]/60 text-[13.5px] font-normal text-[#1d1d1f] focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:liquid-glass transition-all shadow-2xs"
           />
           {searchQuery && (
             <button onClick={() => setSearchQuery('')} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#86868b] hover:text-[#1d1d1f] cursor-pointer">
@@ -552,7 +552,7 @@ export default function GovtSchemes({ currentLang, onNavigate }) {
               onClick={() => setSelectedCategory(cat.id)}
               className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer active:scale-95 shadow-2xs ${
                 selectedCategory === cat.id
-                  ? 'bg-[#0071e3] text-white shadow-md shadow-blue-500/20'
+                  ? 'liquid-pill-btn text-white shadow-md shadow-blue-500/20'
                   : 'bg-[#f5f5f7] hover:bg-[#e8e8ed] text-[#1d1d1f] border border-[#d2d2d7]/60'
               }`}
             >
@@ -578,7 +578,7 @@ export default function GovtSchemes({ currentLang, onNavigate }) {
           return (
             <div
               key={scheme.id}
-              className="p-6 sm:p-7 rounded-[26px] bg-white border border-[#d2d2d7]/70 hover:border-[#0071e3]/40 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.08)] transition-all duration-300 flex flex-col justify-between space-y-5 group"
+              className="p-6 sm:p-7 rounded-[26px] liquid-glass border border-[#d2d2d7]/70 hover:border-[#0071e3]/40 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.08)] transition-all duration-300 flex flex-col justify-between space-y-5 group"
             >
               <div className="space-y-4">
                 
@@ -647,7 +647,7 @@ export default function GovtSchemes({ currentLang, onNavigate }) {
                   href={scheme.officialUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-5 py-2.5 rounded-full bg-[#0071e3] hover:bg-[#0077ed] text-white text-xs font-semibold shadow-md shadow-blue-500/20 active:scale-95 transition-all flex items-center space-x-1.5 cursor-pointer self-stretch sm:self-auto justify-center"
+                  className="px-5 py-2.5 rounded-full liquid-pill-btn hover:bg-[#0077ed] text-white text-xs font-semibold shadow-md shadow-blue-500/20 active:scale-95 transition-all flex items-center space-x-1.5 cursor-pointer self-stretch sm:self-auto justify-center"
                 >
                   <span>{t.officialPortalBtn || "Official Portal"}</span>
                   <ExternalLink size={13} />

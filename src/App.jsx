@@ -62,7 +62,15 @@ export default function App() {
   const isLanding = activePage === 'landing';
 
   return (
-    <div className="min-h-screen bg-[#f5f5f7] text-[#1d1d1f] flex font-sans selection:bg-[#0071e3]/20 selection:text-[#0071e3]">
+    <div className="min-h-screen bg-[#f5f5f7] text-[#1d1d1f] flex font-sans selection:bg-[#0071e3]/20 selection:text-[#0071e3] relative">
+      {/* Apple VisionOS Dynamic Liquid Ambient Orbs (Refraction medium) */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10 select-none">
+        <div className="absolute -top-32 -right-32 w-[520px] h-[520px] rounded-full bg-gradient-to-br from-[#0071e3]/12 via-[#2997ff]/8 to-transparent blur-[130px] animate-liquid-orb-1" />
+        <div className="absolute top-1/3 -left-32 w-[480px] h-[480px] rounded-full bg-gradient-to-br from-[#30d158]/10 via-[#34c759]/6 to-transparent blur-[130px] animate-liquid-orb-2" />
+        <div className="absolute -bottom-32 right-1/4 w-[560px] h-[560px] rounded-full bg-gradient-to-br from-[#af52de]/8 via-[#5856d6]/6 to-transparent blur-[140px] animate-liquid-orb-3" />
+        <div className="absolute top-2/3 right-10 w-[380px] h-[380px] rounded-full bg-gradient-to-br from-[#ff9500]/8 via-[#ffd60a]/5 to-transparent blur-[120px] animate-liquid-orb-1" />
+      </div>
+
       
       {/* Apple Floating Toast Notification */}
       {toastMessage && (
@@ -99,11 +107,11 @@ export default function App() {
       )}
 
       {/* Main Content Area */}
-      <div className={`flex-1 min-w-0 flex flex-col min-h-screen transition-all duration-300 w-full overflow-x-hidden ${!isLanding ? 'lg:pl-64' : 'w-full'}`}>
+      <div className={`flex-1 min-w-0 flex flex-col min-h-screen transition-all duration-300 w-full ${!isLanding ? 'lg:pl-64' : 'w-full'}`}>
         
         {/* Apple Sub-Nav Frosted Header */}
         {!isLanding && (
-          <header className="sticky top-0 z-30 h-[56px] px-3 sm:px-8 bg-[#f5f5f7]/80 backdrop-blur-xl border-b border-[#d2d2d7]/60 flex items-center justify-between shadow-xs w-full">
+          <header className="sticky top-0 z-50 h-[56px] px-3 sm:px-8 bg-[#f5f5f7]/85 backdrop-blur-2xl border-b border-[#d2d2d7]/60 flex items-center justify-between shadow-xs w-full">
             <div className="flex items-center space-x-3">
               <button
                 onClick={() => setIsMobileNavOpen(true)}

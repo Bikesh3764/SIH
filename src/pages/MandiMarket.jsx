@@ -597,13 +597,13 @@ export default function MandiMarket({ currentLang, currentUser }) {
     : chartData.points[chartData.points.length - 1];
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-5 sm:space-y-6 animate-apple-fade text-[#1d1d1f] overflow-x-hidden min-w-0 relative">
+    <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-5 sm:space-y-6 animate-apple-fade text-[#1d1d1f] overflow-visible min-w-0 relative">
       
       {/* Apple Frosted Sync Indicator */}
       {(isRefreshing || isDistrictSyncing) && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-md">
-          <div className="p-6 rounded-[24px] bg-white/95 border border-[#d2d2d7]/80 shadow-2xl flex flex-col items-center space-y-3.5 max-w-xs text-center animate-apple-scale">
-            <div className="w-10 h-10 rounded-full bg-[#0071e3]/10 text-[#0071e3] flex items-center justify-center">
+          <div className="p-6 rounded-[24px] liquid-glass/95 border border-[#d2d2d7]/80 shadow-2xl flex flex-col items-center space-y-3.5 max-w-xs text-center animate-apple-scale">
+            <div className="w-10 h-10 rounded-full liquid-pill-btn/10 text-[#0071e3] flex items-center justify-center">
               <span className="w-5 h-5 border-2 border-[#0071e3] border-t-transparent rounded-full animate-spin"></span>
             </div>
             <div className="space-y-0.5">
@@ -615,12 +615,9 @@ export default function MandiMarket({ currentLang, currentUser }) {
       )}
       
       {/* 1. Header (Clean Apple Typography) */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-apple-in">
-        <div>
-          <span className="text-[12px] font-medium uppercase tracking-[0.04em] text-[#0071e3]">
-            AGMARKNET Live Telemetry
-          </span>
-          <h1 className="text-[24px] sm:text-[34px] font-semibold tracking-[-0.374px] text-[#1d1d1f] mt-0.5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-apple-in relative z-20">
+        <div className="space-y-0.5">
+          <h1 className="text-[24px] sm:text-[34px] font-bold tracking-tight text-[#1d1d1f]">
             {t.marketTitle || 'Market Prices & Trends'}
           </h1>
           <p className="text-[13px] sm:text-[15px] text-[#86868b] font-normal">
@@ -632,7 +629,7 @@ export default function MandiMarket({ currentLang, currentUser }) {
           <button
             onClick={handleRefresh}
             disabled={isRefreshing}
-            className="px-4 py-2 rounded-full bg-white hover:bg-[#f5f5f7] border border-[#d2d2d7] text-xs font-semibold text-[#1d1d1f] hover:text-[#0071e3] shadow-xs flex items-center space-x-1.5 cursor-pointer active:scale-95 transition-all disabled:opacity-60"
+            className="px-4 py-2 rounded-full liquid-glass hover:bg-[#f5f5f7] border border-[#d2d2d7] text-xs font-semibold text-[#1d1d1f] hover:text-[#0071e3] shadow-xs flex items-center space-x-1.5 cursor-pointer active:scale-95 transition-all disabled:opacity-60"
           >
             <RotateCw size={13} className={isRefreshing ? 'animate-spin text-[#0071e3]' : ''} />
             <span>{isRefreshing ? (t.updating || 'Syncing...') : (t.refresh || 'Sync Mandi Feed')}</span>
@@ -640,11 +637,11 @@ export default function MandiMarket({ currentLang, currentUser }) {
         </div>
       </div>
 
-      {/* Top 3 Dynamic Selectors */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-3.5">
+      {/* Top 3 Dynamic Selectors with High Z-Index */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 relative z-40">
         
         {/* 1. Select District */}
-        <div className="p-3.5 sm:p-4 rounded-[18px] bg-white border border-[#e0e0e0] shadow-xs space-y-1.5">
+        <div className="p-4 rounded-[22px] liquid-glass border border-white/80 shadow-xs space-y-1.5 relative z-30 focus-within:z-50 hover:z-40">
           <span className="text-[10px] text-[#86868b] uppercase font-bold tracking-wider block">
             {t.selectDistrict || 'Select District'}
           </span>
@@ -664,7 +661,7 @@ export default function MandiMarket({ currentLang, currentUser }) {
         </div>
 
         {/* 2. Select Market */}
-        <div className="p-3.5 sm:p-4 rounded-[18px] bg-white border border-[#e0e0e0] shadow-xs space-y-1.5">
+        <div className="p-4 rounded-[22px] liquid-glass border border-white/80 shadow-xs space-y-1.5 relative z-20 focus-within:z-50 hover:z-40">
           <span className="text-[10px] text-[#86868b] uppercase font-bold tracking-wider block">
             {t.selectMarket || 'Select Market'}
           </span>
@@ -680,7 +677,7 @@ export default function MandiMarket({ currentLang, currentUser }) {
         </div>
 
         {/* 3. Select Crop */}
-        <div className="p-3.5 sm:p-4 rounded-[18px] bg-white border border-[#e0e0e0] shadow-xs space-y-1.5">
+        <div className="p-4 rounded-[22px] liquid-glass border border-white/80 shadow-xs space-y-1.5 relative z-10 focus-within:z-50 hover:z-40">
           <span className="text-[10px] text-[#86868b] uppercase font-bold tracking-wider block">
             {t.selectCrop || 'Select Crop'}
           </span>
@@ -702,10 +699,10 @@ export default function MandiMarket({ currentLang, currentUser }) {
       </div>
 
       {/* Main Interactive Precision Price Chart Card (Pure Apple Aesthetic) */}
-      <div className="p-5 sm:p-7 rounded-[22px] bg-white border border-[#d2d2d7]/60 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-4">
+      <div className="p-6 sm:p-8 rounded-[28px] liquid-glass border border-white/80 shadow-[0_8px_32px_rgba(0,0,0,0.04)] space-y-5 relative z-10">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#f0f0f0]">
           <div className="flex flex-wrap items-baseline gap-2.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#0071e3]"></span>
+            <span className="w-2.5 h-2.5 rounded-full liquid-pill-btn"></span>
             <h2 className="text-base font-semibold text-[#1d1d1f]">
               {activeCrop.name}
             </h2>
@@ -844,7 +841,7 @@ export default function MandiMarket({ currentLang, currentUser }) {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
         
         {/* Card 1: Modal Rate */}
-        <div className="p-5 sm:p-6 rounded-[20px] bg-white border border-[#d2d2d7]/60 shadow-xs space-y-1.5">
+        <div className="p-5 sm:p-6 rounded-[20px] liquid-glass shadow-xs space-y-1.5">
           <div className="flex justify-between items-center text-xs font-semibold text-[#86868b] uppercase tracking-wider">
             <span>{selectedCropKey} {t.spotRate || 'Spot Rate'}</span>
             <span className="text-[#0071e3] font-bold">{activeCrop.change}</span>
@@ -858,7 +855,7 @@ export default function MandiMarket({ currentLang, currentUser }) {
         </div>
 
         {/* Card 2: Govt MSP Floor */}
-        <div className="p-5 sm:p-6 rounded-[20px] bg-white border border-[#d2d2d7]/60 shadow-xs space-y-1.5">
+        <div className="p-5 sm:p-6 rounded-[20px] liquid-glass shadow-xs space-y-1.5">
           <div className="flex justify-between items-center text-xs font-semibold text-[#86868b] uppercase tracking-wider">
             <span>{t.govtMspFloor || 'Govt Support Price'}</span>
             <span className="text-[#86868b]">Floor Base</span>
@@ -872,7 +869,7 @@ export default function MandiMarket({ currentLang, currentUser }) {
         </div>
 
         {/* Card 3: Live Trading Spread */}
-        <div className="p-5 sm:p-6 rounded-[20px] bg-white border border-[#d2d2d7]/60 shadow-xs space-y-1.5">
+        <div className="p-5 sm:p-6 rounded-[20px] liquid-glass shadow-xs space-y-1.5">
           <div className="flex justify-between items-center text-xs font-semibold text-[#86868b] uppercase tracking-wider">
             <span>{t.dailyTradingRange || 'Trading Spread'}</span>
             <span className="text-[#86868b]">Min - Max</span>
@@ -888,7 +885,7 @@ export default function MandiMarket({ currentLang, currentUser }) {
       </div>
 
       {/* Clean Regional APMC Mandis Comparison (Pure Minimalist Apple Card Grid) */}
-      <div className="p-6 sm:p-7 rounded-[22px] bg-white border border-[#d2d2d7]/60 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-4">
+      <div className="p-6 sm:p-7 rounded-[22px] liquid-glass shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-4">
         <div className="pb-3 border-b border-[#f0f0f0]">
           <span className="text-[10px] font-bold uppercase tracking-wider text-[#0071e3] block">
             {t.regionalNetwork || 'Regional APMC Network'}

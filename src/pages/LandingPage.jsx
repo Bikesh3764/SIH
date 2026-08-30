@@ -123,7 +123,7 @@ export default function LandingPage({ onOpenSignIn, currentLang, setLang }) {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => onOpenSignIn('farmer')}
-            className="px-5 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-semibold backdrop-blur-md transition-all shadow-md cursor-pointer"
+            className="px-5 py-2 rounded-full liquid-glass/10 hover:liquid-glass/20 border border-white/20 text-white text-xs font-semibold backdrop-blur-md transition-all shadow-md cursor-pointer"
           >
             {t.signIn || 'Sign In'}
           </motion.button>
@@ -165,7 +165,7 @@ export default function LandingPage({ onOpenSignIn, currentLang, setLang }) {
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => onOpenSignIn('farmer')}
-            className="px-9 py-4 rounded-full bg-[#0071e3] hover:bg-[#0077ed] text-white text-base font-semibold shadow-[0_10px_35px_rgba(0,113,227,0.45)] transition-all flex items-center justify-center space-x-3 group cursor-pointer"
+            className="px-9 py-4 rounded-full liquid-pill-btn text-white text-base font-semibold shadow-[0_10px_35px_rgba(0,113,227,0.45)] transition-all flex items-center justify-center space-x-3 group cursor-pointer"
           >
             <Sprout size={20} className="group-hover:rotate-12 transition-transform" />
             <span>{t.getStarted || 'Get Started'} / {t.signIn || 'Sign In'}</span>
@@ -188,7 +188,7 @@ export default function LandingPage({ onOpenSignIn, currentLang, setLang }) {
                 whileTap={{ scale: 0.96 }}
                 transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                 onClick={() => onOpenSignIn('farmer')}
-                className={`p-5 rounded-[22px] bg-white/[0.07] hover:bg-white/[0.13] backdrop-blur-2xl border border-white/15 ${card.borderHover} text-white shadow-[0_16px_36px_rgba(0,0,0,0.25)] hover:shadow-2xl cursor-pointer transition-all duration-300 flex flex-col justify-between space-y-4 group`}
+                className={`p-5 rounded-[22px] liquid-glass/[0.07] hover:liquid-glass/[0.13] backdrop-blur-2xl border border-white/15 ${card.borderHover} text-white shadow-[0_16px_36px_rgba(0,0,0,0.25)] hover:shadow-2xl cursor-pointer transition-all duration-300 flex flex-col justify-between space-y-4 group`}
               >
                 {/* Top Row: Squircle Icon & Capsule Tag */}
                 <div className="space-y-3">
@@ -196,7 +196,7 @@ export default function LandingPage({ onOpenSignIn, currentLang, setLang }) {
                     <div className={`w-11 h-11 rounded-[14px] bg-gradient-to-br ${card.iconGrad} flex items-center justify-center text-white shadow-md group-hover:scale-110 transition-transform duration-300`}>
                       <IconComp size={20} className="stroke-[2.2]" />
                     </div>
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-white/10 group-hover:bg-white/20 text-white/90 border border-white/15 transition-colors">
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold liquid-glass/10 group-hover:liquid-glass/20 text-white/90 border border-white/15 transition-colors">
                       {card.tag}
                     </span>
                   </div>

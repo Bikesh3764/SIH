@@ -150,14 +150,7 @@ export default function Sidebar({
         {/* Bottom Utility Bar (100% Mobile Accessible) */}
         <div className="p-3.5 border-t border-[#d2d2d7]/60 space-y-2 bg-[#f5f5f7]/95">
           
-          {/* Mobile Drawer Language Switcher */}
-          <div className="flex items-center justify-between px-2 py-1 text-xs">
-            <span className="text-[11px] font-medium text-[#6e6e73] flex items-center gap-1.5">
-              <Globe size={13} className="text-[#0071e3]" />
-              <span>Language</span>
-            </span>
-            <AppleLanguageDropdown currentLang={currentLang} setLang={setLang} variant="light" />
-          </div>
+
 
           {/* Low-Bandwidth Mode */}
           <div className="flex items-center justify-between px-2 py-1 text-xs">

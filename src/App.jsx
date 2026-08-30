@@ -223,7 +223,7 @@ export default function App() {
         {/* Apple Dense Footer (when not on landing) */}
         {!isLanding && (
           <footer className="py-6 px-4 sm:px-8 border-t border-[#d2d2d7]/60 text-[#86868b] text-xs flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p>© 2026 {t.appName} • Built with ❤️ by Vikesh Ray</p>
+            <p>© 2026 {t.appName} • Built with ❤️ by Team NextMinds</p>
             <button onClick={() => setActivePage('landing')} className="text-[#0071e3] hover:underline font-medium cursor-pointer">
               {t.navHome}
             </button>

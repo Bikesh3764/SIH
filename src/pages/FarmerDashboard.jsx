@@ -124,7 +124,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
   const [tempLoanDetails, setTempLoanDetails] = useState(loanDetails);
   const [selectedCropIdx, setSelectedCropIdx] = useState(0);
 
-  // 1. Fetch Live Weather from Open-Meteo
+  // 1. Fetch Live Weather from {t.open || "Open"}-Meteo
   useEffect(() => {
     let isMounted = true;
     async function loadLiveData() {
@@ -322,7 +322,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
       title: t.weatherTitle || 'Weather Advisory',
       subtitle: t.weatherDesc || 'Hyperlocal rain probability & soil moisture guidance',
       icon: CloudSun,
-      tag: 'Open-Meteo',
+      tag: '{t.open || "Open"}-Meteo',
       iconGrad: 'from-amber-400 to-orange-500 shadow-orange-500/25',
       hoverGlow: 'group-hover:border-amber-500/40 group-hover:shadow-amber-500/10',
       accentColor: 'text-amber-600'
@@ -388,7 +388,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                 {t.welcome || 'Welcome'}, {farmer.name || 'Vikash Ray'}
               </h1>
               <span className="hidden sm:inline-flex px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                Verified Farmer
+                {t.verifiedFarmer || "Verified Farmer"}
               </span>
             </div>
             <p className="text-[13px] sm:text-[14px] text-[#86868b] font-normal">
@@ -467,7 +467,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                   <span>{t.rainfallVariance || 'Rainfall Telemetry'}</span>
                 </span>
                 <span className="px-2 py-0.5 rounded-full liquid-glass/[0.06] border border-white/10 text-[10px] text-white/60 font-semibold">
-                  40% Impact
+                  40% {t.impact || "Impact"}
                 </span>
               </div>
 
@@ -519,7 +519,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                   <span>{t.mandiRealization || 'Crop Realization'}</span>
                 </span>
                 <span className="px-2 py-0.5 rounded-full liquid-glass/[0.06] border border-white/10 text-[10px] text-white/60 font-semibold">
-                  35% Impact
+                  35% {t.impact || "Impact"}
                 </span>
               </div>
 
@@ -612,7 +612,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
             <div className="pt-2 border-t border-white/[0.06] text-xs text-white/60 flex items-center justify-between">
               <span className="truncate">{loanMetrics.subText}</span>
               <span className="px-2 py-0.5 rounded-full liquid-glass/[0.06] border border-white/10 text-[10px] text-white/60 font-semibold shrink-0">
-                25% Impact
+                25% {t.impact || "Impact"}
               </span>
             </div>
           </motion.div>

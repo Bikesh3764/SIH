@@ -227,7 +227,7 @@ export default function LandingPage({ onOpenSignIn, currentLang, setLang }) {
 
       {/* Footer */}
       <footer className="relative z-10 py-6 text-center text-xs text-white/60">
-        <p>© 2026 {t.appName || 'AgriShield AI'} • Built with ❤️ by Vikesh Ray</p>
+        <p>© 2026 {t.appName || 'AgriShield AI'} • Built with ❤️ by Team NextMinds</p>
       </footer>
     </div>
   );

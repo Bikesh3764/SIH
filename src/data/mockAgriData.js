@@ -6,10 +6,7 @@ export const LANGUAGES = [
   { code: 'or', name: 'Odia (ଓଡ଼ିଆ)', native: 'ଓଡ଼ିଆ', voiceCode: 'or-IN' },
   { code: 'mr', name: 'Marathi (मराठी)', native: 'मराठी', voiceCode: 'mr-IN' },
   { code: 'pa', name: 'Punjabi (ਪੰਜਾਬੀ)', native: 'ਪੰਜਾਬੀ', voiceCode: 'pa-IN' },
-  { code: 'te', name: 'Telugu (తెలుగు)', native: 'తెలుగు', voiceCode: 'te-IN' },
-  { code: 'ta', name: 'Tamil (தமிழ்)', native: 'தமிழ்', voiceCode: 'ta-IN' },
-  { code: 'ml', name: 'Malayalam (മലയാളം)', native: 'മലയാളം', voiceCode: 'ml-IN' },
-  { code: 'bn', name: 'Bengali (বাংলা)', native: 'বাংলা', voiceCode: 'bn-IN' }
+  { code: 'ml', name: 'Malayalam (മലയാളം)', native: 'മലയാളം', voiceCode: 'ml-IN' }
 ];
 
 export const CROPS_MARKET_DATA = {
@@ -57,6 +54,18 @@ export const CHATBOT_CONTENT = {
     actionChips: ['💧 Irrigation Advice', '🌾 Yellow Rust Cure', '💰 Mandi Price Radar'],
     inputPlaceholder: "Ask anything about crops, pests, weather or mandi prices...",
     botDefaultReply: "Ensure proper field drainage. High humidity elevates fungal pathogen risk. Delay granular fertilizer broadcasting until soil moisture stabilizes."
+  },
+  or: {
+    welcomeMessage: "ନମସ୍କାର! ମୁଁ ଆପଣଙ୍କର କିଷାନ ମିତ୍ର AI କୃଷି ସହାୟକ। ଆପଣ ଫସଲ ରୋଗ, ପାଣିପାଗ ସତର୍କତା, ମଣ୍ଡି ଦର କିମ୍ବା ସାରର ସଠିକ୍ ପରିମାଣ ବିଷୟରେ କହି କିମ୍ବା ଲେଖି ପଚାରିପାରିବେ।",
+    sampleQueries: [
+      { text: "ଗହମ ପତ୍ରରେ ହଳଦିଆ କଳଙ୍କି (Yellow Rust) ରୋଗ ହୋଇଛି, କଣ ସ୍ପ୍ରେ କରିବି?", reply: "ଗହମର ହଳଦିଆ କଳଙ୍କି ରୋଗ ପାଇଁ ତୁରନ୍ତ ପ୍ରୋପିକୋନାଜୋଲ 25% EC (Tilt) ୧ ମିଲି ପ୍ରତି ଲିଟର ପାଣିରେ ମିଶାଇ ସ୍ପ୍ରେ କରନ୍ତୁ। ଜୈବିକ ଭାବରେ ୧୦% ଖଟା ଘୋଳଦହି ଏବଂ ନିମ ତେଲ ମଧ୍ୟ ଫଳପ୍ରଦ।" },
+      { text: "ଆସନ୍ତାକାଲି ବର୍ଷା ହେବାର ସମ୍ଭାବନା ଅଛି, ଆଜି କୀଟନାଶକ ପକାଇବି କି?", reply: "ଆସନ୍ତା ୨୪ ଘଣ୍ଟା ମଧ୍ୟରେ ୭୪% ବର୍ଷା ସମ୍ଭାବନା ଅଛି। ବର୍ଷା ଯୋଗୁଁ ଔଷଧ ଧୋଇଯିବ, ତେଣୁ ୪୮ ଘଣ୍ଟା ପର୍ଯ୍ୟନ୍ତ କୀଟନାଶକ ସ୍ପ୍ରେ ସ୍ଥଗିତ ରଖନ୍ତୁ।" },
+      { text: "ଧାନ ଏବଂ ସୋରିଷର ଆଜିର ମଣ୍ଡି ଦର କେତେ ଏବଂ କେବେ ବିକ୍ରି କରିବି?", reply: "ସୁନ୍ଦରଗଡ଼ / ରାଉରକେଲା ମଣ୍ଡିରେ ଧାନ ଦର ₹୨,୪୨୦/କ୍ୱିଣ୍ଟାଲ (MSP ₹୨,୧୮୩ ଠାରୁ ଅଧିକ)। ଆଗାମୀ ସପ୍ତାହରେ ଦର ଆହୁରି ବଢ଼ିବାର ସମ୍ଭାବନା ଥିବାରୁ କିଛି ଦିନ ରଖିବାକୁ (HOLD) ପରାମର୍ଶ।" },
+      { text: "ଫସଲରେ କେଉଁ ସମୟରେ କେଉଁ ସାର ପ୍ରୟୋଗ କରିବି?", reply: "ଗଛ ବଢ଼ିବା ସମୟରେ ୟୁରିଆ ସହିତ ପୋଟାସିୟମ ନାଇଟ୍ରେଟ (13-0-45) ପ୍ରତି ଲିଟର ପାଣିରେ ୧୦ ଗ୍ରାମ ମିଶାଇ ସ୍ପ୍ରେ କଲେ ଅଧିକ ଫଳନ ମିଳିଥାଏ।" }
+    ],
+    actionChips: ['💧 ଜଳସେଚନ ପରାମର୍ଶ', '🌾 ହଳଦିଆ କଳଙ୍କି ଉପଚାର', '💰 ଆଜିର ମଣ୍ଡି ଦର'],
+    inputPlaceholder: "ଫସଲ, କୀଟ, ପାଣିପାଗ କିମ୍ବା ମଣ୍ଡି ଦର ବିଷୟରେ ପଚାରନ୍ତୁ...",
+    botDefaultReply: "ଫସଲ ସୁରକ୍ଷା ପାଇଁ ପାଣିପାଗ ଉପରେ ନଜର ରଖନ୍ତୁ। ବର୍ଷା ସମ୍ଭାବନା ଥିବାରୁ କୀଟନାଶକ ସ୍ପ୍ରେ ୨ ଦିନ ସ୍ଥଗିତ ରଖନ୍ତୁ ଏବଂ ଜମିରୁ ଜଳ ନିଷ୍କାସନ ନିଶ୍ଚିତ କରନ୍ତୁ।"
   },
   hi: {
     welcomeMessage: "नमस्ते! मैं आपका किसान मित्र AI हूँ। आप अपनी फसल की बीमारी, आज का मौसम, मंडी भाव या खाद की सही मात्रा के बारे में बोलकर या लिखकर पूछ सकते हैं।",

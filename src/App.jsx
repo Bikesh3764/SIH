@@ -182,7 +182,7 @@ export default function App() {
               )}
 
               {activePage === 'chat' && (
-                <AgronomyChatbot currentLang={currentLang} />
+                <AgronomyChatbot currentLang={currentLang} currentUser={currentUser} />
               )}
 
               {activePage === 'market' && (
@@ -231,6 +231,9 @@ export default function App() {
         currentLang={currentLang}
         setLang={setLang}
       />
+
+    
+      
 
     </div>
   );

@@ -30,6 +30,7 @@ export const GOVT_SCHEMES_CATALOG = [
     localizedNames: {
       en: 'Pradhan Mantri Kisan Samman Nidhi',
       hi: 'प्रधानमंत्री किसान सम्मान निधि योजना',
+      or: 'ପ୍ରଧାନମନ୍ତ୍ରୀ କିଷାନ ସମ୍ମାନ ନିଧି ଯୋଜନା',
       mr: 'प्रधानमंत्री किसान सन्मान निधी योजना',
       pa: 'ਪ੍ਰਧਾਨ ਮੰਤਰੀ ਕਿਸਾਨ ਸੰਮਾਨ ਨਿਧੀ ਯੋਜਨਾ',
       te: 'ప్రధాన మంత్రి కిసాన్ సమ్మాన్ నిధి',
@@ -43,6 +44,7 @@ export const GOVT_SCHEMES_CATALOG = [
     benefitDesc: {
       en: 'Direct benefit transfer in 3 equal installments of ₹2,000 credited directly into bank account.',
       hi: '₹2,000 की 3 समान किस्तों में प्रति वर्ष ₹6,000 की प्रत्यक्ष बैंक हस्तांतरण सहायता।',
+      or: 'ବାର୍ଷିକ ₹୨,୦୦୦ ଲେଖାଏଁ ୩ଟି କିସ୍ତିରେ ₹୬,୦୦୦ ସିଧାସଳଖ ବ୍ୟାଙ୍କ ଖାତାକୁ ପ୍ରଦାନ।',
       mr: 'दरवर्षी ₹२,००० च्या ३ हप्त्यांमध्ये ₹६,००० थेट बँक खात्यात जमा.',
       pa: 'ਹਰ ਸਾਲ ₹2,000 ਦੀਆਂ 3 ਕਿਸ਼ਤਾਂ ਵਿੱਚ ₹6,000 ਸਿੱਧੇ ਬੈਂਕ ਖਾਤੇ ਵਿੱਚ।',
       te: 'ఏడాదికి ₹2,000 చొప్పున 3 విడతల్లో ₹6,000 నేరుగా బ్యాంక్ ఖాతాలో జమ.',
@@ -182,6 +184,7 @@ export const GOVT_SCHEMES_CATALOG = [
     localizedNames: {
       en: 'Pradhan Mantri Kisan Urja Suraksha (Solar Pump)',
       hi: 'पीएम-कुसुम सौर कृषि पंप योजना',
+      or: 'ପିଏମ-କୁସୁମ ସୌର କୃଷି ପମ୍ପ ଯୋଜନା',
       mr: 'पीएम-कुसुम सौर कृषी पंप योजना',
       pa: 'ਪੀਐਮ-ਕੁਸੁਮ ਸੋਲਰ ਐਗਰੀ ਪੰਪ ਯੋਜਨਾ',
       te: 'పీఎం-కుసుమ్ సోలార్ అగ్రికల్చర్ పంప్',
@@ -195,6 +198,7 @@ export const GOVT_SCHEMES_CATALOG = [
     benefitDesc: {
       en: 'Get standalone solar agriculture pumps (3HP to 7.5HP) with up to 90% government subsidy + zero electricity bill.',
       hi: '3HP से 7.5HP तक स्टैंडअलोन सोलर एग्रीकल्चर पंपों पर 90% तक सरकारी अनुदान + शून्य बिजली बिल।',
+      or: '୩HP ରୁ ୭.୫HP ସୌର କୃଷି ପମ୍ପ ଉପରେ ୯୦% ପର୍ଯ୍ୟନ୍ତ ସରକାରୀ ରିହାତି + ମାଗଣା ବିଜୁଳି।',
       mr: '३ एचपी ते ७.५ एचपी सौर कृषी पंपांवर ९०% पर्यंत सरकारी अनुदान + मोफत दिवसा वीज.',
       pa: '3HP ਤੋਂ 7.5HP ਸੋਲਰ ਪੰਪਾਂ ਉੱਤੇ 90% ਤੱਕ ਸਰਕਾਰੀ ਸਬਸਿਡੀ।',
       te: '3HP నుండి 7.5HP సౌర వ్యవసాయ పంపులపై 90% వరకు ప్రభుత్వ రాయితీ.',
@@ -255,6 +259,7 @@ export const GOVT_SCHEMES_CATALOG = [
     localizedNames: {
       en: 'Sub-Mission on Agricultural Mechanization (Tractor & Drone)',
       hi: 'कृषि यंत्रीकरण उप-मिशन (ट्रैक्टर व ड्रोन सब्सिडी)',
+      or: 'କୃଷି ଯନ୍ତ୍ରପାତି ଯୋଜନା (ଟ୍ରାକ୍ଟର ଓ ଡ୍ରୋନ)',
       mr: 'कृषी यांत्रिकीकरण उप-अभियान (ट्रॅक्टर व अवजारे अनुदान)',
       pa: 'ਖੇਤੀਬਾੜੀ ਮਸ਼ੀਨਰੀ ਸਬਸਿਡੀ ਮਿਸ਼ਨ',
       te: 'వ్యవసాయ యాంత్రీకరణ సబ్-మిషన్ (ట్రాక్టర్ & డ్రోన్)',
@@ -268,6 +273,7 @@ export const GOVT_SCHEMES_CATALOG = [
     benefitDesc: {
       en: 'Direct financial subsidy on Tractors, Power Tillers, Rotavators, Harvesters, and Kisan Drone Sprayers.',
       hi: 'ट्रैक्टर, पावर टिलर, रोटावेटर, रीपर और किसान ड्रोन स्प्रेयर की खरीद पर 40% से 80% तक की भारी छूट।',
+      or: 'ଟ୍ରାକ୍ଟର, ପାୱାର ଟିଲର, ରୋଟାଭେଟର ଏବଂ କୃଷି ଡ୍ରୋନ କିଣିବା ଉପରେ ୪୦% ରୁ ୮୦% ସବସିଡି।',
       mr: 'ट्रॅक्टर, पॉवर टिलर, रोटाव्हेटर आणि कृषी ड्रोन खरेदीवर ४०% ते ८०% थेट अनुदान.',
       pa: 'ਟਰੈਕਟਰ, ਰੋਟਾਵੇਟਰ ਅਤੇ ਡਰੋਨ ਸਪਰੇਅਰ ਦੀ ਖਰੀਦ ਤੇ 40% ਤੋਂ 80% ਸਬਸਿਡੀ।',
       te: 'ట్రాక్టర్లు, రోటవేటర్లు మరియు డ్రోన్ స్ప్రేయర్లపై 40% నుండి 80% వరకు రాయితీ.',
@@ -327,6 +333,7 @@ export const GOVT_SCHEMES_CATALOG = [
     localizedNames: {
       en: 'Kisan Credit Card (Low Interest Agri Loan)',
       hi: 'किसान क्रेडिट कार्ड (सस्ता कृषि ऋण @ 4%)',
+      or: 'କିଷାନ କ୍ରେଡିଟ କାର୍ଡ (ସୁଲଭ କୃଷି ଋଣ @ ୪%)',
       mr: 'किसान क्रेडिट कार्ड (सवलतीचा पीक कर्ज दर)',
       pa: 'ਕਿਸਾਨ ਕ੍ਰੈਡਿਟ ਕਾਰਡ (ਸਸਤਾ ਖੇਤੀਬਾੜੀ ਕਰਜ਼ਾ)',
       te: 'కిసాన్ క్రెడిట్ కార్డ్ (తక్కువ వడ్డీ రుణం)',
@@ -340,6 +347,7 @@ export const GOVT_SCHEMES_CATALOG = [
     benefitDesc: {
       en: 'Instant working capital loan for seeds, fertilizers, and diesel at an effective 4% annual interest with prompt repayment.',
       hi: 'बीज, खाद और डीजल के लिए 4% की रियायती वार्षिक ब्याज दर पर ₹3 लाख तक का आसान फसली ऋण।',
+      or: 'ବିହନ, ସାର ଓ ଡିଜେଲ ପାଇଁ ସମୟୋଚିତ ପରିଶୋଧ ସହିତ ମାତ୍ର ୪% ସୁଧରେ ₹୩ ଲକ୍ଷ ପର୍ଯ୍ୟନ୍ତ ଋଣ।',
       mr: 'वेळेवर परतफेडीवर केवळ ४% व्याजदराने ₹३ लाखांपर्यंत तात्काळ पीक कर्ज.',
       pa: 'ਸਮੇਂ ਸਿਰ ਅਦਾਇਗੀ ਤੇ ਸਿਰਫ 4% ਵਿਆਜ ਦਰ ਨਾਲ ₹3 ਲੱਖ ਤੱਕ ਫ਼ਸਲੀ ਕਰਜ਼ਾ।',
       te: 'సకాలంలో చెల్లింపుపై కేవలం 4% వార్షిక వడ్డీతో ₹3 లక్షల వరకు పంట రుణం.',
@@ -394,6 +402,7 @@ export const GOVT_SCHEMES_CATALOG = [
     localizedNames: {
       en: 'Pradhan Mantri Krishi Sinchayee Yojana (Drip & Sprinkler)',
       hi: 'प्रधानमंत्री कृषि सिंचाई योजना (ड्रिप व स्प्रिंकलर)',
+      or: 'ପ୍ରଧାନମନ୍ତ୍ରୀ କୃଷି ସିଞ୍ଚାଇ ଯୋଜନା (ଟୋପା ଓ ସ୍ପ୍ରିଙ୍କଲର)',
       mr: 'प्रधानमंत्री कृषी सिंचन योजना (ठिबक व तुषार सिंचन)',
       pa: 'ਪ੍ਰਧਾਨ ਮੰਤਰੀ ਤੁਪਕਾ ਸਿੰਚਾਈ ਯੋਜਨਾ',
       te: 'ప్రధాన మంత్రి కృషి సించాయి యోజన (బిందు సేద్యం)',
@@ -407,6 +416,7 @@ export const GOVT_SCHEMES_CATALOG = [
     benefitDesc: {
       en: 'Substantial grant for installing Drip Irrigation and Sprinkler systems, saving 60% water while boosting yield by 35%.',
       hi: 'ड्रिप (टपक) और स्प्रिंकलर सिंचाई सिस्टम लगाने पर 55% से 75% तक सरकारी सब्सिडी।',
+      or: 'ଡ୍ରିପ ଏବଂ ସ୍ପ୍ରିଙ୍କଲର ଜଳସେଚନ ଉପକରଣ ଉପରେ ୫୫% ରୁ ୭୫% ପର୍ଯ୍ୟନ୍ତ ସରକାରୀ ରିହାତି।',
       mr: 'ठिबक आणि तुषार सिंचन संच बसवण्यासाठी ५५% ते ७५% थेट शासकीय अनुदान.',
       pa: 'ਤੁਪਕਾ ਅਤੇ ਫੁਹਾਰਾ ਸਿੰਚਾਈ ਸਿਸਟਮ ਲਗਾਉਣ ਤੇ 75% ਤੱਕ ਸਬਸਿਡੀ।',
       te: 'బిందు మరియు తుంపర సేద్యం పరికరాల కొనుగోలుపై 75% వరకు రాయితీ.',
@@ -471,74 +481,79 @@ export default function GovtSchemes({ currentLang, onNavigate }) {
   });
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-5 sm:space-y-6 animate-apple-fade text-[#1d1d1f] overflow-x-hidden min-w-0">
+    <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-6 animate-apple-fade text-[#1d1d1f] overflow-x-hidden min-w-0">
       
-      {/* 1. Header Banner (DESIGN.md {component.product-tile-dark}: #272729 Tile) */}
-      <div className="p-5 sm:p-8 rounded-[18px] bg-[#272729] text-white shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-5 sm:gap-6 animate-apple-in overflow-hidden">
-        <div className="space-y-2">
+      {/* 1. Header Banner (Apple Obsidian Frosted Glass) */}
+      <div className="p-6 sm:p-8 rounded-[26px] bg-gradient-to-br from-[#1c1c1e] via-[#161618] to-[#111113] text-white shadow-[0_24px_50px_rgba(0,0,0,0.3)] border border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden backdrop-blur-2xl">
+        
+        {/* Ambient Apple Glow */}
+        <div className="absolute -top-24 -right-24 w-80 h-80 bg-[#0071e3]/15 rounded-full blur-[90px] pointer-events-none" />
+        <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-emerald-500/10 rounded-full blur-[90px] pointer-events-none" />
+
+        <div className="relative z-10 space-y-2 max-w-2xl">
           <div className="flex items-center space-x-2">
-            <span className="px-3 py-1 rounded-full text-[12px] font-semibold uppercase bg-[#2997ff]/15 border border-[#2997ff]/30 text-[#2997ff] tracking-[0.04em]">
-              {t.centralStateWelfare}
+            <span className="w-2 h-2 rounded-full bg-[#2997ff] animate-pulse"></span>
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#2997ff]">
+              {t.dbtSubsidies || "Direct Benefit Transfer & Subsidies"}
             </span>
           </div>
-          <h1 className="text-[24px] sm:text-[36px] font-semibold tracking-[-0.28px] text-white leading-tight">
-            {t.schemesPageTitle}
+          <h1 className="text-2xl sm:text-4xl font-bold tracking-tight text-white leading-tight">
+            {t.schemesPageTitle || 'Government Schemes & Subsidies'}
           </h1>
-          <p className="text-[13px] sm:text-[14px] text-[#cccccc] max-w-2xl leading-[1.47]">
-            {t.schemesPageSubtitle}
+          <p className="text-xs sm:text-sm text-white/70 font-normal leading-relaxed">
+            {t.schemesPageSubtitle || 'Official central and state government agricultural financial grants, crop insurance, solar subsidies, and credit schemes.'}
           </p>
         </div>
 
-        {/* 2 Stats Pods (DESIGN.md Tile 2 #2a2a2c) */}
-        <div className="grid grid-cols-2 gap-2.5 sm:gap-3 shrink-0 w-full sm:w-auto">
-          <div className="p-3 sm:p-4 rounded-[14px] bg-[#2a2a2c] border border-white/5 text-center w-full sm:min-w-[130px]">
-            <span className="text-[10px] sm:text-[11px] uppercase font-semibold text-[#7a7a7a] block tracking-wide">{t.totalGrantPool}</span>
-            <span className="text-[17px] sm:text-[21px] font-semibold text-white tracking-[-0.231px]">₹1.24 Lakh Cr</span>
+        {/* 2 Stats Glass Pods */}
+        <div className="relative z-10 grid grid-cols-2 gap-3 shrink-0 w-full sm:w-auto">
+          <div className="p-4 rounded-[20px] bg-white/[0.05] border border-white/10 backdrop-blur-xl text-center w-full sm:min-w-[140px] shadow-sm">
+            <span className="text-[10.5px] uppercase font-bold text-white/50 block tracking-wider">{t.totalGrantPool || 'Total Budget Pool'}</span>
+            <span className="text-lg sm:text-2xl font-bold text-white tracking-tight mt-0.5 block">₹1.24 Lakh Cr</span>
           </div>
-          <div className="p-3 sm:p-4 rounded-[14px] bg-[#2a2a2c] border border-white/5 text-center w-full sm:min-w-[130px]">
-            <span className="text-[10px] sm:text-[11px] uppercase font-semibold text-[#7a7a7a] block tracking-wide">{t.activePrograms}</span>
-            <span className="text-[17px] sm:text-[21px] font-semibold text-[#2997ff] tracking-[-0.231px]">6 Schemes</span>
+          <div className="p-4 rounded-[20px] bg-white/[0.05] border border-white/10 backdrop-blur-xl text-center w-full sm:min-w-[140px] shadow-sm">
+            <span className="text-[10.5px] uppercase font-bold text-white/50 block tracking-wider">{t.activePrograms || 'Active Schemes'}</span>
+            <span className="text-lg sm:text-2xl font-bold text-[#2997ff] tracking-tight mt-0.5 block">6 Programs</span>
           </div>
         </div>
       </div>
 
-      {/* 2. Search & Category Filter Toolbar (DESIGN.md search-input & pill grammar) */}
-      <div className="p-4 sm:p-5 rounded-[18px] bg-white border border-[#e0e0e0] space-y-3 shadow-xs">
+      {/* 2. Search & Category Filter Toolbar (Apple Glass Pill Bar) */}
+      <div className="p-4 sm:p-5 rounded-[22px] bg-white border border-[#d2d2d7]/70 space-y-3.5 shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
         
         {/* Apple Pill Search Input */}
         <div className="relative">
-          <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#7a7a7a]" />
+          <Search size={17} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#86868b]" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder={t.searchSchemesPlaceholder}
-            className="w-full pl-11 pr-9 py-2.5 sm:py-3 rounded-full bg-[#f5f5f7] border border-[#e0e0e0] text-[14px] font-normal text-[#1d1d1f] focus:outline-none focus:ring-2 focus:ring-[#0066cc] focus:bg-white transition-all shadow-xs"
+            placeholder={t.searchSchemesPlaceholder || 'Search schemes by name, keyword (e.g. PM-KISAN, Tractor, Solar, KCC)...'}
+            className="w-full pl-11 pr-10 py-3 rounded-full bg-[#f5f5f7] border border-[#d2d2d7]/60 text-[13.5px] font-normal text-[#1d1d1f] focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:bg-white transition-all shadow-2xs"
           />
           {searchQuery && (
-            <button onClick={() => setSearchQuery('')} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#7a7a7a] hover:text-[#1d1d1f] cursor-pointer">
-              <X size={14} />
+            <button onClick={() => setSearchQuery('')} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#86868b] hover:text-[#1d1d1f] cursor-pointer">
+              <X size={15} />
             </button>
           )}
         </div>
 
         {/* Filter Category Pills */}
-        <div className="flex items-center space-x-2 overflow-x-auto no-scrollbar pb-0.5">
+        <div className="flex items-center space-x-2 overflow-x-auto no-scrollbar pb-1">
           {[
-            { id: 'all', label: t.allSchemes },
-            { id: 'financial', label: t.catFinancial },
-            { id: 'insurance', label: t.catInsurance },
-            { id: 'solar', label: t.catSolar },
-            { id: 'machinery', label: t.catMachinery },
-            { id: 'soil', label: t.catSoil }
+            { id: 'all', label: t.allSchemes || 'All Programs' },
+            { id: 'financial', label: t.catFinancial || 'Financial & Direct Support' },
+            { id: 'insurance', label: t.catInsurance || 'Crop Insurance (PMFBY)' },
+            { id: 'solar', label: t.catSolar || 'Solar & Irrigation' },
+            { id: 'machinery', label: t.catMachinery || 'Farm Machinery Subsidy' }
           ].map((cat) => (
             <button
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-[12px] sm:text-[13px] font-medium whitespace-nowrap transition-all cursor-pointer active:scale-95 ${
+              className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer active:scale-95 shadow-2xs ${
                 selectedCategory === cat.id
-                  ? 'bg-[#0066cc] text-white shadow-sm'
-                  : 'bg-[#f5f5f7] hover:bg-[#e8e8ed] text-[#1d1d1f] border border-[#e0e0e0]'
+                  ? 'bg-[#0071e3] text-white shadow-md shadow-blue-500/20'
+                  : 'bg-[#f5f5f7] hover:bg-[#e8e8ed] text-[#1d1d1f] border border-[#d2d2d7]/60'
               }`}
             >
               {cat.label}
@@ -547,98 +562,95 @@ export default function GovtSchemes({ currentLang, onNavigate }) {
         </div>
       </div>
 
-      {/* 3. Schemes Grid (DESIGN.md {component.store-utility-card}: #ffffff, 18px rounded, 24px padding) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-        {filteredSchemes.map((scheme, idx) => {
+      {/* 3. Schemes Grid (Apple Bento Specification) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+        {filteredSchemes.map((scheme) => {
           const IconComp = scheme.icon;
           const localizedTitle = scheme.localizedNames[currentLang] || scheme.name;
           const localizedDesc = scheme.benefitDesc[currentLang] || scheme.benefitDesc.en;
           const localizedEligibility = scheme.eligibility[currentLang] || scheme.eligibility.en;
+          const localizedCat = scheme.category === 'financial' ? (t.catDirectSupport || scheme.categoryLabel)
+            : scheme.category === 'insurance' ? (t.catCropInsurance || scheme.categoryLabel)
+            : scheme.category === 'solar' ? (t.catSolarIrrigation || scheme.categoryLabel)
+            : scheme.category === 'machinery' ? (t.catMachinerySubsidy || scheme.categoryLabel)
+            : scheme.categoryLabel;
 
           return (
             <div
               key={scheme.id}
-              className={`p-5 sm:p-7 rounded-[18px] bg-white border border-[#e0e0e0] transition-all flex flex-col justify-between space-y-5 apple-card-hover animate-apple-in delay-${(idx % 6) + 1}`}
+              className="p-6 sm:p-7 rounded-[26px] bg-white border border-[#d2d2d7]/70 hover:border-[#0071e3]/40 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.08)] transition-all duration-300 flex flex-col justify-between space-y-5 group"
             >
               <div className="space-y-4">
                 
-                {/* Header with Circular Glyph Container */}
+                {/* Header with Vibrant Apple Squircle Icon */}
                 <div className="flex items-start space-x-3.5">
-                  <div className="w-12 h-12 rounded-[12px] bg-[#f5f5f7] text-[#0066cc] flex items-center justify-center font-bold shrink-0 border border-[#e0e0e0]">
-                    <IconComp size={22} />
+                  <div className="w-13 h-13 rounded-[16px] bg-gradient-to-br from-[#0071e3] to-[#005bb5] text-white flex items-center justify-center font-bold shrink-0 shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">
+                    <IconComp size={24} className="stroke-[2.2]" />
                   </div>
-                  <div>
-                    <div className="flex items-center space-x-2">
-                      <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#f5f5f7] text-[#1d1d1f] border border-[#e0e0e0]">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#f5f5f7] text-[#0071e3] border border-[#d2d2d7]/60">
                         {scheme.code}
                       </span>
-                      <span className="text-[12px] text-[#7a7a7a]">
-                        {scheme.categoryLabel}
+                      <span className="text-xs text-[#86868b] font-medium">
+                        {localizedCat}
                       </span>
                     </div>
-                    <h3 className="text-[18px] font-semibold text-[#1d1d1f] tracking-[-0.28px] mt-1 leading-snug">
+                    <h3 className="text-lg font-bold text-[#1d1d1f] tracking-tight mt-1 leading-snug group-hover:text-[#0071e3] transition-colors">
                       {localizedTitle}
                     </h3>
                   </div>
                 </div>
 
-                {/* Benefit Highlight Box (DESIGN.md Parchment surface #f5f5f7) */}
-                <div className="p-4 rounded-[14px] bg-[#f5f5f7] border border-[#e0e0e0] space-y-1.5">
+                {/* Benefit Highlight Box */}
+                <div className="p-4 rounded-[18px] bg-gradient-to-br from-[#f5f5f7] to-[#ebebee] border border-[#d2d2d7]/50 space-y-1">
                   <div className="flex justify-between items-baseline">
-                    <span className="text-[11px] font-semibold uppercase text-[#7a7a7a] tracking-wider">
-                      {t.subsidyBenefit}
+                    <span className="text-[10.5px] font-bold uppercase text-[#86868b] tracking-wider">
+                      {t.subsidyBenefit || 'Government Benefit'}
                     </span>
-                    <span className="text-[17px] font-semibold text-[#0066cc] tracking-tight">
-                      {scheme.benefitAmount}
+                    <span className="text-[11px] font-semibold text-emerald-700">
+                      {t.directDbtTag || "Direct DBT / Grant"}
                     </span>
                   </div>
-                  <p className="text-[14px] text-[#7a7a7a] leading-relaxed">
+                  <div className="text-2xl font-extrabold text-[#1d1d1f] tracking-tight">
+                    {scheme.benefitAmount}
+                  </div>
+                  <p className="text-xs text-[#86868b] leading-relaxed pt-1 border-t border-[#d2d2d7]/40">
                     {localizedDesc}
                   </p>
                 </div>
 
-                {/* Eligibility Criteria */}
-                <div className="space-y-1.5 text-[14px]">
-                  <span className="font-semibold text-[#1d1d1f] flex items-center gap-1.5 text-[13px]">
-                    <CheckSquare size={14} className="text-[#0066cc]" /> {t.eligibilityCriteria}
+                {/* Eligibility Checklist */}
+                <div className="space-y-2">
+                  <span className="text-xs font-bold text-[#1d1d1f] uppercase tracking-wider block">
+                    {t.whoIsEligible || 'Eligibility Criteria'}:
                   </span>
-                  <ul className="space-y-1 text-[#7a7a7a] pl-4 list-disc text-[13px]">
-                    {localizedEligibility.map((el, elIdx) => (
-                      <li key={elIdx} className="leading-snug">{el}</li>
+                  <ul className="space-y-1.5 text-xs text-[#86868b]">
+                    {localizedEligibility.map((el, i) => (
+                      <li key={i} className="flex items-start space-x-2">
+                        <CheckCircle size={14} className="text-emerald-600 shrink-0 mt-0.5" />
+                        <span className="leading-snug">{el}</span>
+                      </li>
                     ))}
                   </ul>
                 </div>
 
-                {/* Required Documents */}
-                <div className="space-y-1.5 text-[14px]">
-                  <span className="font-semibold text-[#1d1d1f] flex items-center gap-1.5 text-[13px]">
-                    <FileText size={14} className="text-[#0066cc]" /> {t.requiredDocuments}
-                  </span>
-                  <div className="flex flex-wrap gap-1.5 pt-0.5">
-                    {scheme.documents.map((doc, docIdx) => (
-                      <span key={docIdx} className="px-3 py-1 rounded-full bg-[#f5f5f7] border border-[#e0e0e0] text-[12px] font-medium text-[#7a7a7a]">
-                        📄 {doc}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
               </div>
 
-              {/* Bottom Action Bar (DESIGN.md button-primary pill) */}
-              <div className="pt-4 border-t border-[#f0f0f0] flex items-center justify-between gap-3">
-                <div className="text-[12px] text-[#7a7a7a] flex items-center gap-1">
-                  <Clock size={13} /> {scheme.processingDays} {t.reviewDays}
-                </div>
+              {/* Action Footer: Official Government Portal Pill */}
+              <div className="pt-4 border-t border-[#f0f0f0] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <span className="text-[11px] text-[#86868b]">
+                  {t.processingLabel || "Processing"}: <b className="text-[#1d1d1f] font-medium">{scheme.processingDays}</b>
+                </span>
 
                 <a
                   href={scheme.officialUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-2.5 rounded-full bg-[#0066cc] hover:bg-[#0071e3] active:scale-95 text-white text-[14px] font-medium tracking-tight shadow-sm transition-all flex items-center space-x-1.5 cursor-pointer no-underline apple-btn-active"
+                  className="px-5 py-2.5 rounded-full bg-[#0071e3] hover:bg-[#0077ed] text-white text-xs font-semibold shadow-md shadow-blue-500/20 active:scale-95 transition-all flex items-center space-x-1.5 cursor-pointer self-stretch sm:self-auto justify-center"
                 >
-                  <span>{t.applyOfficialPortal}</span>
-                  <ExternalLink size={14} />
+                  <span>{t.officialPortalBtn || "Official Portal"}</span>
+                  <ExternalLink size={13} />
                 </a>
               </div>
 

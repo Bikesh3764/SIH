@@ -19,12 +19,15 @@ import {
 import { DISTRICTS_DATA, WEATHER_FORECAST_DATA } from '../data/mockAgriData';
 import { TRANSLATIONS } from '../data/translations';
 import AppleSelect from '../components/AppleSelect';
+import { fetchLiveDistrictWeather } from '../services/weatherService';
 
 export default function WeatherAdvisory({ currentLang, currentUser }) {
   const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
 
   const [selectedDistrict, setSelectedDistrict] = useState(DISTRICTS_DATA[0]); // Rourkela (Sundargarh, Odisha)
   const [forecastView, setForecastView] = useState('hourly'); // 'hourly' | '7day'
+  const [liveWeather, setLiveWeather] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   // Sync with user's selected district from Sign In / Registration
   useEffect(() => {
@@ -41,40 +44,79 @@ export default function WeatherAdvisory({ currentLang, currentUser }) {
     }
   }, [currentUser]);
 
-  const hourlyData = [
-    { time: '00:00', temp: '26°C', rain: '20%', icon: CloudSun, condition: 'Clear' },
-    { time: '01:00', temp: '25°C', rain: '15%', icon: CloudSun, condition: 'Clear' },
-    { time: '02:00', temp: '25°C', rain: '10%', icon: CloudSun, condition: 'Clear' },
-    { time: '03:00', temp: '24°C', rain: '10%', icon: CloudSun, condition: 'Clear' },
-    { time: '04:00', temp: '24°C', rain: '15%', icon: CloudSun, condition: 'Clear' },
-    { time: '05:00', temp: '24°C', rain: '20%', icon: CloudSun, condition: 'Partly Cloudy' },
-    { time: '06:00', temp: '25°C', rain: '30%', icon: Sun, condition: 'Sunrise' },
-    { time: '07:00', temp: '27°C', rain: '35%', icon: Sun, condition: 'Sunny' },
-    { time: '08:00', temp: '29°C', rain: '40%', icon: Sun, condition: 'Sunny' },
-    { time: '09:00', temp: '31°C', rain: '45%', icon: CloudSun, condition: 'Warm' },
-    { time: '10:00', temp: '33°C', rain: '50%', icon: CloudSun, condition: 'Warm' },
-    { time: '11:00', temp: '34°C', rain: '60%', icon: CloudSun, condition: 'Humidity Rising' },
-    { time: '12:00', temp: '35°C', rain: '65%', icon: CloudSun, condition: 'Hot' },
-    { time: '13:00', temp: '35°C', rain: '70%', icon: CloudRain, condition: 'Overcast' },
-    { time: '14:00', temp: '33°C', rain: '85%', icon: CloudRain, condition: 'Rain Showers' },
-    { time: '15:00', temp: '31°C', rain: '80%', icon: CloudRain, condition: 'Heavy Rain' },
-    { time: '16:00', temp: '30°C', rain: '75%', icon: CloudRain, condition: 'Rain' },
-    { time: '17:00', temp: '29°C', rain: '60%', icon: CloudSun, condition: 'Scattered Clouds' },
-    { time: '18:00', temp: '28°C', rain: '45%', icon: Sun, condition: 'Sunset' },
-    { time: '19:00', temp: '28°C', rain: '35%', icon: CloudSun, condition: 'Dusk' },
-    { time: '20:00', temp: '27°C', rain: '25%', icon: CloudSun, condition: 'Clear' },
-    { time: '21:00', temp: '27°C', rain: '20%', icon: CloudSun, condition: 'Clear' },
-    { time: '22:00', temp: '26°C', rain: '15%', icon: CloudSun, condition: 'Clear' },
-    { time: '23:00', temp: '26°C', rain: '10%', icon: CloudSun, condition: 'Clear' }
+  // Fetch Live Weather from Open-Meteo when district changes
+  useEffect(() => {
+    let isMounted = true;
+    async function loadWeather() {
+      setLoading(true);
+      const data = await fetchLiveDistrictWeather(selectedDistrict.id, currentLang);
+      if (isMounted) {
+        if (data) {
+          setLiveWeather(data);
+        }
+        setLoading(false);
+      }
+    }
+    loadWeather();
+    return () => { isMounted = false; };
+  }, [selectedDistrict, currentLang]);
+
+  const currentWeather = liveWeather || {
+    currentTemp: '28°C',
+    feelsLike: '31°C',
+    condition: 'Partly Cloudy',
+    conditionIcon: '⛅',
+    humidity: '74%',
+    windSpeed: '12 km/h',
+    barometric: '1010 hPa',
+    rainProbability: '45%',
+    uvIndex: '4 (Moderate)',
+    soilMoistureVal: '68%',
+    soilMoistureStatus: 'Optimal',
+    hourlyData: [],
+    forecast7Days: WEATHER_FORECAST_DATA.forecast7Days,
+    hyperlocalAdvisory: 'Optimal soil moisture. Favorable window for nutrient spraying.'
+  };
+
+  const hourlyList = liveWeather?.hourlyData?.length ? liveWeather.hourlyData : [
+    { time: '00:00', temp: '26°C', rain: '20%', icon: '⛅', label: 'Clear' },
+    { time: '04:00', temp: '24°C', rain: '15%', icon: '⛅', label: 'Clear' },
+    { time: '08:00', temp: '29°C', rain: '40%', icon: '☀️', label: 'Sunny' },
+    { time: '12:00', temp: '35°C', rain: '65%', icon: '⛅', label: 'Warm' },
+    { time: '16:00', temp: '30°C', rain: '75%', icon: '🌧️', label: 'Rain' },
+    { time: '20:00', temp: '27°C', rain: '25%', icon: '⛅', label: 'Clear' }
   ];
 
+  const forecast7DaysList = liveWeather?.forecast7Days || WEATHER_FORECAST_DATA.forecast7Days;
+
   return (
-    <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-5 sm:space-y-6 animate-apple-fade text-[#1d1d1f] overflow-x-hidden min-w-0">
+    <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-5 sm:space-y-6 animate-apple-fade text-[#1d1d1f] overflow-x-hidden min-w-0 relative">
+      
+      {/* Apple Frosted Glass Activity Indicator (During Live Telemetry Sync) */}
+      {loading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-xl">
+          <div className="p-7 rounded-[26px] bg-white/95 border border-[#d2d2d7]/80 shadow-2xl flex flex-col items-center space-y-4 max-w-sm text-center animate-apple-scale">
+            <div className="w-12 h-12 rounded-full bg-[#0071e3]/10 text-[#0071e3] flex items-center justify-center">
+              <span className="w-6 h-6 border-3 border-[#0071e3] border-t-transparent rounded-full animate-spin"></span>
+            </div>
+            <div className="space-y-1">
+              <h3 className="text-base font-bold text-[#1d1d1f] tracking-tight">Syncing Microclimate Telemetry</h3>
+              <p className="text-xs text-[#86868b]">Connecting to Open-Meteo Live Satellite Feed for {selectedDistrict.name}...</p>
+            </div>
+          </div>
+        </div>
+      )}
       
       {/* Header & District Selector */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-apple-in">
         <div>
-          <h1 className="text-[24px] sm:text-[34px] font-semibold tracking-[-0.374px] text-[#1d1d1f]">
+          <div className="flex items-center space-x-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span className="text-[12px] font-semibold uppercase tracking-[0.04em] text-emerald-600">
+              Live Open-Meteo Microclimate Telemetry
+            </span>
+          </div>
+          <h1 className="text-[24px] sm:text-[34px] font-semibold tracking-[-0.374px] text-[#1d1d1f] mt-0.5">
             {t.weatherPageTitle}
           </h1>
           <p className="text-[13px] sm:text-[16px] text-[#7a7a7a] font-normal">
@@ -106,53 +148,70 @@ export default function WeatherAdvisory({ currentLang, currentUser }) {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <span className="text-xs font-semibold text-blue-100 uppercase tracking-wider block">
-              Current Weather Conditions
+              {t.currentWeatherConditions} • {selectedDistrict.name}
             </span>
             <div className="flex items-baseline space-x-3 mt-1">
-              <span className="text-4xl sm:text-6xl font-semibold tracking-tight text-white">32°C</span>
-              <span className="text-lg sm:text-xl font-medium text-blue-100">Overcast</span>
+              <span className="text-4xl sm:text-6xl font-semibold tracking-tight text-white">
+                {currentWeather.currentTemp}
+              </span>
+              <span className="text-lg sm:text-xl font-medium text-blue-100 flex items-center gap-1.5">
+                <span>{currentWeather.conditionIcon}</span>
+                <span>{currentWeather.condition}</span>
+              </span>
             </div>
             <span className="text-xs text-blue-100 mt-1 block">
-              Feels like 36°C • Updated: {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              {t.feelsLike} {currentWeather.feelsLike} • {t.liveStation || 'Live Station'}
             </span>
           </div>
 
-          <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/15 backdrop-blur-md flex items-center justify-center border border-white/20 self-start sm:self-auto">
-            <CloudSun size={32} className="text-white" />
+          <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/15 backdrop-blur-md flex items-center justify-center border border-white/20 text-3xl self-start sm:self-auto">
+            <span>{currentWeather.conditionIcon || '⛅'}</span>
           </div>
         </div>
 
         {/* 6 Key Weather Telemetry Metrics */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3 pt-3 border-t border-white/20 text-xs">
           <div className="p-2.5 sm:p-3 rounded-[12px] sm:rounded-[14px] bg-white/10 backdrop-blur-md border border-white/15">
-            <span className="text-[10px] text-blue-200 uppercase font-semibold block">Soil Moisture</span>
-            <span className="text-[13px] sm:text-base font-semibold text-white">68% Optimal</span>
+            <span className="text-[10px] text-blue-200 uppercase font-semibold block">{t.soilMoisture}</span>
+            <span className="text-[13px] sm:text-base font-semibold text-white">
+              {currentWeather.soilMoistureVal} ({currentWeather.soilMoistureStatus})
+            </span>
           </div>
           <div className="p-2.5 sm:p-3 rounded-[12px] sm:rounded-[14px] bg-white/10 backdrop-blur-md border border-white/15">
-            <span className="text-[10px] text-blue-200 uppercase font-semibold block">{t.rainChance}</span>
-            <span className="text-[13px] sm:text-base font-semibold text-white">74% {t.high}</span>
+            <span className="text-[10px] text-blue-200 uppercase font-semibold block">{t.rainProbability}</span>
+            <span className="text-[13px] sm:text-base font-semibold text-white">
+              {currentWeather.rainProbability}
+            </span>
           </div>
           <div className="p-2.5 sm:p-3 rounded-[12px] sm:rounded-[14px] bg-white/10 backdrop-blur-md border border-white/15">
             <span className="text-[10px] text-blue-200 uppercase font-semibold block">{t.windSpeed}</span>
-            <span className="text-[13px] sm:text-base font-semibold text-white">14 km/h WNW</span>
+            <span className="text-[13px] sm:text-base font-semibold text-white">
+              {currentWeather.windSpeed}
+            </span>
           </div>
           <div className="p-2.5 sm:p-3 rounded-[12px] sm:rounded-[14px] bg-white/10 backdrop-blur-md border border-white/15">
             <span className="text-[10px] text-blue-200 uppercase font-semibold block">{t.humidity}</span>
-            <span className="text-[13px] sm:text-base font-semibold text-white">78%</span>
+            <span className="text-[13px] sm:text-base font-semibold text-white">
+              {currentWeather.humidity}
+            </span>
           </div>
           <div className="p-2.5 sm:p-3 rounded-[12px] sm:rounded-[14px] bg-white/10 backdrop-blur-md border border-white/15">
             <span className="text-[10px] text-blue-200 uppercase font-semibold block">{t.barometric}</span>
-            <span className="text-[13px] sm:text-base font-semibold text-white">1008 hPa</span>
+            <span className="text-[13px] sm:text-base font-semibold text-white">
+              {currentWeather.barometric}
+            </span>
           </div>
           <div className="p-2.5 sm:p-3 rounded-[12px] sm:rounded-[14px] bg-white/10 backdrop-blur-md border border-white/15">
             <span className="text-[10px] text-blue-200 uppercase font-semibold block">{t.uvIndex}</span>
-            <span className="text-[13px] sm:text-base font-semibold text-white">4 ({t.moderate})</span>
+            <span className="text-[13px] sm:text-base font-semibold text-white">
+              {currentWeather.uvIndex}
+            </span>
           </div>
         </div>
 
       </div>
 
-      {/* Farming Advisories Section (3 Apple Utility Cards) */}
+      {/* Dynamic Farming Advisories Section (3 Apple Utility Cards) */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-3.5">
         
         <div className="p-4 sm:p-5 rounded-[18px] bg-white border border-[#e0e0e0] shadow-xs space-y-2">
@@ -161,7 +220,7 @@ export default function WeatherAdvisory({ currentLang, currentUser }) {
             <h3 className="font-semibold text-sm text-[#1d1d1f]">{t.wateringAdvisory}</h3>
           </div>
           <p className="text-xs text-[#7a7a7a] leading-relaxed">
-            {t.wateringAdvisoryDesc}
+            {currentWeather.dynamicWatering || t.wateringAdvisoryDesc}
           </p>
         </div>
 
@@ -171,7 +230,7 @@ export default function WeatherAdvisory({ currentLang, currentUser }) {
             <h3 className="font-semibold text-sm text-[#1d1d1f]">{t.pestAlert}</h3>
           </div>
           <p className="text-xs text-[#7a7a7a] leading-relaxed">
-            {t.pestAlertDesc}
+            {currentWeather.dynamicPest || t.pestAlertDesc}
           </p>
         </div>
 
@@ -181,7 +240,7 @@ export default function WeatherAdvisory({ currentLang, currentUser }) {
             <h3 className="font-semibold text-sm text-[#1d1d1f]">{t.harvestingWindow}</h3>
           </div>
           <p className="text-xs text-[#7a7a7a] leading-relaxed">
-            {t.harvestingDesc}
+            {currentWeather.dynamicHarvest || t.harvestingDesc}
           </p>
         </div>
 
@@ -219,17 +278,15 @@ export default function WeatherAdvisory({ currentLang, currentUser }) {
         {/* 1. 24-Hour Horizontal Hourly Strip */}
         {forecastView === 'hourly' && (
           <div className="flex space-x-3 overflow-x-auto pb-2 no-scrollbar">
-            {hourlyData.map((hour, idx) => {
-              const Icon = hour.icon;
-
+            {hourlyList.map((hour, idx) => {
               return (
                 <div
                   key={idx}
                   className="min-w-[85px] p-3.5 rounded-[16px] bg-[#f5f5f7] border border-[#d2d2d7]/50 text-center space-y-2 shrink-0 hover:border-[#0071e3]/40 transition-all"
                 >
                   <span className="text-[11px] font-semibold text-[#86868b] block">{hour.time}</span>
-                  <div className="w-8 h-8 rounded-full bg-white text-[#0071e3] mx-auto flex items-center justify-center shadow-xs">
-                    <Icon size={16} />
+                  <div className="w-8 h-8 rounded-full bg-white text-[#0071e3] text-lg mx-auto flex items-center justify-center shadow-xs">
+                    <span>{hour.icon || '⛅'}</span>
                   </div>
                   <span className="text-sm font-semibold text-[#1d1d1f] block">{hour.temp}</span>
                   <span className="text-[10px] font-semibold text-blue-600 block">🌧️ {hour.rain}</span>
@@ -242,13 +299,13 @@ export default function WeatherAdvisory({ currentLang, currentUser }) {
         {/* 2. 7-Day Forecast List */}
         {forecastView === '7day' && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-            {WEATHER_FORECAST_DATA.forecast7Days.map((day, idx) => (
+            {forecast7DaysList.map((day, idx) => (
               <div
                 key={idx}
                 className="p-4 rounded-[16px] bg-[#f5f5f7] border border-[#d2d2d7]/50 space-y-2 text-center"
               >
                 <span className="text-xs font-semibold text-[#1d1d1f] block">{day.day}</span>
-                <span className="text-2xl block">🌧️</span>
+                <span className="text-2xl block">{day.icon || '🌧️'}</span>
                 <div className="flex justify-center space-x-2 text-xs">
                   <span className="font-semibold text-[#1d1d1f]">{day.tempMax}°C</span>
                   <span className="text-[#86868b]">{day.tempMin}°C</span>

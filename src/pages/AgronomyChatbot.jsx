@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import { CHATBOT_CONTENT } from '../data/mockAgriData';
 import { TRANSLATIONS } from '../data/translations';
-import { askAgronomyChatbot, getGeminiApiKey, saveGeminiApiKey } from '../services/geminiService';
+import { askAgronomyChatbot } from '../services/geminiService';
 
 export default function AgronomyChatbot({ currentLang, currentUser }) {
   const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;

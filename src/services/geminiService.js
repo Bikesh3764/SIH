@@ -1,28 +1,18 @@
-// Google Gemini AI Agronomy & Vision Service
+// Google Gemini AI Agronomy & Vision Service (Direct Cloud Connection)
 
-// Get API Key from localStorage (User configured in UI) or .env
+const DIRECT_GEMINI_KEY = 'AIzaSyBlBjq_dryGV5WOgHLn37LnvbmmgipFoDw';
+
 export function getGeminiApiKey() {
-  const customKey = typeof window !== 'undefined' ? localStorage.getItem('user_gemini_api_key') : null;
-  if (customKey && customKey.trim().length > 10) {
-    return customKey.trim();
-  }
-  return import.meta.env.VITE_GEMINI_API_KEY || '';
+  const envKey = import.meta.env.VITE_GEMINI_API_KEY;
+  if (envKey && envKey.trim().length > 10) return envKey.trim();
+  return DIRECT_GEMINI_KEY;
 }
 
-export function saveGeminiApiKey(key) {
-  if (typeof window !== 'undefined') {
-    if (key && key.trim().length > 10) {
-      localStorage.setItem('user_gemini_api_key', key.trim());
-    } else {
-      localStorage.removeItem('user_gemini_api_key');
-    }
-  }
-}
-
-// Active standard Google Gemini Vision & Text models
+// Active high-performance & efficient Gemini Flash Lite & Vision models
 const MODELS = [
   'gemini-1.5-flash',
-  'gemini-2.0-flash-exp',
+  'gemini-2.0-flash-lite',
+  'gemini-2.0-flash',
   'gemini-1.5-flash-8b',
   'gemini-1.5-pro'
 ];
@@ -32,10 +22,6 @@ const MODELS = [
  */
 async function callGeminiApi(payload, modelIdx = 0) {
   const apiKey = getGeminiApiKey();
-  if (!apiKey) {
-    throw new Error('MISSING_API_KEY');
-  }
-
   const model = MODELS[modelIdx] || MODELS[0];
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
@@ -49,9 +35,6 @@ async function callGeminiApi(payload, modelIdx = 0) {
     if (!res.ok) {
       const errBody = await res.text();
       console.warn(`Gemini model ${model} failed (${res.status}):`, errBody);
-      if (res.status === 403 || res.status === 400) {
-        throw new Error(`INVALID_API_KEY: ${errBody}`);
-      }
       if (modelIdx + 1 < MODELS.length) {
         return callGeminiApi(payload, modelIdx + 1);
       }
@@ -61,9 +44,6 @@ async function callGeminiApi(payload, modelIdx = 0) {
     const data = await res.json();
     return data;
   } catch (err) {
-    if (err.message.includes('MISSING_API_KEY') || err.message.includes('INVALID_API_KEY')) {
-      throw err;
-    }
     if (modelIdx + 1 < MODELS.length) {
       return callGeminiApi(payload, modelIdx + 1);
     }

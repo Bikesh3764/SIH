@@ -1,20 +1,18 @@
-// Google Gemini AI Agronomy & Vision Service (Direct Cloud Connection)
-
-const DIRECT_GEMINI_KEY = 'AIzaSyBlBjq_dryGV5WOgHLn37LnvbmmgipFoDw';
+// Google Gemini AI Agronomy & Vision Service (Gemini 3.5 Flash Lite)
 
 export function getGeminiApiKey() {
   const envKey = import.meta.env.VITE_GEMINI_API_KEY;
   if (envKey && envKey.trim().length > 10) return envKey.trim();
-  return DIRECT_GEMINI_KEY;
+  const localKey = typeof window !== 'undefined' ? localStorage.getItem('user_gemini_api_key') : null;
+  if (localKey && localKey.trim().length > 10) return localKey.trim();
+  return 'AIzaSyBlBjq_dryGV5WOgHLn37LnvbmmgipFoDw';
 }
 
-// Active high-performance & efficient Gemini Flash Lite & Vision models
+// Google Gemini 3.5 Flash Lite & Gemini 3.6 Flash
 const MODELS = [
-  'gemini-1.5-flash',
-  'gemini-2.0-flash-lite',
-  'gemini-2.0-flash',
-  'gemini-1.5-flash-8b',
-  'gemini-1.5-pro'
+  'gemini-3.5-flash-lite',
+  'gemini-3.6-flash',
+  'gemini-3.5-flash'
 ];
 
 /**
@@ -52,7 +50,7 @@ async function callGeminiApi(payload, modelIdx = 0) {
 }
 
 /**
- * 1. Kisan Mitra Voice & Text Agronomy Chatbot (Google Gemini Live AI)
+ * 1. Kisan Mitra Voice & Text Agronomy Chatbot (Gemini 3.5 Flash Lite)
  */
 export async function askAgronomyChatbot({ prompt, history = [], language = 'en', district = 'Sundargarh, Odisha', crops = 'Paddy, Mustard, Tomato' }) {
   const languageNames = {
@@ -114,7 +112,7 @@ Farmer Question: ${prompt}` }]
 }
 
 /**
- * 2. Crop Disease Visual Diagnosis from Image (Google Gemini 1.5 Multimodal Vision AI)
+ * 2. Crop Disease Visual Diagnosis from Image (Gemini 3.5 Flash Lite Multimodal Vision)
  */
 export async function diagnoseCropDisease({ imageBase64, mimeType = 'image/jpeg', language = 'en', cropHint = '' }) {
   const languageNames = {

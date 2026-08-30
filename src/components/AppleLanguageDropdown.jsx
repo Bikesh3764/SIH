@@ -30,13 +30,14 @@ export default function AppleLanguageDropdown({ currentLang, setLang, variant = 
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center space-x-1.5 sm:space-x-2 px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-tight transition-all duration-200 cursor-pointer shadow-xs active:scale-95 ${
+        className={`flex items-center space-x-2 px-3.5 py-2 rounded-full text-xs font-semibold tracking-tight transition-all duration-200 cursor-pointer shadow-xs active:scale-95 ${
           isDark
-            ? 'liquid-glass-dark text-white border-white/20'
+            ? 'bg-black/40 hover:bg-black/60 text-white border border-white/25 backdrop-blur-xl shadow-lg shadow-black/20'
             : 'liquid-pill-light text-[#1d1d1f]'
         }`}
       >
-        <span className="truncate max-w-[90px] sm:max-w-none">{selectedLanguage.name}</span>
+        <Globe size={13} className={isDark ? 'text-white/80' : 'text-[#0071e3]'} />
+        <span>{selectedLanguage.name}</span>
         <ChevronDown
           size={13}
           className={`transition-transform duration-300 ${
@@ -45,21 +46,21 @@ export default function AppleLanguageDropdown({ currentLang, setLang, variant = 
         />
       </button>
 
-      {/* Apple Framer Motion Popover Menu (100% Mobile Responsive) */}
+      {/* Apple Framer Motion Popover Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: 6, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 4, scale: 0.95 }}
-            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className={`absolute right-0 top-full mt-2 w-52 sm:w-56 max-w-[calc(100vw-28px)] rounded-[22px] p-2 shadow-[0_24px_60px_rgba(0,0,0,0.22)] z-[99999] border backdrop-blur-3xl max-h-80 overflow-y-auto ${
+            transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+            className={`absolute right-0 top-full mt-2 w-56 max-w-[calc(100vw-32px)] rounded-[22px] p-2 shadow-[0_28px_64px_rgba(0,0,0,0.5)] z-[99999] border backdrop-blur-3xl max-h-80 overflow-y-auto ${
               isDark
-                ? 'liquid-glass-dark text-white border-white/20'
+                ? 'bg-[#18181b]/95 text-white border-white/20'
                 : 'bg-white/95 text-[#1d1d1f] border-white/90 shadow-2xl'
             }`}
           >
-            <div className="space-y-0.5">
+            <div className="space-y-1">
               {LANGUAGES.map((lang) => {
                 const isSelected = lang.code === currentLang;
 
@@ -71,17 +72,17 @@ export default function AppleLanguageDropdown({ currentLang, setLang, variant = 
                       setLang(lang.code);
                       setIsOpen(false);
                     }}
-                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-[14px] text-xs font-medium transition-all duration-150 cursor-pointer ${
+                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-[14px] text-xs transition-all duration-150 cursor-pointer ${
                       isSelected
                         ? isDark
-                          ? 'bg-[#2997ff]/20 text-[#2997ff] font-bold border border-[#2997ff]/30'
+                          ? 'bg-[#0071e3]/30 text-white font-bold border border-[#0071e3]/50 shadow-xs'
                           : 'bg-[#0071e3]/12 text-[#0071e3] font-bold border border-[#0071e3]/20 shadow-2xs'
                         : isDark
                         ? 'hover:bg-white/10 text-white/90'
                         : 'hover:bg-black/5 text-[#1d1d1f]'
                     }`}
                   >
-                    <span className="font-semibold">{lang.name}</span>
+                    <span className="font-semibold text-left">{lang.name}</span>
                     {isSelected && (
                       <Check size={14} className={isDark ? 'text-[#2997ff]' : 'text-[#0071e3]'} />
                     )}

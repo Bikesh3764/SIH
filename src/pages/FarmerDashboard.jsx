@@ -322,7 +322,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
       title: t.weatherTitle || 'Weather Advisory',
       subtitle: t.weatherDesc || 'Hyperlocal rain probability & soil moisture guidance',
       icon: CloudSun,
-      tag: '{t.open || "Open"}-Meteo',
+      tag: 'Open-Meteo',
       iconGrad: 'from-amber-400 to-orange-500 shadow-orange-500/25',
       hoverGlow: 'group-hover:border-amber-500/40 group-hover:shadow-amber-500/10',
       accentColor: 'text-amber-600'
@@ -387,9 +387,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
               <h1 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-[#1d1d1f]">
                 {t.welcome || 'Welcome'}, {farmer.name || 'Vikash Ray'}
               </h1>
-              <span className="hidden sm:inline-flex px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                {t.verifiedFarmer || "Verified Farmer"}
-              </span>
+
             </div>
             <p className="text-[13px] sm:text-[14px] text-[#86868b] font-normal">
               {farmer.village ? `${farmer.village}, ` : ''}{districtData.name} ({districtData.state}) • {t.landHolding || 'Landholding'}: <strong className="text-[#1d1d1f] font-semibold">{farmer.landSize || '3.5 Acres'}</strong>

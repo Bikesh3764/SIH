@@ -462,9 +462,28 @@ export default function MandiMarket({ currentLang, currentUser }) {
   const [selectedDistrictKey, setSelectedDistrictKey] = useState('rourkela');
   const [selectedMarketId, setSelectedMarketId] = useState('panposh');
   const [selectedCropKey, setSelectedCropKey] = useState('Paddy');
+  const [initialLoading, setInitialLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isDistrictSyncing, setIsDistrictSyncing] = useState(false);
   const [hoveredPointIndex, setHoveredPointIndex] = useState(null);
+
+  // Initial Data & APMC Radar Loading
+  useEffect(() => {
+    let isMounted = true;
+    async function loadInitial() {
+      try {
+        await fetchLiveMandiFeed();
+      } catch (e) {
+        // fallback
+      } finally {
+        if (isMounted) {
+          setTimeout(() => setInitialLoading(false), 550);
+        }
+      }
+    }
+    loadInitial();
+    return () => { isMounted = false; };
+  }, []);
 
   // Sync with user district on login
   useEffect(() => {

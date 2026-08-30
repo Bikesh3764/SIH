@@ -45,7 +45,6 @@ export default function App() {
   const handleLoginSuccess = (user) => {
     setCurrentUser(user);
     setActivePage('dashboard');
-    showNotification(`Welcome, ${user.name}!`);
   };
 
   const handleUpdateUser = (updatedUser) => {
@@ -72,23 +71,7 @@ export default function App() {
       </div>
 
       
-      {/* Apple Floating Toast Notification */}
-      {toastMessage && (
-        <div className="fixed top-5 left-1/2 -translate-x-1/2 z-50 max-w-md w-full px-4 animate-bounce">
-          <div className="p-3.5 rounded-[18px] bg-[#1d1d1f]/95 text-white shadow-2xl backdrop-blur-xl border border-white/20 flex items-center justify-between gap-3">
-            <div className="flex items-center space-x-2.5">
-              <span className="text-base">🌾</span>
-              <p className="text-xs font-medium text-white">{toastMessage}</p>
-            </div>
-            <button
-              onClick={() => setToastMessage(null)}
-              className="text-[#86868b] hover:text-white cursor-pointer"
-            >
-              <X size={14} />
-            </button>
-          </div>
-        </div>
-      )}
+
 
       {/* Persistent Apple Sidebar */}
       {!isLanding && (

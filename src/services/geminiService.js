@@ -1,24 +1,43 @@
-// Google Gemini AI Agronomy & Vision Service (Gemini 3.5 Flash Lite)
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || 'AIzaSyBlBjq_dryGV5WOgHLn37LnvbmmgipFoDw';
+// Google Gemini AI Agronomy & Vision Service
 
-// Primary high-performance & efficient models with automatic fallback
+// Get API Key from localStorage (User configured in UI) or .env
+export function getGeminiApiKey() {
+  const customKey = typeof window !== 'undefined' ? localStorage.getItem('user_gemini_api_key') : null;
+  if (customKey && customKey.trim().length > 10) {
+    return customKey.trim();
+  }
+  return import.meta.env.VITE_GEMINI_API_KEY || '';
+}
+
+export function saveGeminiApiKey(key) {
+  if (typeof window !== 'undefined') {
+    if (key && key.trim().length > 10) {
+      localStorage.setItem('user_gemini_api_key', key.trim());
+    } else {
+      localStorage.removeItem('user_gemini_api_key');
+    }
+  }
+}
+
+// Active standard Google Gemini Vision & Text models
 const MODELS = [
-  'gemini-3.5-flash-lite',
-  'gemini-3.5-flash',
-  'gemini-2.5-flash',
-  'gemini-flash-latest'
+  'gemini-1.5-flash',
+  'gemini-2.0-flash-exp',
+  'gemini-1.5-flash-8b',
+  'gemini-1.5-pro'
 ];
 
 /**
  * Helper to call Gemini API with automatic model fallback
  */
 async function callGeminiApi(payload, modelIdx = 0) {
-  if (!GEMINI_API_KEY) {
-    throw new Error('Gemini API Key is missing. Please set VITE_GEMINI_API_KEY in .env');
+  const apiKey = getGeminiApiKey();
+  if (!apiKey) {
+    throw new Error('MISSING_API_KEY');
   }
 
   const model = MODELS[modelIdx] || MODELS[0];
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
   try {
     const res = await fetch(url, {
@@ -30,6 +49,9 @@ async function callGeminiApi(payload, modelIdx = 0) {
     if (!res.ok) {
       const errBody = await res.text();
       console.warn(`Gemini model ${model} failed (${res.status}):`, errBody);
+      if (res.status === 403 || res.status === 400) {
+        throw new Error(`INVALID_API_KEY: ${errBody}`);
+      }
       if (modelIdx + 1 < MODELS.length) {
         return callGeminiApi(payload, modelIdx + 1);
       }
@@ -39,6 +61,9 @@ async function callGeminiApi(payload, modelIdx = 0) {
     const data = await res.json();
     return data;
   } catch (err) {
+    if (err.message.includes('MISSING_API_KEY') || err.message.includes('INVALID_API_KEY')) {
+      throw err;
+    }
     if (modelIdx + 1 < MODELS.length) {
       return callGeminiApi(payload, modelIdx + 1);
     }
@@ -47,7 +72,7 @@ async function callGeminiApi(payload, modelIdx = 0) {
 }
 
 /**
- * 1. Kisan Mitra Voice & Text Agronomy Chatbot (Gemini 3.5 Flash Lite)
+ * 1. Kisan Mitra Voice & Text Agronomy Chatbot (Google Gemini Live AI)
  */
 export async function askAgronomyChatbot({ prompt, history = [], language = 'en', district = 'Sundargarh, Odisha', crops = 'Paddy, Mustard, Tomato' }) {
   const languageNames = {
@@ -76,10 +101,8 @@ Instructions:
 3. Keep the response concise, formatted with clean bullet points and emojis for easy readability on mobile.
 4. MUST respond entirely in the target language (${targetLang}). If responding in Hindi/Odia/regional script, write naturally and clearly so farmers can understand easily.`;
 
-  // Format conversational contents
   const contents = [];
 
-  // Add past conversation context
   if (history && history.length > 0) {
     history.slice(-6).forEach(msg => {
       contents.push({
@@ -89,7 +112,6 @@ Instructions:
     });
   }
 
-  // Add current query with context
   contents.push({
     role: 'user',
     parts: [{ text: `[Context: ${systemInstruction}]
@@ -112,7 +134,7 @@ Farmer Question: ${prompt}` }]
 }
 
 /**
- * 2. Crop Disease Visual Diagnosis from Image (Gemini 3.5 Flash Lite Multimodal)
+ * 2. Crop Disease Visual Diagnosis from Image (Google Gemini 1.5 Multimodal Vision AI)
  */
 export async function diagnoseCropDisease({ imageBase64, mimeType = 'image/jpeg', language = 'en', cropHint = '' }) {
   const languageNames = {
@@ -127,9 +149,8 @@ export async function diagnoseCropDisease({ imageBase64, mimeType = 'image/jpeg'
     bn: 'Bengali (বাংলা)'
   };
 
-  const targetLang = languageNames[language] || 'Hindi';
+  const targetLang = languageNames[language] || 'English';
 
-  // Clean base64 data
   let cleanBase64 = imageBase64;
   if (imageBase64.includes(',')) {
     const parts = imageBase64.split(',');
@@ -140,52 +161,34 @@ export async function diagnoseCropDisease({ imageBase64, mimeType = 'image/jpeg'
   }
 
   const promptText = `You are an expert Agricultural Plant Pathologist and Computer Vision Specialist for Indian farmers under Smart India Hackathon (SIH 2026).
-Analyze the provided image carefully.
-Crop context/hint: ${cropHint || 'Field crop'}
-Target Language for text explanations: ${targetLang}
+Analyze the provided leaf/crop image with extreme accuracy.
+Target Language: ${targetLang}
 
-STEP 1: VALIDATE IMAGE CONTENT
-- Check if the image contains a genuine agricultural plant leaf, stem, fruit, crop, or tree foliage.
-- If the image contains a HUMAN (face, portrait, selfie), animal, car, room, electronic device, random object, blank screen, or non-plant item, you MUST set "isPlant": false.
+STEP 1: INSPECT IMAGE
+- Identify what crop plant species this is.
+- Inspect the visual symptoms on the leaf (color changes, fungal lesions, necrotic spots, insect bite holes, powdery mildew, bacterial blight, rust pustules, viral mosaic, or nutrient deficiency).
+- Determine the exact pathogen/disease name. If the leaf is completely healthy, indicate "Healthy Crop Foliage".
 
 STEP 2: RETURN STRICT JSON
-If "isPlant": false (Non-plant image like human portrait/object):
-{
-  "isPlant": false,
-  "detectedObject": "Human portrait / Non-crop object (e.g. Person, room, animal)",
-  "aiExplanation": "The uploaded photo shows a human portrait / non-agricultural object rather than a plant leaf or crop stem. Please upload a clear close-up photograph of an agricultural crop leaf for pathology assessment in ${targetLang}.",
-  "crop": "Non-Crop Image",
-  "diseaseName": "Invalid Image (Non-Plant Detected)",
-  "severity": "Invalid Image",
-  "confidence": 99.0,
-  "symptoms": "No plant foliage, chlorophyll reflectance, or botanical tissue detected.",
-  "organicTreatment": "Please upload a clear photograph of a crop leaf or stem.",
-  "chemicalTreatment": "N/A",
-  "prevention": "Hold camera 15-20cm from the affected leaf in good daytime light."
-}
-
-If "isPlant": true (Valid agricultural plant / leaf):
+Return ONLY a valid JSON object matching this schema without markdown code blocks:
 {
   "isPlant": true,
-  "crop": "Exact Crop Name in ${targetLang} (with English in brackets)",
-  "scientificName": "Botanical Latin Name",
-  "family": "Botanical Family",
-  "diseaseName": "Exact Disease / Pathogen Name in ${targetLang} (or Healthy Crop if no disease)",
-  "confidence": 96.5,
+  "crop": "Exact Crop Name (e.g. Tomato / Paddy / Wheat / Cotton)",
+  "family": "Botanical Family (e.g. Solanaceae / Poaceae)",
+  "diseaseName": "Exact Disease Name (e.g. Early Blight / Cercospora Leaf Spot / Powdery Mildew)",
+  "confidence": 97.5,
   "severity": "High / Moderate / Low / Healthy",
-  "aiExplanation": "Detailed, professional yet easy-to-understand agronomy assessment in ${targetLang}. Explain what visual damage (chlorosis, rust pustules, fungal necrosis, insect holes) is seen on the leaf and how it impacts photosynthesis and yield.",
-  "symptoms": "Exact visual symptoms seen on leaf margins, veins, and surface in ${targetLang}",
-  "organicTreatment": "Detailed Zero-Budget / Organic remedy (e.g. 5% Neem oil emulsion @ 5ml/L, Trichoderma harzianum, Jeevamrut, Sour buttermilk spray) in ${targetLang}",
-  "chemicalTreatment": "Standard approved chemical fungicide/pesticide with exact dosage (e.g. Mancozeb 75% WP @ 2.5g/L, Azoxystrobin @ 1ml/L) in ${targetLang}",
-  "prevention": "Best cultural practices, crop rotation, seed treatment, and field drainage in ${targetLang}",
+  "healthScore": 35,
+  "aiExplanation": "Comprehensive agronomic analysis of the leaf visual symptoms in ${targetLang}.",
+  "symptoms": "Detailed visual symptoms seen on this specific leaf (e.g. concentric dark brown rings with yellow halo) in ${targetLang}",
+  "organicTreatment": "Zero-Budget / Organic remedy (e.g. 5% Neem Oil spray @ 5ml/L, Trichoderma viride, Dashparni Ark) in ${targetLang}",
+  "chemicalTreatment": "Approved chemical fungicide/pesticide with exact dosage (e.g. Mancozeb 75% WP @ 2.5g/L or Azoxystrobin 23% SC @ 1ml/L) in ${targetLang}",
+  "prevention": "Field sanitation, plant spacing, and irrigation advice in ${targetLang}",
   "recommendations": [
-    "Tip 1 for plant care in ${targetLang}",
-    "Tip 2 for soil and water in ${targetLang}",
-    "Tip 3 for preventive protection in ${targetLang}"
+    "Tip 1 for plant recovery in ${targetLang}",
+    "Tip 2 for soil and irrigation in ${targetLang}"
   ]
-}
-
-Return ONLY valid clean JSON with no markdown fences.`;
+}`;
 
   const payload = {
     contents: [{
@@ -195,7 +198,8 @@ Return ONLY valid clean JSON with no markdown fences.`;
       ]
     }],
     generationConfig: {
-      temperature: 0.2
+      temperature: 0.2,
+      responseMimeType: "application/json"
     }
   };
 

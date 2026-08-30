@@ -15,6 +15,15 @@ const MODELS = [
   'gemini-3.5-flash'
 ];
 
+const LANGUAGE_MAP = {
+  hi: 'Hindi (हिन्दी) in Devanagari script',
+  or: 'Odia (ଓଡ଼ିଆ) in Odia script',
+  mr: 'Marathi (मराठी) in Devanagari script',
+  pa: 'Punjabi (ਪੰਜਾਬੀ) in Gurmukhi script',
+  ml: 'Malayalam (മലയാളം) in Malayalam script',
+  en: 'English'
+};
+
 /**
  * Helper to call Gemini API with automatic model fallback
  */
@@ -53,36 +62,28 @@ async function callGeminiApi(payload, modelIdx = 0) {
  * 1. Kisan Mitra Voice & Text Agronomy Chatbot (Gemini 3.5 Flash Lite)
  */
 export async function askAgronomyChatbot({ prompt, history = [], language = 'en', district = 'Sundargarh, Odisha', crops = 'Paddy, Mustard, Tomato' }) {
-  const languageNames = {
-    en: 'English',
-    hi: 'Hindi (हिन्दी)',
-    or: 'Odia (ଓଡ଼ିଆ)',
-    mr: 'Marathi (मराठी)',
-    pa: 'Punjabi (ਪੰਜਾਬੀ)',
-    te: 'Telugu (తెలుగు)',
-    ta: 'Tamil (தமிழ்)',
-    ml: 'Malayalam (മലയാളം)',
-    bn: 'Bengali (বাংলা)'
-  };
-
-  const targetLang = languageNames[language] || 'Hindi';
+  const targetLang = LANGUAGE_MAP[language] || 'Hindi (हिन्दी) in Devanagari script';
 
   const systemInstruction = `You are "Kisan Mitra AI", an empathetic, highly expert agricultural scientist (agronomist) and early-warning advisory companion for Indian farmers under Smart India Hackathon (SIH 2026).
-Current Context:
-- Farmer District: ${district}
-- Farmer Crops: ${crops}
-- Target Response Language: ${targetLang}
+Farmer Location: ${district}
+Farmer Crops: ${crops}
 
-Instructions:
-1. Provide accurate, practical farming advice (crop diseases, pest management, bio-fertilizers, weather guidance, government schemes like PM-KISAN, PMFBY, KCC, and live mandi selling tips).
-2. Balance Organic/Zero-Budget remedies (e.g. Jeevamrut, Neem oil, Trichoderma, Dashparni Ark) with approved Chemical treatments (accurate dosages per liter).
-3. Keep the response concise, formatted with clean bullet points and emojis for easy readability on mobile.
-4. MUST respond entirely in the target language (${targetLang}). If responding in Hindi/Odia/regional script, write naturally and clearly so farmers can understand easily.`;
+STRICT LANGUAGE RULE:
+You MUST write your entire answer in ${targetLang}. 
+- If Hindi: Write 100% in natural Hindi using Devanagari script.
+- If Odia: Write 100% in Odia using Odia script (ଓଡ଼ିଆ).
+- If Marathi: Write 100% in Marathi using Devanagari script (मराठी).
+- If Punjabi: Write 100% in Punjabi using Gurmukhi script (ਪੰਜਾਬੀ).
+- If Malayalam: Write 100% in Malayalam using Malayalam script (മലയാളം).
+- If English: Write in clear English.
+Do NOT mix languages or default to English.
+
+Provide actionable, practical farming advice with organic remedies and approved chemical dosages. Keep it concise with bullet points and friendly emojis.`;
 
   const contents = [];
 
   if (history && history.length > 0) {
-    history.slice(-6).forEach(msg => {
+    history.slice(-4).forEach(msg => {
       contents.push({
         role: msg.sender === 'user' ? 'user' : 'model',
         parts: [{ text: msg.text }]
@@ -92,15 +93,17 @@ Instructions:
 
   contents.push({
     role: 'user',
-    parts: [{ text: `[Context: ${systemInstruction}]
+    parts: [{ text: `[System Command: ${systemInstruction}]
 
-Farmer Question: ${prompt}` }]
+Farmer Question: ${prompt}
+
+(Remember: Respond ONLY in ${targetLang})` }]
   });
 
   const payload = {
     contents,
     generationConfig: {
-      temperature: 0.7,
+      temperature: 0.6,
       topP: 0.95,
       maxOutputTokens: 1000
     }
@@ -115,19 +118,7 @@ Farmer Question: ${prompt}` }]
  * 2. Crop Disease Visual Diagnosis from Image (Gemini 3.5 Flash Lite Multimodal Vision)
  */
 export async function diagnoseCropDisease({ imageBase64, mimeType = 'image/jpeg', language = 'en', cropHint = '' }) {
-  const languageNames = {
-    en: 'English',
-    hi: 'Hindi (हिन्दी)',
-    or: 'Odia (ଓଡ଼ିଆ)',
-    mr: 'Marathi (मraठी)',
-    pa: 'Punjabi (ਪੰਜਾਬੀ)',
-    te: 'Telugu (తెలుగు)',
-    ta: 'Tamil (தமிழ்)',
-    ml: 'Malayalam (മലയാളം)',
-    bn: 'Bengali (বাংলা)'
-  };
-
-  const targetLang = languageNames[language] || 'English';
+  const targetLang = LANGUAGE_MAP[language] || 'Hindi (हिन्दी) in Devanagari script';
 
   let cleanBase64 = imageBase64;
   if (imageBase64.includes(',')) {
@@ -138,33 +129,37 @@ export async function diagnoseCropDisease({ imageBase64, mimeType = 'image/jpeg'
     else mimeType = 'image/jpeg';
   }
 
-  const promptText = `You are an expert Agricultural Plant Pathologist and Computer Vision Specialist for Indian farmers under Smart India Hackathon (SIH 2026).
-Analyze the provided leaf/crop image with extreme accuracy.
-Target Language: ${targetLang}
+  const promptText = `You are an expert Agricultural Plant Pathologist for Indian farmers under Smart India Hackathon (SIH 2026).
+Analyze this crop leaf image carefully.
 
-STEP 1: INSPECT IMAGE
-- Identify what crop plant species this is.
-- Inspect the visual symptoms on the leaf (color changes, fungal lesions, necrotic spots, insect bite holes, powdery mildew, bacterial blight, rust pustules, viral mosaic, or nutrient deficiency).
-- Determine the exact pathogen/disease name. If the leaf is completely healthy, indicate "Healthy Crop Foliage".
+CRITICAL REQUIREMENT:
+All descriptive text values in the JSON output MUST be written 100% in ${targetLang}.
+- diseaseName: In ${targetLang}
+- crop: In ${targetLang}
+- aiExplanation: Detailed explanation in ${targetLang}
+- symptoms: Exact leaf symptoms in ${targetLang}
+- organicTreatment: Organic & Zero-budget cure in ${targetLang}
+- chemicalTreatment: Chemical fungicide/pesticide dosage in ${targetLang}
+- prevention: Field prevention advice in ${targetLang}
+- recommendations: Array of tips in ${targetLang}
 
-STEP 2: RETURN STRICT JSON
-Return ONLY a valid JSON object matching this schema without markdown code blocks:
+Return ONLY valid JSON matching this schema:
 {
   "isPlant": true,
-  "crop": "Exact Crop Name (e.g. Tomato / Paddy / Wheat / Cotton)",
-  "family": "Botanical Family (e.g. Solanaceae / Poaceae)",
-  "diseaseName": "Exact Disease Name (e.g. Early Blight / Cercospora Leaf Spot / Powdery Mildew)",
-  "confidence": 97.5,
+  "crop": "Crop Name in ${targetLang}",
+  "family": "Botanical Family",
+  "diseaseName": "Disease Name in ${targetLang}",
+  "confidence": 96.8,
   "severity": "High / Moderate / Low / Healthy",
   "healthScore": 35,
-  "aiExplanation": "Comprehensive agronomic analysis of the leaf visual symptoms in ${targetLang}.",
-  "symptoms": "Detailed visual symptoms seen on this specific leaf (e.g. concentric dark brown rings with yellow halo) in ${targetLang}",
-  "organicTreatment": "Zero-Budget / Organic remedy (e.g. 5% Neem Oil spray @ 5ml/L, Trichoderma viride, Dashparni Ark) in ${targetLang}",
-  "chemicalTreatment": "Approved chemical fungicide/pesticide with exact dosage (e.g. Mancozeb 75% WP @ 2.5g/L or Azoxystrobin 23% SC @ 1ml/L) in ${targetLang}",
-  "prevention": "Field sanitation, plant spacing, and irrigation advice in ${targetLang}",
+  "aiExplanation": "Comprehensive agronomic analysis in ${targetLang}",
+  "symptoms": "Leaf visual symptoms in ${targetLang}",
+  "organicTreatment": "Organic remedy in ${targetLang}",
+  "chemicalTreatment": "Approved chemical treatment with dosage in ${targetLang}",
+  "prevention": "Field prevention practices in ${targetLang}",
   "recommendations": [
-    "Tip 1 for plant recovery in ${targetLang}",
-    "Tip 2 for soil and irrigation in ${targetLang}"
+    "Tip 1 in ${targetLang}",
+    "Tip 2 in ${targetLang}"
   ]
 }`;
 

@@ -197,17 +197,17 @@ export default function CropDiseaseDetect({ currentLang, onNavigate }) {
           <div className="flex items-center justify-between pb-3 border-b border-[#f0f0f0]">
             <div>
               <span className="text-[11px] font-bold uppercase text-[#0071e3] tracking-wider block">
-                Step 2 of 2
+                {t.step2of2 || 'Step 2 of 2'}
               </span>
               <h3 className="text-lg font-bold text-[#1d1d1f]">
-                Ready for Live AI Agronomist Analysis
+                {t.readyForAnalysis || 'Ready for Live AI Agronomist Analysis'}
               </h3>
             </div>
             <button
               onClick={handleReset}
               className="px-4 py-2 rounded-full text-xs font-semibold bg-[#f5f5f7] hover:bg-[#e8e8ed] text-[#1d1d1f] transition-colors cursor-pointer"
             >
-              Change Photo
+              {t.changePhotoBtn || 'Change Photo'}
             </button>
           </div>
 
@@ -224,10 +224,10 @@ export default function CropDiseaseDetect({ currentLang, onNavigate }) {
               <div className="p-4 rounded-[18px] bg-[#f5f5f7] border border-[#d2d2d7]/50 space-y-2">
                 <div className="flex items-center space-x-2 text-xs font-bold text-[#1d1d1f]">
                   <Sparkles size={16} className="text-[#0071e3]" />
-                  <span>Google Gemini Vision AI Pipeline</span>
+                  <span>{t.geminiVisionPipeline || 'Google Gemini 3.5 Multimodal Vision AI'}</span>
                 </div>
                 <p className="text-xs text-[#86868b] leading-relaxed">
-                  Our Google Gemini Multimodal Vision AI model scans the leaf in real time to identify the crop species, foliar lesions, bacterial blast, or fungal spots with scientific precision.
+                  {t.geminiVisionDesc || 'Our Google Gemini Multimodal Vision AI model scans the leaf in real time to identify the crop species, foliar lesions, bacterial blast, or fungal spots with scientific precision.'}
                 </p>
               </div>
 
@@ -239,12 +239,12 @@ export default function CropDiseaseDetect({ currentLang, onNavigate }) {
                 {analyzing ? (
                   <>
                     <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                    <span>Analyzing Leaf with Gemini AI...</span>
+                    <span>{t.analyzingLeaf || 'Analyzing Leaf with Gemini AI...'}</span>
                   </>
                 ) : (
                   <>
                     <Zap size={18} />
-                    <span>Run AI Disease Diagnosis</span>
+                    <span>{t.runAnalysisBtn || 'Run AI Disease Diagnosis'}</span>
                   </>
                 )}
               </button>
@@ -282,7 +282,7 @@ export default function CropDiseaseDetect({ currentLang, onNavigate }) {
               className="px-5 py-2 rounded-full liquid-pill-btn text-white text-xs font-semibold hover:bg-[#0077ed] transition-colors flex items-center space-x-1.5 cursor-pointer self-start sm:self-auto"
             >
               <RotateCcw size={13} />
-              <span>Scan Another Leaf</span>
+              <span>{t.scanAnotherLeaf || 'Scan Another Leaf'}</span>
             </button>
           </div>
 
@@ -293,7 +293,7 @@ export default function CropDiseaseDetect({ currentLang, onNavigate }) {
             <div className="space-y-5 lg:col-span-1">
               <div className="p-5 rounded-[26px] liquid-glass border border-[#d2d2d7]/70 shadow-xs space-y-4">
                 <h4 className="text-xs font-bold uppercase text-[#86868b] tracking-wider">
-                  Scanned Specimen
+                  {t.scannedSpecimen || 'Scanned Specimen'}
                 </h4>
                 <div className="rounded-[18px] overflow-hidden bg-black/5 border border-[#d2d2d7]/60 aspect-square flex items-center justify-center">
                   <img
@@ -303,7 +303,7 @@ export default function CropDiseaseDetect({ currentLang, onNavigate }) {
                   />
                 </div>
                 <div className="pt-2 border-t border-[#f0f0f0] flex items-center justify-between text-xs">
-                  <span className="text-[#86868b]">Infection Severity:</span>
+                  <span className="text-[#86868b]">{t.infectionSeverity || 'Infection Severity'}:</span>
                   <span className="font-bold text-[#1d1d1f]">{diagnosisResult.severity}</span>
                 </div>
               </div>
@@ -316,7 +316,7 @@ export default function CropDiseaseDetect({ currentLang, onNavigate }) {
               <div className="p-6 rounded-[26px] liquid-glass border border-[#d2d2d7]/70 shadow-xs space-y-3">
                 <div className="flex items-center space-x-2 text-amber-600 font-bold text-sm">
                   <AlertTriangle size={17} />
-                  <span>Identified Foliar Symptoms</span>
+                  <span>{t.foliarSymptoms || 'Identified Foliar Symptoms'}</span>
                 </div>
                 <p className="text-xs sm:text-sm text-[#1d1d1f] leading-relaxed">
                   {diagnosisResult.symptoms}
@@ -333,7 +333,7 @@ export default function CropDiseaseDetect({ currentLang, onNavigate }) {
                 <div className="p-5 rounded-[22px] liquid-glass bg-emerald-50/60 border-emerald-300/60 shadow-sm space-y-2.5">
                   <div className="flex items-center space-x-2 text-emerald-800 font-bold text-xs uppercase tracking-wider">
                     <CheckCircle2 size={16} className="text-emerald-600" />
-                    <span>Organic & Bio-Cure (ICAR)</span>
+                    <span>{t.organicBioCure || 'Organic & Bio-Cure (ICAR)'}</span>
                   </div>
                   <p className="text-xs text-emerald-950 font-medium leading-relaxed">
                     {diagnosisResult.organicCure}
@@ -344,7 +344,7 @@ export default function CropDiseaseDetect({ currentLang, onNavigate }) {
                 <div className="p-5 rounded-[22px] liquid-glass bg-blue-50/60 border-blue-300/60 shadow-sm space-y-2.5">
                   <div className="flex items-center space-x-2 text-blue-800 font-bold text-xs uppercase tracking-wider">
                     <Zap size={16} className="text-blue-600" />
-                    <span>Targeted Chemical Cure</span>
+                    <span>{t.chemicalCureTitle || 'Targeted Chemical Cure'}</span>
                   </div>
                   <p className="text-xs text-blue-950 font-medium leading-relaxed">
                     {diagnosisResult.chemicalCure}
@@ -356,7 +356,7 @@ export default function CropDiseaseDetect({ currentLang, onNavigate }) {
               {/* Prevention & Good Agricultural Practices */}
               <div className="p-5 rounded-[22px] bg-[#f5f5f7] border border-[#d2d2d7]/60 space-y-2">
                 <span className="text-xs font-bold text-[#1d1d1f] uppercase tracking-wider block">
-                  Field Prevention & Best Practices:
+                  {t.preventionTitle || 'Field Prevention & Best Practices'}:
                 </span>
                 <p className="text-xs text-[#86868b] leading-relaxed">
                   {diagnosisResult.prevention}

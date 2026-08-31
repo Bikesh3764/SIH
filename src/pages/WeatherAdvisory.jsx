@@ -304,7 +304,7 @@ export default function WeatherAdvisory({ currentLang, currentUser }) {
                   : 'text-[#86868b] hover:text-[#1d1d1f]'
               }`}
             >
-              {t.forecast5d || '5-Day Forecast'}
+              {t.forecast7d || '7-Day Forecast'}
             </button>
           </div>
         </div>
@@ -341,30 +341,31 @@ export default function WeatherAdvisory({ currentLang, currentUser }) {
           </div>
         )}
 
-        {/* 2. 5-Day Forecast Liquid Glass Grid */}
+        {/* 2. 7-Day Forecast Liquid Glass Grid */}
         {forecastView === '7day' && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
-            {forecast7DaysList.slice(0, 5).map((day, idx) => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
+            {forecast7DaysList.slice(0, 7).map((day, idx) => (
               <div
                 key={idx}
-                className="p-5 rounded-[22px] liquid-glass border border-white/90 space-y-2.5 text-center shadow-xs hover:scale-105 transition-all"
+                className="p-4 rounded-[22px] liquid-glass border border-white/90 space-y-2 text-center shadow-xs hover:scale-105 transition-all flex flex-col justify-between"
               >
                 <span className="text-xs font-bold text-[#1d1d1f] block uppercase tracking-wider">{day.day}</span>
                 <span className="text-3xl block animate-pulse">{day.icon || '🌧️'}</span>
-                <div className="flex justify-center space-x-2 text-sm">
+                <div className="flex justify-center space-x-1.5 text-xs sm:text-sm">
                   <span className="font-extrabold text-[#1d1d1f]">{day.tempMax}°C</span>
                   <span className="text-[#86868b] font-medium">{day.tempMin}°C</span>
                 </div>
-                <span className="text-[11px] font-bold text-blue-600 px-2 py-0.5 rounded-full bg-blue-100/60 inline-block">
+                <span className="text-[10.5px] font-bold text-blue-600 px-1.5 py-0.5 rounded-full bg-blue-100/60 inline-block">
                   Rain: {day.rainChance}%
                 </span>
-                <p className="text-[11px] text-[#86868b] block leading-tight font-medium pt-1">
+                <p className="text-[10px] text-[#86868b] block leading-tight font-medium pt-1 line-clamp-3">
                   {day.advisory}
                 </p>
               </div>
             ))}
           </div>
         )}
+
 
       </div>
 

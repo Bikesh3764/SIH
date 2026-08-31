@@ -14,7 +14,7 @@ import {
 import { DISTRICTS_DATA } from '../data/mockAgriData';
 import { TRANSLATIONS } from '../data/translations';
 import AppleSelect from '../components/AppleSelect';
-import { fetchLiveMandiFeed } from '../services/mandiService';
+import { fetchLiveDistrictMandiFeed } from '../services/mandiService';
 
 const DISTRICT_DATA_STORE = {
   rourkela: {
@@ -466,19 +466,41 @@ export default function MandiMarket({ currentLang, currentUser }) {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isDistrictSyncing, setIsDistrictSyncing] = useState(false);
   const [hoveredPointIndex, setHoveredPointIndex] = useState(null);
+  const [liveStore, setLiveStore] = useState({});
+
+  // Helper to load live district feed from AGMARKNET
+  const loadMandiData = async (distKey) => {
+    try {
+      const liveData = await fetchLiveDistrictMandiFeed(distKey);
+      if (liveData && liveData.crops && Object.keys(liveData.crops).length > 0) {
+        setLiveStore(prev => ({
+          ...prev,
+          [distKey]: liveData
+        }));
+
+        const availableCrops = Object.keys(liveData.crops);
+        // If current crop is not available in the new district's live data, switch to the first available crop
+        if (!liveData.crops[selectedCropKey]) {
+          const firstCrop = availableCrops[0];
+          setSelectedCropKey(firstCrop);
+          const firstCropMarkets = Object.keys(liveData.crops[firstCrop]?.marketMap || {});
+          if (firstCropMarkets.length > 0) {
+            setSelectedMarketId(firstCropMarkets[0]);
+          }
+        }
+      }
+    } catch (e) {
+      console.warn('Live mandi fetch error:', e);
+    }
+  };
 
   // Initial Data & APMC Radar Loading
   useEffect(() => {
     let isMounted = true;
     async function loadInitial() {
-      try {
-        await fetchLiveMandiFeed();
-      } catch (e) {
-        // fallback
-      } finally {
-        if (isMounted) {
-          setTimeout(() => setInitialLoading(false), 550);
-        }
+      await loadMandiData(selectedDistrictKey);
+      if (isMounted) {
+        setInitialLoading(false);
       }
     }
     loadInitial();
@@ -498,30 +520,47 @@ export default function MandiMarket({ currentLang, currentUser }) {
     }
   }, [currentUser]);
 
-  const handleDistrictChange = (distKey) => {
+  const handleDistrictChange = async (distKey) => {
     setIsDistrictSyncing(true);
     setSelectedDistrictKey(distKey);
-    const distData = DISTRICT_DATA_STORE[distKey] || DISTRICT_DATA_STORE.rourkela;
-    
-    if (distData.markets && distData.markets[0]) {
-      setSelectedMarketId(distData.markets[0].id);
-    }
+    setHoveredPointIndex(null);
 
+    const distData = liveStore[distKey] || DISTRICT_DATA_STORE[distKey] || DISTRICT_DATA_STORE.rourkela;
     const availableCrops = Object.keys(distData.crops || {});
     if (availableCrops.length > 0) {
-      setSelectedCropKey(availableCrops[0]);
+      const newCrop = availableCrops[0];
+      setSelectedCropKey(newCrop);
+      const cropMarkets = Object.keys(distData.crops[newCrop]?.marketMap || {});
+      if (cropMarkets.length > 0) {
+        setSelectedMarketId(cropMarkets[0]);
+      } else if (distData.markets && distData.markets[0]) {
+        setSelectedMarketId(distData.markets[0].id);
+      }
     }
-    setHoveredPointIndex(null);
+
+    await loadMandiData(distKey);
 
     setTimeout(() => {
       setIsDistrictSyncing(false);
     }, 400);
   };
 
+  const handleCropChange = (newCropKey) => {
+    setSelectedCropKey(newCropKey);
+    setHoveredPointIndex(null);
+    const cropObj = activeDistrict.crops?.[newCropKey];
+    if (cropObj?.marketMap) {
+      const marketKeys = Object.keys(cropObj.marketMap);
+      if (marketKeys.length > 0 && !cropObj.marketMap[selectedMarketId]) {
+        setSelectedMarketId(marketKeys[0]);
+      }
+    }
+  };
+
   const handleRefresh = async () => {
     setIsRefreshing(true);
     try {
-      await fetchLiveMandiFeed();
+      await loadMandiData(selectedDistrictKey);
     } catch (e) {
       // fallback
     } finally {
@@ -529,32 +568,65 @@ export default function MandiMarket({ currentLang, currentUser }) {
     }
   };
 
-  const activeDistrict = DISTRICT_DATA_STORE[selectedDistrictKey] || DISTRICT_DATA_STORE.rourkela;
-  const activeMarket = activeDistrict.markets.find(m => m.id === selectedMarketId) || activeDistrict.markets[0];
-  const marketPremium = activeMarket.premium || 0;
+  const activeDistrict = liveStore[selectedDistrictKey] || DISTRICT_DATA_STORE[selectedDistrictKey] || DISTRICT_DATA_STORE.rourkela;
 
   const cropList = Object.keys(activeDistrict.crops || {});
-  const activeCrop = activeDistrict.crops[selectedCropKey] || activeDistrict.crops[cropList[0]] || {
+  const activeCrop = activeDistrict.crops?.[selectedCropKey] || activeDistrict.crops?.[cropList[0]] || {
     name: selectedCropKey,
+    displayName: selectedCropKey,
     unit: '₹ / quintal',
     basePrice: 2369,
     minPrice: 2360,
     maxPrice: 2390,
     msp: 2183,
+    mspFloorLabel: 'Govt Support Price',
     trend: 'up',
     change: '+3.2%',
-    arrivalDate: '30/08/2026',
-    historyOffsets: [-30, -20, -10, -15, -5, +10, 0],
+    arrivalDate: activeDistrict.arrivalDate || '31/08/2026',
+    marketMap: {},
     nearby: []
   };
 
-  const currentPrice = activeCrop.basePrice + marketPremium;
-  const currentMinPrice = activeCrop.minPrice + marketPremium;
-  const currentMaxPrice = activeCrop.maxPrice + marketPremium;
+  // Available markets that trade this specific crop in this district
+  const availableMarketsForCrop = useMemo(() => {
+    if (activeCrop.marketMap && Object.keys(activeCrop.marketMap).length > 0) {
+      return Object.values(activeCrop.marketMap);
+    }
+    return activeDistrict.markets || [];
+  }, [activeCrop, activeDistrict]);
+
+  // Keep selectedMarketId in sync with available markets for active crop
+  const activeMarket = useMemo(() => {
+    if (activeCrop.marketMap && activeCrop.marketMap[selectedMarketId]) {
+      return activeCrop.marketMap[selectedMarketId];
+    }
+    const foundInNearby = activeCrop.nearby?.find(m => m.id === selectedMarketId);
+    if (foundInNearby) {
+      return foundInNearby;
+    }
+    if (availableMarketsForCrop.length > 0) {
+      return availableMarketsForCrop[0];
+    }
+    return activeDistrict.markets?.find(m => m.id === selectedMarketId) || activeDistrict.markets?.[0] || { id: 'main', name: `${activeDistrict.districtName} APMC` };
+  }, [activeCrop, selectedMarketId, availableMarketsForCrop, activeDistrict]);
+
+  // Real-time market specific price
+  const currentPrice = Number(activeMarket.price || activeCrop.marketMap?.[activeMarket.id]?.price || activeCrop.basePrice) || 2400;
+  const currentMinPrice = Number(activeMarket.min || activeCrop.marketMap?.[activeMarket.id]?.min || activeCrop.minPrice) || Math.round(currentPrice * 0.95);
+  const currentMaxPrice = Number(activeMarket.max || activeCrop.marketMap?.[activeMarket.id]?.max || activeCrop.maxPrice) || Math.round(currentPrice * 1.05);
+
 
   const chartData = useMemo(() => {
     const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Today'];
-    const offsets = activeCrop.historyOffsets || [-40, -25, -15, -20, -10, +15, 0];
+    const offsets = [
+      -Math.round(currentPrice * 0.024),
+      -Math.round(currentPrice * 0.016),
+      -Math.round(currentPrice * 0.008),
+      -Math.round(currentPrice * 0.014),
+      -Math.round(currentPrice * 0.004),
+      +Math.round(currentPrice * 0.009),
+      0
+    ];
     
     const points = days.map((day, idx) => {
       const price = currentPrice + (offsets[idx] || 0);
@@ -579,6 +651,7 @@ export default function MandiMarket({ currentLang, currentUser }) {
       const y = yBottom - normalizedY * (yBottom - yTop);
       return { ...p, x: Math.round(x * 10) / 10, y: Math.round(y * 10) / 10 };
     });
+
 
     let pathD = `M ${coords[0].x},${coords[0].y}`;
     for (let i = 0; i < coords.length - 1; i++) {
@@ -685,15 +758,20 @@ export default function MandiMarket({ currentLang, currentUser }) {
             {t.selectMarket || 'Select Market'}
           </span>
           <AppleSelect
-            options={activeDistrict.markets.map(m => ({
+            options={availableMarketsForCrop.map(m => ({
               value: m.id,
-              label: m.name
+              label: m.name,
+              subLabel: m.price ? `₹${Number(m.price).toLocaleString()}` : ''
             }))}
-            value={selectedMarketId}
-            onChange={(val) => setSelectedMarketId(val)}
+            value={activeMarket.id}
+            onChange={(val) => {
+              setSelectedMarketId(val);
+              setHoveredPointIndex(null);
+            }}
             icon={Store}
           />
         </div>
+
 
         {/* 3. Select Crop */}
         <div className="p-4 rounded-[22px] liquid-glass border border-white/80 shadow-xs space-y-1.5 relative z-10 focus-within:z-50 hover:z-40">
@@ -703,17 +781,14 @@ export default function MandiMarket({ currentLang, currentUser }) {
           <AppleSelect
             options={cropList.map(c => ({
               value: c,
-              label: activeDistrict.crops[c].name.split('(')[0].trim() || c,
-              subLabel: activeDistrict.crops[c].unit
+              label: activeDistrict.crops?.[c]?.displayName || activeDistrict.crops?.[c]?.name || c
             }))}
             value={selectedCropKey}
-            onChange={(val) => {
-              setSelectedCropKey(val);
-              setHoveredPointIndex(null);
-            }}
+            onChange={(val) => handleCropChange(val)}
             icon={Sparkles}
           />
         </div>
+
 
       </div>
 
@@ -723,7 +798,7 @@ export default function MandiMarket({ currentLang, currentUser }) {
           <div className="flex flex-wrap items-baseline gap-2.5">
             <span className="w-2.5 h-2.5 rounded-full liquid-pill-btn"></span>
             <h2 className="text-base font-semibold text-[#1d1d1f]">
-              {activeCrop.name}
+              {activeCrop.displayName || activeCrop.name}
             </h2>
             <span className="text-xs text-[#86868b]">
               • {activeMarket.name}
@@ -862,7 +937,7 @@ export default function MandiMarket({ currentLang, currentUser }) {
         {/* Card 1: Modal Rate */}
         <div className="p-5 sm:p-6 rounded-[20px] liquid-glass shadow-xs space-y-1.5">
           <div className="flex justify-between items-center text-xs font-semibold text-[#86868b] uppercase tracking-wider">
-            <span>{selectedCropKey} {t.spotRate || 'Spot Rate'}</span>
+            <span>{(activeCrop.displayName || activeCrop.name)} {t.spotRate || 'Spot Rate'}</span>
             <span className="text-[#0071e3] font-bold">{activeCrop.change}</span>
           </div>
           <div className="text-3xl font-bold tracking-tight text-[#1d1d1f]">
@@ -876,8 +951,8 @@ export default function MandiMarket({ currentLang, currentUser }) {
         {/* Card 2: Govt MSP Floor */}
         <div className="p-5 sm:p-6 rounded-[20px] liquid-glass shadow-xs space-y-1.5">
           <div className="flex justify-between items-center text-xs font-semibold text-[#86868b] uppercase tracking-wider">
-            <span>{t.govtMspFloor || 'Govt Support Price'}</span>
-            <span className="text-[#86868b]">Floor Base</span>
+            <span>{activeCrop.mspFloorLabel || t.govtMspFloor || 'Govt Support Price'}</span>
+            <span className="text-[#86868b]">{activeCrop.isOfficialMsp ? 'Official MSP' : 'Floor Base'}</span>
           </div>
           <div className="text-3xl font-bold tracking-tight text-[#0071e3]">
             ₹{activeCrop.msp.toLocaleString()} <span className="text-xs font-normal text-[#86868b]">{activeCrop.unit}</span>
@@ -910,32 +985,54 @@ export default function MandiMarket({ currentLang, currentUser }) {
             {t.regionalNetwork || 'Regional APMC Network'}
           </span>
           <h3 className="text-base font-semibold text-[#1d1d1f]">
-            {t.nearbyComparison || 'Nearby APMC Mandi Rates for'} {selectedCropKey} ({activeDistrict.districtName})
+            {t.nearbyComparison || 'Nearby APMC Mandi Rates for'} {(activeCrop.displayName || activeCrop.name)} ({activeDistrict.districtName})
           </h3>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5">
-          {activeCrop.nearby.map((m, idx) => (
-            <div
-              key={idx}
-              className="p-5 rounded-[18px] bg-[#f5f5f7] border border-[#d2d2d7]/50 space-y-3 hover:border-[#0071e3]/40 transition-all shadow-xs"
-            >
-              <div>
-                <h4 className="font-semibold text-sm text-[#1d1d1f] leading-snug">{m.name}</h4>
-                <span className="text-xs text-[#86868b]">{m.type}</span>
-              </div>
 
-              <div className="pt-2.5 border-t border-[#e0e0e0] space-y-1">
-                <div className="text-2xl font-bold tracking-tight text-[#1d1d1f]">
-                  ₹{m.price.toLocaleString()} <span className="text-xs font-normal text-[#86868b]">{activeCrop.unit}</span>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5">
+          {(activeCrop.nearby || []).map((m, idx) => {
+            const isSelected = (m.id === activeMarket.id || m.name === activeMarket.name);
+            return (
+              <div
+                key={idx}
+                onClick={() => {
+                  if (m.id) setSelectedMarketId(m.id);
+                  setHoveredPointIndex(null);
+                }}
+                className={`p-5 rounded-[18px] transition-all shadow-xs cursor-pointer ${
+                  isSelected 
+                    ? 'bg-white border-2 border-[#0071e3] ring-4 ring-[#0071e3]/10 shadow-md scale-[1.02]' 
+                    : 'bg-[#f5f5f7] border border-[#d2d2d7]/50 hover:border-[#0071e3]/40 hover:bg-white'
+                } space-y-3`}
+              >
+                <div className="flex items-start justify-between gap-1">
+                  <div>
+                    <h4 className={`font-semibold text-sm leading-snug ${isSelected ? 'text-[#0071e3]' : 'text-[#1d1d1f]'}`}>
+                      {m.name}
+                    </h4>
+                    <span className="text-xs text-[#86868b]">{m.type}</span>
+                  </div>
+                  {isSelected && (
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#0071e3]/10 text-[#0071e3]">
+                      Active
+                    </span>
+                  )}
                 </div>
-                <div className="text-xs text-[#86868b]">
-                  {t.auctionSpread || "Auction Spread"}: <span className="text-[#1d1d1f] font-medium">₹{m.min.toLocaleString()} - ₹{m.max.toLocaleString()}</span>
+
+                <div className="pt-2.5 border-t border-[#e0e0e0] space-y-1">
+                  <div className="text-2xl font-bold tracking-tight text-[#1d1d1f]">
+                    ₹{Number(m.price).toLocaleString()} <span className="text-xs font-normal text-[#86868b]">{activeCrop.unit}</span>
+                  </div>
+                  <div className="text-xs text-[#86868b]">
+                    {t.auctionSpread || "Auction Spread"}: <span className="text-[#1d1d1f] font-medium">₹{Number(m.min).toLocaleString()} - ₹{Number(m.max).toLocaleString()}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
+
       </div>
 
     </div>

@@ -43,6 +43,7 @@ export const DISTRICT_CONFIGS = {
   rourkela: {
     state: 'Odisha',
     district: 'Sundergarh',
+    altDistrict: 'Sambalpur',
     districtName: 'Rourkela (Sundargarh)',
     stateName: 'Odisha',
     regionalHubs: ['Sundargarh Central APMC', 'Jharsuguda APMC Hub', 'Sambalpur Main Yard', 'Bargarh APMC']
@@ -50,6 +51,7 @@ export const DISTRICT_CONFIGS = {
   yavatmal: {
     state: 'Maharashtra',
     district: 'Yavatmal',
+    altDistrict: 'Amravati',
     districtName: 'Yavatmal',
     stateName: 'Maharashtra',
     regionalHubs: ['Wardha Grain Hub', 'Amravati APMC', 'Akola Central Yard', 'Nagpur Kalamna Yard']
@@ -57,6 +59,7 @@ export const DISTRICT_CONFIGS = {
   nashik: {
     state: 'Maharashtra',
     district: 'Nashik',
+    altDistrict: 'Pune',
     districtName: 'Nashik (Lasalgaon)',
     stateName: 'Maharashtra',
     regionalHubs: ['Lasalgaon Terminal Yard', 'Pimpalgaon Mega APMC', 'Pune Gultekdi Hub', 'Mumbai Vashi Mega Terminal']
@@ -64,6 +67,7 @@ export const DISTRICT_CONFIGS = {
   karnal: {
     state: 'Haryana',
     district: 'Karnal',
+    altDistrict: 'Kurukshetra',
     districtName: 'Karnal',
     stateName: 'Haryana',
     regionalHubs: ['Taraori World Basmati Yard', 'Kurukshetra Grain APMC', 'Panipat Central Market', 'Ambala Grain Terminal']
@@ -71,6 +75,7 @@ export const DISTRICT_CONFIGS = {
   bathinda: {
     state: 'Punjab',
     district: 'Bhatinda',
+    altDistrict: 'Patiala',
     districtName: 'Bathinda',
     stateName: 'Punjab',
     regionalHubs: ['Bathinda Main Yard', 'Mansa APMC', 'Abohar Cotton Hub', 'Patiala Regional Hub']
@@ -78,6 +83,7 @@ export const DISTRICT_CONFIGS = {
   ernakulam: {
     state: 'Keralam',
     district: 'Ernakulam',
+    altDistrict: 'Kottayam',
     districtName: 'Ernakulam (Kochi)',
     stateName: 'Kerala',
     regionalHubs: ['Kochi Spices Board Hub', 'Kottayam Central Yard', 'Thrissur APMC Yard', 'Palakkad Terminal Hub']
@@ -89,21 +95,27 @@ export const DISTRICT_CONFIGS = {
  */
 export async function fetchLiveDistrictMandiFeed(districtKey = 'rourkela') {
   const cfg = DISTRICT_CONFIGS[districtKey?.toLowerCase()] || DISTRICT_CONFIGS.rourkela;
-  const endpoint = `https://api.data.gov.in/resource/${RESOURCE_ID}?api-key=${DATAGOV_API_KEY}&format=json&limit=100&filters[state]=${encodeURIComponent(cfg.state)}&filters[district]=${encodeURIComponent(cfg.district)}`;
+  const endpoint = `https://api.data.gov.in/resource/${RESOURCE_ID}?api-key=${DATAGOV_API_KEY}&format=json&limit=100&filters[state]=${encodeURIComponent(cfg.state)}&filters[district]=${encodeURIComponent(cfg.district)}&_t=${Date.now()}`;
 
   try {
     const ctrl = new AbortController();
     const timeoutId = setTimeout(() => ctrl.abort(), 7000);
 
-    const res = await fetch(endpoint, { signal: ctrl.signal });
+    let res = await fetch(endpoint, { signal: ctrl.signal });
     clearTimeout(timeoutId);
 
-    if (!res.ok) {
-      throw new Error(`Data.gov.in HTTP ${res.status}`);
-    }
+    let data = res.ok ? await res.json() : { records: [] };
+    let records = data.records || [];
 
-    const data = await res.json();
-    const records = data.records || [];
+    // If 0 records for specific district today, query state-level active mandis to guarantee live today's data!
+    if (records.length === 0) {
+      const stateEndpoint = `https://api.data.gov.in/resource/${RESOURCE_ID}?api-key=${DATAGOV_API_KEY}&format=json&limit=100&filters[state]=${encodeURIComponent(cfg.state)}&_t=${Date.now()}`;
+      const stateRes = await fetch(stateEndpoint);
+      if (stateRes.ok) {
+        const stateData = await stateRes.json();
+        records = stateData.records || [];
+      }
+    }
 
     if (records.length === 0) {
       return null;
@@ -251,6 +263,3 @@ export async function fetchLiveDistrictMandiFeed(districtKey = 'rourkela') {
 export async function fetchLiveMandiFeed() {
   return fetchLiveDistrictMandiFeed('rourkela');
 }
-
-
-

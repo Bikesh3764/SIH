@@ -36,7 +36,7 @@ const DISTRICT_DATA_STORE = {
         msp: 2183,
         trend: 'up',
         change: '+4.8%',
-        arrivalDate: '30/08/2026',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
         historyOffsets: [-50, -35, -20, -30, -10, +15, 0],
         nearby: [
           { name: 'Sundargarh Central APMC', type: 'Principal Yard', price: 2450, min: 2390, max: 2510 },
@@ -54,7 +54,7 @@ const DISTRICT_DATA_STORE = {
         msp: 5050,
         trend: 'up',
         change: '+3.2%',
-        arrivalDate: '30/08/2026',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
         historyOffsets: [-80, -60, -40, -15, -30, +20, 0],
         nearby: [
           { name: 'Sundargarh Central APMC', type: 'Principal Yard', price: 5720, min: 5550, max: 5880 },
@@ -72,7 +72,7 @@ const DISTRICT_DATA_STORE = {
         msp: 15,
         trend: 'up',
         change: '+8.5%',
-        arrivalDate: '30/08/2026',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
         historyOffsets: [-4, -3, -1, -2, 0, +2, 0],
         nearby: [
           { name: 'Panposh Sabzi Mandi', type: 'Vegetable APMC', price: 28, min: 24, max: 32 },
@@ -90,7 +90,7 @@ const DISTRICT_DATA_STORE = {
         msp: 5850,
         trend: 'up',
         change: '+2.1%',
-        arrivalDate: '30/08/2026',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
         historyOffsets: [-100, -70, -40, -50, -20, +10, 0],
         nearby: [
           { name: 'Sundargarh Central APMC', type: 'Principal Yard', price: 6500, min: 6250, max: 6750 },
@@ -121,7 +121,7 @@ const DISTRICT_DATA_STORE = {
         msp: 6620,
         trend: 'up',
         change: '+3.4%',
-        arrivalDate: '30/08/2026',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
         historyOffsets: [-120, -80, -60, -90, -40, +30, 0],
         nearby: [
           { name: 'Wani APMC', type: 'Cotton Market Hub', price: 6940, min: 6750, max: 7200 },
@@ -139,7 +139,7 @@ const DISTRICT_DATA_STORE = {
         msp: 4600,
         trend: 'down',
         change: '-4.1%',
-        arrivalDate: '30/08/2026',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
         historyOffsets: [+140, +110, +80, +95, +40, -10, 0],
         nearby: [
           { name: 'Yavatmal APMC', type: 'Principal Yard', price: 4720, min: 4550, max: 4890 },
@@ -157,7 +157,7 @@ const DISTRICT_DATA_STORE = {
         msp: 2275,
         trend: 'up',
         change: '+2.1%',
-        arrivalDate: '30/08/2026',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
         historyOffsets: [-40, -25, -15, -20, -5, +10, 0],
         nearby: [
           { name: 'Yavatmal Main', type: 'APMC Market', price: 2460, min: 2380, max: 2540 },
@@ -175,7 +175,7 @@ const DISTRICT_DATA_STORE = {
         msp: 7000,
         trend: 'up',
         change: '+7.5%',
-        arrivalDate: '30/08/2026',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
         historyOffsets: [-250, -180, -120, -150, -60, +40, 0],
         nearby: [
           { name: 'Yavatmal APMC', type: 'Pulse Hub', price: 9850, min: 9400, max: 10200 },
@@ -206,7 +206,7 @@ const DISTRICT_DATA_STORE = {
         msp: 2183,
         trend: 'up',
         change: '+5.2%',
-        arrivalDate: '30/08/2026',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
         historyOffsets: [-60, -45, -30, -35, -15, +10, 0],
         nearby: [
           { name: 'Aluva APMC Market', type: 'Principal Yard', price: 2430, min: 2350, max: 2510 },
@@ -224,7 +224,7 @@ const DISTRICT_DATA_STORE = {
         msp: 28,
         trend: 'neutral',
         change: '0.0%',
-        arrivalDate: '30/08/2026',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
         historyOffsets: [-1, 0, -1, 0, 0, +1, 0],
         nearby: [
           { name: 'Ernakulam Broadway', type: 'Wholesale Yard', price: 35, min: 32, max: 38 },
@@ -242,7 +242,7 @@ const DISTRICT_DATA_STORE = {
         msp: 450,
         trend: 'up',
         change: '+8.1%',
-        arrivalDate: '30/08/2026',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
         historyOffsets: [-18, -12, -8, -10, -4, +3, 0],
         nearby: [
           { name: 'Kochi Spices Exchange', type: 'National Spices Board Hub', price: 520, min: 490, max: 550 },
@@ -273,7 +273,7 @@ const DISTRICT_DATA_STORE = {
         msp: 1800,
         trend: 'up',
         change: '+9.4%',
-        arrivalDate: '30/08/2026',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
         historyOffsets: [-150, -110, -70, -85, -30, +25, 0],
         nearby: [
           { name: 'Lasalgaon APMC', type: 'Asia Largest Onion Hub', price: 2920, min: 2680, max: 3220 },
@@ -291,7 +291,7 @@ const DISTRICT_DATA_STORE = {
         msp: 15,
         trend: 'up',
         change: '+12.0%',
-        arrivalDate: '30/08/2026',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
         historyOffsets: [-5, -4, -2, -3, -1, +2, 0],
         nearby: [
           { name: 'Pimpalgaon Mandi', type: 'Tomato Hub', price: 29, min: 25, max: 33 },
@@ -309,7 +309,7 @@ const DISTRICT_DATA_STORE = {
         msp: 60,
         trend: 'up',
         change: '+4.5%',
-        arrivalDate: '30/08/2026',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
         historyOffsets: [-6, -4, -3, -5, -2, +1, 0],
         nearby: [
           { name: 'Pimpalgaon Grapes Yard', type: 'Export Quality Hub', price: 88, min: 78, max: 101 },
@@ -340,7 +340,7 @@ const DISTRICT_DATA_STORE = {
         msp: 2183,
         trend: 'up',
         change: '+4.2%',
-        arrivalDate: '30/08/2026',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
         historyOffsets: [-90, -70, -45, -55, -20, +25, 0],
         nearby: [
           { name: 'Taraori Basmati Yard', type: 'World Basmati Hub', price: 3920, min: 3720, max: 4180 },
@@ -358,7 +358,7 @@ const DISTRICT_DATA_STORE = {
         msp: 2275,
         trend: 'up',
         change: '+2.8%',
-        arrivalDate: '30/08/2026',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
         historyOffsets: [-45, -30, -15, -25, -10, +15, 0],
         nearby: [
           { name: 'Karnal Grain Mandi', type: 'District Grain Hub', price: 2480, min: 2420, max: 2550 },
@@ -376,7 +376,7 @@ const DISTRICT_DATA_STORE = {
         msp: 5050,
         trend: 'up',
         change: '+1.8%',
-        arrivalDate: '30/08/2026',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
         historyOffsets: [-70, -50, -30, -40, -15, +10, 0],
         nearby: [
           { name: 'Karnal APMC', type: 'Principal Yard', price: 5420, min: 5250, max: 5600 },
@@ -407,7 +407,7 @@ const DISTRICT_DATA_STORE = {
         msp: 2275,
         trend: 'up',
         change: '+3.1%',
-        arrivalDate: '30/08/2026',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
         historyOffsets: [-55, -35, -20, -30, -10, +15, 0],
         nearby: [
           { name: 'Maur Mandi APMC', type: 'Major Grain Market', price: 2510, min: 2450, max: 2580 },
@@ -425,7 +425,7 @@ const DISTRICT_DATA_STORE = {
         msp: 2183,
         trend: 'up',
         change: '+1.9%',
-        arrivalDate: '30/08/2026',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
         historyOffsets: [-30, -20, -10, -15, -5, +10, 0],
         nearby: [
           { name: 'Bathinda Mandi', type: 'Principal Yard', price: 2240, min: 2190, max: 2290 },
@@ -443,7 +443,7 @@ const DISTRICT_DATA_STORE = {
         msp: 6620,
         trend: 'up',
         change: '+2.4%',
-        arrivalDate: '30/08/2026',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
         historyOffsets: [-110, -75, -50, -65, -30, +20, 0],
         nearby: [
           { name: 'Bathinda Cotton Market', type: 'Principal Cotton Yard', price: 6780, min: 6550, max: 7050 },
@@ -582,7 +582,7 @@ export default function MandiMarket({ currentLang, currentUser }) {
     mspFloorLabel: 'Govt Support Price',
     trend: 'up',
     change: '+3.2%',
-    arrivalDate: activeDistrict.arrivalDate || '31/08/2026',
+    arrivalDate: activeDistrict.arrivalDate || new Date().toLocaleDateString('en-GB'),
     marketMap: {},
     nearby: []
   };

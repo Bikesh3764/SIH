@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   X, 
@@ -10,12 +10,13 @@ import {
   Globe, 
   UserPlus, 
   LogIn,
-  CheckCircle2
+  CheckCircle2,
+  ChevronDown,
+  Check
 } from 'lucide-react';
 import { DISTRICTS_DATA, CURRENT_FARMER_PROFILE, LANGUAGES } from '../data/mockAgriData';
 import { TRANSLATIONS } from '../data/translations';
 import AppleLanguageDropdown from '../components/AppleLanguageDropdown';
-import AppleSelect from '../components/AppleSelect';
 
 export default function SignInModal({ isOpen, onClose, onLoginSuccess, currentLang, setLang }) {
   const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
@@ -30,6 +31,21 @@ export default function SignInModal({ isOpen, onClose, onLoginSuccess, currentLa
   const [villageName, setVillageName] = useState('');
   const [landHolding, setLandHolding] = useState('3.5 Acres');
   const [primaryCrop, setPrimaryCrop] = useState('Paddy & Mustard');
+  const [isDistrictSelectOpen, setIsDistrictSelectOpen] = useState(false);
+  const districtRef = useRef(null);
+
+  // Close district popover on click outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (districtRef.current && !districtRef.current.contains(event.target)) {
+        setIsDistrictSelectOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   // Existing Login Form State
   const [loginPhone, setLoginPhone] = useState('');
@@ -97,7 +113,7 @@ export default function SignInModal({ isOpen, onClose, onLoginSuccess, currentLa
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 15 }}
           transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full max-w-lg liquid-glass text-[#1d1d1f] rounded-[32px] shadow-2xl overflow-y-auto max-h-[92vh] p-5 sm:p-8 space-y-4 sm:space-y-5 border border-white/80 my-auto"
+          className="relative w-full max-w-lg liquid-glass text-[#1d1d1f] rounded-[32px] shadow-2xl p-6 sm:p-8 space-y-4 sm:space-y-5 border border-white/80 my-auto"
         >
           
           {/* Top Header: Apple Language Popover + Close Button */}
@@ -239,27 +255,65 @@ export default function SignInModal({ isOpen, onClose, onLoginSuccess, currentLa
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="space-y-1">
+                <div className="space-y-1 relative" ref={districtRef}>
                   <label className="font-semibold text-[#1d1d1f] text-[13px]">{t.district} *</label>
-                  <div className="relative">
-                    <MapPin size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#0066cc] pointer-events-none" />
-                    <select
-                      value={selectedDistrict}
-                      onChange={(e) => setSelectedDistrict(e.target.value)}
-                      className="w-full pl-9 pr-8 py-2.5 rounded-[12px] bg-[#f5f5f7] border border-[#e0e0e0] focus:bg-white focus:ring-2 focus:ring-[#0066cc] focus:outline-none text-[13px] font-medium text-[#1d1d1f] appearance-none cursor-pointer"
-                    >
-                      {DISTRICTS_DATA.map((d) => (
-                        <option key={d.name} value={d.name}>
-                          {d.name} ({d.state})
-                        </option>
-                      ))}
-                    </select>
-                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[#86868b]">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                      </svg>
+                  
+                  {/* Apple VisionOS Capsule Button */}
+                  <button
+                    type="button"
+                    onClick={() => setIsDistrictSelectOpen(!isDistrictSelectOpen)}
+                    className="w-full px-3 py-2.5 rounded-[12px] bg-[#f5f5f7] hover:bg-[#ebebed] border border-[#e0e0e0] flex items-center justify-between text-[13px] font-semibold text-[#1d1d1f] shadow-xs active:scale-[0.99] transition-all cursor-pointer"
+                  >
+                    <div className="flex items-center space-x-1.5 truncate pr-1">
+                      <MapPin size={14} className="text-[#0066cc] shrink-0" />
+                      <span className="truncate">{DISTRICTS_DATA.find(d => d.name === selectedDistrict)?.name || selectedDistrict}</span>
+                      <span className="text-[10.5px] text-[#86868b] font-normal shrink-0">({DISTRICTS_DATA.find(d => d.name === selectedDistrict)?.state || 'Odisha'})</span>
                     </div>
-                  </div>
+                    <ChevronDown size={14} className={`text-[#86868b] shrink-0 transition-transform duration-300 ${isDistrictSelectOpen ? 'rotate-180 text-[#0066cc]' : ''}`} />
+                  </button>
+
+                  {/* Apple Framer Motion Glass Popover Menu */}
+                  <AnimatePresence>
+                    {isDistrictSelectOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 4, scale: 0.96 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 3, scale: 0.96 }}
+                        transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+                        className="absolute left-0 right-0 top-full mt-1.5 rounded-[18px] bg-white/95 text-[#1d1d1f] border border-white/90 shadow-[0_20px_50px_rgba(0,0,0,0.22)] p-1.5 z-[9999] backdrop-blur-3xl max-h-52 overflow-y-auto"
+                      >
+                        <div className="space-y-0.5">
+                          {DISTRICTS_DATA.map((d) => {
+                            const isSelected = d.name === selectedDistrict;
+                            return (
+                              <button
+                                key={d.name}
+                                type="button"
+                                onClick={() => {
+                                  setSelectedDistrict(d.name);
+                                  setSelectedState(d.state);
+                                  setIsDistrictSelectOpen(false);
+                                }}
+                                className={`w-full flex items-center justify-between px-3 py-2 rounded-[12px] text-xs transition-all duration-150 cursor-pointer ${
+                                  isSelected
+                                    ? 'bg-[#0066cc]/10 text-[#0066cc] font-bold border border-[#0066cc]/20 shadow-2xs'
+                                    : 'hover:bg-black/5 text-[#1d1d1f] font-medium'
+                                }`}
+                              >
+                                <div className="flex items-center space-x-1.5 truncate pr-2 text-left">
+                                  <span className="truncate">{d.name}</span>
+                                  <span className="text-[10.5px] text-[#86868b] font-normal">({d.state})</span>
+                                </div>
+                                {isSelected && (
+                                  <Check size={14} className="text-[#0066cc] shrink-0" />
+                                )}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
 
                 <div className="space-y-1">

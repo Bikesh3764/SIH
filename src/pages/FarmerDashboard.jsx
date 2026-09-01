@@ -46,6 +46,14 @@ export const DASHBOARD_DISTRICT_CROPS = {
   indore: { key: 'indore', name: 'Indore (Malwa)', state: 'Madhya Pradesh' }
 };
 
+export const LOAN_SCHEMES = [
+  { id: 'kcc', name: 'Kisan Credit Card (KCC) Short-Term Crop Loan', rate: '4% (with 3% Govt Subvention)' },
+  { id: 'pmkmy', name: 'PM-Kisan Maan-Dhan / Agri Infrastructure Fund Loan', rate: '5.5% Concessional' },
+  { id: 'coop', name: 'State Cooperative Bank / PACS Crop Credit', rate: '0% - 3% State Subvention' },
+  { id: 'nabard', name: 'NABARD Refinanced Dairy & Farm Mechanization Loan', rate: '6.8% Priority Sector' },
+  { id: 'mfi', name: 'MFI / Commercial Agrarian Credit', rate: '8.5% Standard Bank Rate' }
+];
+
 export default function FarmerDashboard({ onNavigate, currentLang, currentUser }) {
   const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
   const farmer = currentUser || CURRENT_FARMER_PROFILE;
@@ -65,10 +73,10 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
   const [liveMandiFeed, setLiveMandiFeed] = useState(null);
   const [mandiLoading, setMandiLoading] = useState(true);
 
-  // Dynamic Interactive Loan State
+  // Dynamic Interactive Loan State (Default OFF as per requirement)
   const [loanDetails, setLoanDetails] = useState({
-    hasLoan: true,
-    loanType: 'Kisan Credit Card (KCC) Crop Loan',
+    hasLoan: false,
+    schemeType: 'Kisan Credit Card (KCC) Short-Term Crop Loan',
     bankName: `State Bank of India (${districtData.name} Branch)`,
     amount: '1,45,000',
     dueDate: '2026-09-15'
@@ -122,14 +130,15 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
 
   // 2. Dynamic Loan Metrics Calculation (Real-time Date Diff)
   const calculateLoanMetrics = () => {
-    if (!loanDetails.hasLoan || loanDetails.loanType === 'None') {
+    if (!loanDetails.hasLoan) {
       return {
-        score: 10,
-        daysText: 'No Active Debt',
-        subText: 'Zero debt liability',
+        score: 0,
+        daysText: t.noActiveDebt || 'No Active Debt',
+        subText: t.zeroDebtLiability || 'Zero debt liability (Off)',
         colorHex: '#30d158',
         pillBg: 'bg-[#30d158]/15 text-[#30d158] border-[#30d158]/30',
-        barWidth: '10%'
+        barWidth: '0%',
+        isActive: false
       };
     }
 
@@ -147,7 +156,8 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
         subText: t.repayOverdue || 'Immediate debt intervention required',
         colorHex: '#ff453a',
         pillBg: 'bg-[#ff453a]/15 text-[#ff453a] border-[#ff453a]/30',
-        barWidth: '100%'
+        barWidth: '100%',
+        isActive: true
       };
     } else if (diffDays <= 7) {
       return {
@@ -156,7 +166,8 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
         subText: `${t.dueThisWeek || 'Due this week'} (${loanDetails.bankName?.split(' ')[0] || 'KCC'})`,
         colorHex: '#ff9f0a',
         pillBg: 'bg-[#ff9f0a]/15 text-[#ff9f0a] border-[#ff9f0a]/30',
-        barWidth: '85%'
+        barWidth: '85%',
+        isActive: true
       };
     } else if (diffDays <= 20) {
       return {
@@ -165,7 +176,8 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
         subText: t.repaymentApproaching || 'Repayment deadline approaching',
         colorHex: '#ffd60a',
         pillBg: 'bg-[#ffd60a]/15 text-[#ffd60a] border-[#ffd60a]/30',
-        barWidth: '50%'
+        barWidth: '50%',
+        isActive: true
       };
     } else {
       return {
@@ -174,7 +186,8 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
         subText: t.repaymentSafe || 'Adequate liquidity buffer',
         colorHex: '#30d158',
         pillBg: 'bg-[#30d158]/15 text-[#30d158] border-[#30d158]/30',
-        barWidth: '15%'
+        barWidth: '15%',
+        isActive: true
       };
     }
   };
@@ -267,18 +280,28 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
     return 20; // Stable
   }, [mandiAnalytics]);
 
-  // Pillar 3: Debt & Credit Proximity Risk (25% Weight)
+  // Pillar 3: Debt & Credit Proximity Risk (25% Weight if ON, 0% contribution if OFF)
   const loanProximityScore = loanMetrics.score;
 
-  // Composite FDI (0-100 Scale): 40% Climate + 35% Mandi + 25% Loan
+  // Composite FDI (0-100 Scale):
+  // When loan is OFF -> 55% Climate + 45% Mandi (Debt contribution = 0)
+  // When loan is ON -> 40% Climate + 35% Mandi + 25% Loan
   const computedDistressScore = useMemo(() => {
-    const total = Math.round(
-      (0.40 * climateTelemetry.score) + 
-      (0.35 * marketRiskScore) + 
-      (0.25 * loanProximityScore)
-    );
+    let total;
+    if (loanDetails.hasLoan) {
+      total = Math.round(
+        (0.40 * climateTelemetry.score) + 
+        (0.35 * marketRiskScore) + 
+        (0.25 * loanProximityScore)
+      );
+    } else {
+      total = Math.round(
+        (0.55 * climateTelemetry.score) + 
+        (0.45 * marketRiskScore)
+      );
+    }
     return Math.min(100, Math.max(10, total));
-  }, [climateTelemetry, marketRiskScore, loanProximityScore]);
+  }, [climateTelemetry, marketRiskScore, loanProximityScore, loanDetails.hasLoan]);
 
   const getDistressBadge = () => {
     if (computedDistressScore <= 35) {
@@ -305,7 +328,9 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
   const distressBadge = getDistressBadge();
 
   const handleSaveLoanDetails = (e) => {
-    e.preventDefault();
+    if (e && typeof e.preventDefault === 'function') {
+      e.preventDefault();
+    }
     setLoanDetails(tempLoanDetails);
     setIsLoanModalOpen(false);
   };
@@ -604,16 +629,25 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                   <span>💳</span>
                   <span>{t.loanProximity || 'Loan Proximity'}</span>
                 </span>
-                <button
-                  onClick={() => {
-                    setTempLoanDetails(loanDetails);
-                    setIsLoanModalOpen(true);
-                  }}
-                  className="text-[11px] font-semibold text-[#2997ff] hover:text-[#5ac8fa] flex items-center space-x-1 cursor-pointer"
-                >
-                  <Edit3 size={11} />
-                  <span>{t.edit || "Edit"}</span>
-                </button>
+                <div className="flex items-center space-x-2">
+                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${
+                    loanDetails.hasLoan 
+                      ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' 
+                      : 'bg-white/10 text-white/50 border-white/15'
+                  }`}>
+                    {loanDetails.hasLoan ? 'ON' : 'OFF'}
+                  </span>
+                  <button
+                    onClick={() => {
+                      setTempLoanDetails(loanDetails);
+                      setIsLoanModalOpen(true);
+                    }}
+                    className="text-[11px] font-semibold text-[#2997ff] hover:text-[#5ac8fa] flex items-center space-x-1 cursor-pointer"
+                  >
+                    <Edit3 size={11} />
+                    <span>{loanDetails.hasLoan ? (t.edit || "Edit") : (t.setup || "Configure")}</span>
+                  </button>
+                </div>
               </div>
 
               <div className="flex items-baseline space-x-2 pt-1">
@@ -637,17 +671,28 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                   />
                 </div>
                 <div className="flex justify-between text-[10px] text-white/40 font-medium px-0.5">
-                  <span>{t.dueToday || "Due Today"}</span>
-                  <span>15 {t.daysText || "Days"}</span>
-                  <span>30+ {t.daysText || "Days"}</span>
+                  {loanDetails.hasLoan ? (
+                    <>
+                      <span>{t.dueToday || "Due Today"}</span>
+                      <span>15 {t.daysText || "Days"}</span>
+                      <span>30+ {t.daysText || "Days"}</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>{t.zeroDebtLiability || "No Debt Liability"}</span>
+                      <span>0% {t.impact || "Impact"}</span>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
 
             <div className="pt-2 border-t border-white/[0.06] text-xs text-white/60 flex items-center justify-between">
-              <span className="truncate pr-2">{loanMetrics.subText}</span>
+              <span className="truncate pr-2">
+                {loanDetails.hasLoan ? loanMetrics.subText : (t.enableLoanPrompt || "Turn ON to track KCC / Crop Loan")}
+              </span>
               <span className="px-2 py-0.5 rounded-full liquid-glass/[0.06] border border-white/10 text-[10px] text-white/60 font-semibold shrink-0">
-                25% {t.impact || "Impact"}
+                {loanDetails.hasLoan ? `25% ${t.impact || "Impact"}` : `0% ${t.impact || "Impact"}`}
               </span>
             </div>
           </motion.div>
@@ -703,7 +748,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
         </div>
       </motion.div>
 
-      {/* 4. Loan Details Edit Modal */}
+      {/* 4. Loan Details Edit & Configuration Modal */}
       <AnimatePresence>
         {isLoanModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md">
@@ -711,10 +756,13 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
               initial={{ opacity: 0, scale: 0.95, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 15 }}
-              className="bg-white rounded-[28px] max-w-lg w-full p-6 sm:p-8 space-y-6 shadow-2xl text-[#1d1d1f]"
+              className="bg-white rounded-[28px] max-w-lg w-full p-6 sm:p-8 space-y-5 shadow-2xl text-[#1d1d1f]"
             >
               <div className="flex items-center justify-between pb-3 border-b border-[#d2d2d7]/50">
-                <h3 className="text-lg font-bold">{t.editLoanDetails || 'Edit KCC Crop Loan Details'}</h3>
+                <div>
+                  <h3 className="text-lg font-bold">{t.editLoanDetails || 'Crop Loan & Credit Configuration'}</h3>
+                  <p className="text-xs text-[#86868b]">Set up your active agricultural credit for predictive FDI distress tracking</p>
+                </div>
                 <button
                   onClick={() => setIsLoanModalOpen(false)}
                   className="w-8 h-8 rounded-full bg-[#f5f5f7] hover:bg-[#e8e8ed] flex items-center justify-center text-[#86868b] transition-colors cursor-pointer"
@@ -723,46 +771,110 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                 </button>
               </div>
 
-              <form onSubmit={handleSaveLoanDetails} className="space-y-4">
-                <div>
-                  <label className="block text-xs font-semibold text-[#86868b] uppercase tracking-wider mb-1.5">
-                    {t.lendingInstitution || 'Lending Institution'}
-                  </label>
-                  <input
-                    type="text"
-                    value={tempLoanDetails.bankName}
-                    onChange={(e) => setTempLoanDetails({ ...tempLoanDetails, bankName: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-xl bg-[#f5f5f7] border border-[#d2d2d7]/60 text-sm focus:outline-none focus:border-[#0071e3]"
-                  />
+              {/* Master ON / OFF Toggle Switch */}
+              <div className="p-4 rounded-[18px] bg-[#f5f5f7] border border-[#d2d2d7]/60 flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <span className="text-sm font-bold text-[#1d1d1f] block">
+                    {t.enableLoanTracking || 'Track Active Crop Loan / KCC'}
+                  </span>
+                  <span className="text-xs text-[#86868b] block">
+                    {tempLoanDetails.hasLoan ? 'Loan metrics active in FDI distress model (25% weight)' : 'No debt liability. Loan contribution score is 0.'}
+                  </span>
                 </div>
+                <button
+                  type="button"
+                  onClick={() => setTempLoanDetails(prev => ({ ...prev, hasLoan: !prev.hasLoan }))}
+                  className={`w-12 h-6.5 rounded-full transition-colors relative cursor-pointer ${
+                    tempLoanDetails.hasLoan ? 'bg-[#30d158]' : 'bg-[#d2d2d7]'
+                  }`}
+                >
+                  <div
+                    className={`w-5 h-5 rounded-full bg-white shadow-md absolute top-0.5 transition-transform ${
+                      tempLoanDetails.hasLoan ? 'translate-x-6' : 'translate-x-1'
+                    }`}
+                  />
+                </button>
+              </div>
 
-                <div className="grid grid-cols-2 gap-3">
+              {/* Loan Details Form - Active Only When Toggle is ON */}
+              {tempLoanDetails.hasLoan ? (
+                <form onSubmit={handleSaveLoanDetails} className="space-y-4">
+                  {/* Loan Scheme Selector */}
                   <div>
                     <label className="block text-xs font-semibold text-[#86868b] uppercase tracking-wider mb-1.5">
-                      {t.loanAmountLabel || 'Loan Amount (₹)'}
+                      {t.loanScheme || 'Loan Scheme'}
+                    </label>
+                    <select
+                      value={tempLoanDetails.schemeType || LOAN_SCHEMES[0].name}
+                      onChange={(e) => setTempLoanDetails({ ...tempLoanDetails, schemeType: e.target.value })}
+                      className="w-full px-4 py-2.5 rounded-xl bg-[#f5f5f7] border border-[#d2d2d7]/60 text-sm font-medium focus:outline-none focus:border-[#0071e3]"
+                    >
+                      {LOAN_SCHEMES.map(s => (
+                        <option key={s.id} value={s.name}>
+                          {s.name} ({s.rate})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-[#86868b] uppercase tracking-wider mb-1.5">
+                      {t.lendingInstitution || 'Lending Institution / Bank Branch'}
                     </label>
                     <input
                       type="text"
-                      value={tempLoanDetails.amount}
-                      onChange={(e) => setTempLoanDetails({ ...tempLoanDetails, amount: e.target.value })}
+                      value={tempLoanDetails.bankName}
+                      onChange={(e) => setTempLoanDetails({ ...tempLoanDetails, bankName: e.target.value })}
                       className="w-full px-4 py-2.5 rounded-xl bg-[#f5f5f7] border border-[#d2d2d7]/60 text-sm focus:outline-none focus:border-[#0071e3]"
+                      placeholder="e.g. State Bank of India (Rourkela Main Branch)"
                     />
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-semibold text-[#86868b] uppercase tracking-wider mb-1.5">
-                      {t.repaymentDueDate || 'Repayment Due Date'}
-                    </label>
-                    <input
-                      type="date"
-                      value={tempLoanDetails.dueDate}
-                      onChange={(e) => setTempLoanDetails({ ...tempLoanDetails, dueDate: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-xl bg-[#f5f5f7] border border-[#d2d2d7]/60 text-sm focus:outline-none focus:border-[#0071e3]"
-                    />
-                  </div>
-                </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs font-semibold text-[#86868b] uppercase tracking-wider mb-1.5">
+                        {t.loanAmountLabel || 'Loan Amount (₹)'}
+                      </label>
+                      <input
+                        type="text"
+                        value={tempLoanDetails.amount}
+                        onChange={(e) => setTempLoanDetails({ ...tempLoanDetails, amount: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-xl bg-[#f5f5f7] border border-[#d2d2d7]/60 text-sm focus:outline-none focus:border-[#0071e3]"
+                        placeholder="1,45,000"
+                      />
+                    </div>
 
-                <div className="pt-3 flex justify-end space-x-2">
+                    <div>
+                      <label className="block text-xs font-semibold text-[#86868b] uppercase tracking-wider mb-1.5">
+                        {t.repaymentDueDate || 'Repayment Due Date'}
+                      </label>
+                      <input
+                        type="date"
+                        value={tempLoanDetails.dueDate}
+                        onChange={(e) => setTempLoanDetails({ ...tempLoanDetails, dueDate: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-xl bg-[#f5f5f7] border border-[#d2d2d7]/60 text-sm focus:outline-none focus:border-[#0071e3]"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="pt-3 flex justify-end space-x-2">
+                    <button
+                      type="button"
+                      onClick={() => setIsLoanModalOpen(false)}
+                      className="px-4 py-2 rounded-full text-xs font-semibold text-[#86868b] hover:bg-[#f5f5f7] transition-colors cursor-pointer"
+                    >
+                      {t.cancel || 'Cancel'}
+                    </button>
+                    <button
+                      type="submit"
+                      className="px-5 py-2 rounded-full liquid-pill-btn text-white text-xs font-semibold shadow-md shadow-blue-500/20 active:scale-95 transition-all cursor-pointer"
+                    >
+                      {t.saveRecomputeFdi || 'Save & Compute FDI'}
+                    </button>
+                  </div>
+                </form>
+              ) : (
+                <div className="pt-2 flex justify-end space-x-2">
                   <button
                     type="button"
                     onClick={() => setIsLoanModalOpen(false)}
@@ -771,13 +883,14 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                     {t.cancel || 'Cancel'}
                   </button>
                   <button
-                    type="submit"
-                    className="px-5 py-2 rounded-full liquid-pill-btn text-white text-xs font-semibold shadow-md shadow-blue-500/20 active:scale-95 transition-all cursor-pointer"
+                    type="button"
+                    onClick={handleSaveLoanDetails}
+                    className="px-5 py-2 rounded-full bg-[#1d1d1f] hover:bg-black text-white text-xs font-semibold shadow-md active:scale-95 transition-all cursor-pointer"
                   >
-                    {t.saveRecomputeFdi || 'Save & Recompute FDI'}
+                    {t.confirmZeroDebt || 'Confirm Zero Debt (Score = 0)'}
                   </button>
                 </div>
-              </form>
+              )}
             </motion.div>
           </div>
         )}

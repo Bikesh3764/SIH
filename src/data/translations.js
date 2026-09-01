@@ -432,7 +432,12 @@ export const TRANSLATIONS = {
     "debtPressure": "KCC Debt Pressure",
     "pestCropDamage": "Pest / Crop Infestation Damage",
     "computedFdiScore": "Computed FDI Score",
-    "priorityActionQueue": "Priority Action Queue"
+    "priorityActionQueue": "Priority Action Queue",
+    "enableLoanTracking": "Track Active Crop Loan / KCC",
+    "loanScheme": "Loan Scheme",
+    "confirmZeroDebt": "Confirm Zero Debt (Score = 0)",
+    "setup": "Configure",
+    "enableLoanPrompt": "Turn ON to track KCC / Crop Loan"
   },
   "hi": {
     "aiThinking": "एआई विश्लेषण कर रहा है...",
@@ -867,7 +872,12 @@ export const TRANSLATIONS = {
     "debtPressure": "केसीसी ऋण दबाव",
     "pestCropDamage": "कीट / फसल क्षति नुकसान",
     "computedFdiScore": "गणना किया गया एफडीआई स्कोर",
-    "priorityActionQueue": "प्राथमिकता कार्रवाई कतार"
+    "priorityActionQueue": "प्राथमिकता कार्रवाई कतार",
+    "enableLoanTracking": "सक्रिय फसल ऋण / केसीसी ट्रैक करें",
+    "loanScheme": "ऋण योजना",
+    "confirmZeroDebt": "शून्य ऋण की पुष्टि करें (स्कोर = 0)",
+    "setup": "कॉन्फ़िगर करें",
+    "enableLoanPrompt": "केसीसी / फसल ऋण ट्रैक करने के लिए चालू करें"
   },
   "mr": {
     "aiThinking": "एआय विश्लेषण करत आहे...",
@@ -1302,7 +1312,12 @@ export const TRANSLATIONS = {
     "debtPressure": "केसीसी कर्ज दबाव",
     "pestCropDamage": "कीड / पीक नुकसान",
     "computedFdiScore": "गणना केलेला एफडीआय स्कोअर",
-    "priorityActionQueue": "प्राधान्य कृती रांग"
+    "priorityActionQueue": "प्राधान्य कृती रांग",
+    "enableLoanTracking": "सक्रिय पीक कर्ज / केसीसी ट्रॅक करा",
+    "loanScheme": "कर्ज योजना",
+    "confirmZeroDebt": "शून्य कर्जाची पुष्टी करा (स्कोअर = 0)",
+    "setup": "कॉन्फिगर करा",
+    "enableLoanPrompt": "केसीसी / पीक कर्ज ट्रॅक करण्यासाठी सुरू करा"
   },
   "or": {
     "aiThinking": "AI ବିଶ୍ଳେଷଣ କରୁଛି...",
@@ -1737,7 +1752,12 @@ export const TRANSLATIONS = {
     "debtPressure": "କେସିସି ଋଣ ଚାପ",
     "pestCropDamage": "କୀଟ / ଫସଲ କ୍ଷୟକ୍ଷତି",
     "computedFdiScore": "ଗଣନା କରାଯାଇଥିବା ଏଫଡିଆଇ ସ୍କୋର",
-    "priorityActionQueue": "ପ୍ରାଥମିକତା କାର୍ଯ୍ୟାନୁଷ୍ଠାନ ଧାଡ଼ି"
+    "priorityActionQueue": "ପ୍ରାଥମିକତା କାର୍ଯ୍ୟାନୁଷ୍ଠାନ ଧାଡ଼ି",
+    "enableLoanTracking": "ସକ୍ରିୟ ଫସଲ ଋଣ / କେସିସି ଟ୍ରାକ୍ କରନ୍ତୁ",
+    "loanScheme": "ଋଣ ଯୋଜନା",
+    "confirmZeroDebt": "ଶୂନ ଋଣ ନିଶ୍ଚିତ କରନ୍ତୁ (ସ୍କୋର = 0)",
+    "setup": "କନଫିଗର କରନ୍ତୁ",
+    "enableLoanPrompt": "କେସିସି / ଫସଲ ଋଣ ଟ୍ରାକ୍ କରିବା ପାଇଁ ଅନ୍ କରନ୍ତୁ"
   },
   "pa": {
     "aiThinking": "AI ਵਿਸ਼ਲੇਸ਼ਣ ਕਰ ਰਿਹਾ ਹੈ...",
@@ -2195,7 +2215,12 @@ export const TRANSLATIONS = {
     "debtPressure": "ਕੇਸੀਸੀ ਕਰਜ਼ਾ ਦਬਾਅ",
     "pestCropDamage": "ਕੀੜੇ / ਫਸਲ ਨੁਕਸਾਨ",
     "computedFdiScore": "ଗଣନା ਕੀਤਾ ਐਫਡੀਆਈ ਸਕੋਰ",
-    "priorityActionQueue": "ਪ੍ਰਮੁੱਖ ਕਾਰਵਾਈ ਕਤਾਰ"
+    "priorityActionQueue": "ਪ੍ਰਮੁੱਖ ਕਾਰਵਾਈ ਕਤਾਰ",
+    "enableLoanTracking": "ਸਰਗਰਮ ਫਸਲੀ ਕਰਜ਼ਾ / ਕੇਸੀਸੀ ਟਰੈਕ ਕਰੋ",
+    "loanScheme": "ਕਰਜ਼ਾ ਸਕੀਮ",
+    "confirmZeroDebt": "ਜ਼ੀਰੋ ਕਰਜ਼ੇ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ (ਸਕੋਰ = 0)",
+    "setup": "ਸੈੱਟ ਕਰੋ",
+    "enableLoanPrompt": "ਕੇਸੀਸੀ / ਫਸਲੀ ਕਰਜ਼ਾ ਟਰੈਕ ਕਰਨ ਲਈ ਚਾਲੂ ਕਰੋ"
   },
   "ml": {
     "aiThinking": "AI വിശകലനം ചെയ്യുന്നു...",
@@ -2653,6 +2678,11 @@ export const TRANSLATIONS = {
     "debtPressure": "കെസിസി കടബാധ്യത സമ്മർദ്ദം",
     "pestCropDamage": "കീട / വിള നാശനഷ്ടം",
     "computedFdiScore": "കണക്കാക്കിയ എഫ്‌ഡിഐ സ്കോർ",
-    "priorityActionQueue": "മുൻഗണനാ കർമ്മ നിര"
+    "priorityActionQueue": "മുൻഗണനാ കർമ്മ നിര",
+    "enableLoanTracking": "സജീവ വിള വായ്പ / കെസിസി ട്രാക്ക് ചെയ്യുക",
+    "loanScheme": "വായ്പാ പദ്ധതി",
+    "confirmZeroDebt": "കടബാധ്യതയില്ലെന്ന് സ്ഥിരീകരിക്കുക (സ്കോർ = 0)",
+    "setup": "സജ്ജീകരിക്കുക",
+    "enableLoanPrompt": "കെസിസി / വിള വായ്പ ട്രാക്ക് ചെയ്യാൻ ഓൺ ചെയ്യുക"
   }
 };

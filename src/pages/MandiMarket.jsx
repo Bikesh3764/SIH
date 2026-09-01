@@ -700,10 +700,16 @@ export default function MandiMarket({ currentLang, currentUser }) {
   useEffect(() => {
     let isMounted = true;
     async function loadInitial() {
+      setInitialLoading(true);
+      const start = Date.now();
       await loadMandiData(selectedDistrictKey);
-      if (isMounted) {
-        setInitialLoading(false);
-      }
+      const elapsed = Date.now() - start;
+      const wait = Math.max(0, 600 - elapsed);
+      setTimeout(() => {
+        if (isMounted) {
+          setInitialLoading(false);
+        }
+      }, wait);
     }
     loadInitial();
     return () => { isMounted = false; };
@@ -727,6 +733,11 @@ export default function MandiMarket({ currentLang, currentUser }) {
     setSelectedDistrictKey(distKey);
     setHoveredPointIndex(null);
 
+    const start = Date.now();
+    await loadMandiData(distKey);
+    const elapsed = Date.now() - start;
+    const wait = Math.max(0, 500 - elapsed);
+
     const distData = liveStore[distKey] || DISTRICT_DATA_STORE[distKey] || DISTRICT_DATA_STORE.rourkela;
     const availableCrops = Object.keys(distData.crops || {});
     if (availableCrops.length > 0) {
@@ -740,11 +751,9 @@ export default function MandiMarket({ currentLang, currentUser }) {
       }
     }
 
-    await loadMandiData(distKey);
-
     setTimeout(() => {
       setIsDistrictSyncing(false);
-    }, 400);
+    }, wait);
   };
 
   const handleCropChange = (newCropKey) => {
@@ -774,12 +783,15 @@ export default function MandiMarket({ currentLang, currentUser }) {
 
   const handleRefresh = async () => {
     setIsRefreshing(true);
+    const start = Date.now();
     try {
       await loadMandiData(selectedDistrictKey);
     } catch (e) {
       // fallback
     } finally {
-      setTimeout(() => setIsRefreshing(false), 500);
+      const elapsed = Date.now() - start;
+      const wait = Math.max(0, 600 - elapsed);
+      setTimeout(() => setIsRefreshing(false), wait);
     }
   };
 
@@ -924,16 +936,21 @@ export default function MandiMarket({ currentLang, currentUser }) {
   return (
     <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-5 sm:space-y-6 animate-apple-fade text-[#1d1d1f] overflow-visible min-w-0 relative">
       
-      {/* Apple Frosted Sync Indicator */}
-      {(isRefreshing || isDistrictSyncing) && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-md">
-          <div className="p-6 rounded-[24px] liquid-glass/95 border border-[#d2d2d7]/80 shadow-2xl flex flex-col items-center space-y-3.5 max-w-xs text-center animate-apple-scale">
-            <div className="w-10 h-10 rounded-full liquid-pill-btn/10 text-[#0071e3] flex items-center justify-center">
-              <span className="w-5 h-5 border-2 border-[#0071e3] border-t-transparent rounded-full animate-spin"></span>
+      {/* Apple Frosted Sync Indicator / Initial Loading Screen */}
+      {(initialLoading || isRefreshing || isDistrictSyncing) && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md animate-fade-in">
+          <div className="p-7 rounded-[26px] liquid-glass/95 border border-[#d2d2d7]/80 shadow-2xl flex flex-col items-center space-y-4 max-w-sm text-center animate-apple-scale">
+            <div className="w-12 h-12 rounded-full liquid-pill-btn/10 text-[#0071e3] flex items-center justify-center shadow-xs">
+              <span className="w-6 h-6 border-3 border-[#0071e3] border-t-transparent rounded-full animate-spin"></span>
             </div>
-            <div className="space-y-0.5">
-              <h4 className="text-sm font-bold text-[#1d1d1f]">{t.syncingMandiFeed || 'Syncing AGMARKNET Feed'}</h4>
-              <p className="text-[11px] text-[#86868b]">{t.connectingApmcGateway || 'Connecting to National APMC Gateway for'} {activeDistrict.districtName}...</p>
+            <div className="space-y-1">
+              <h4 className="text-base font-bold text-[#1d1d1f]">{t.syncingMandiFeed || 'Syncing AGMARKNET Live Feed'}</h4>
+              <p className="text-xs text-[#86868b] leading-relaxed">
+                {t.connectingApmcGateway || 'Connecting to National APMC Gateway for'} <b className="text-[#1d1d1f]">{activeDistrict.districtName}</b>...
+              </p>
+              <p className="text-[11px] text-[#0071e3] font-medium pt-1">
+                Extracting live modal prices & official MSP floor benchmarks
+              </p>
             </div>
           </div>
         </div>

@@ -583,7 +583,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
               ) : (
                 <span className="px-2.5 py-0.5 rounded-full bg-white/[0.08] border border-white/15 text-white/80 font-medium text-[11px] flex items-center space-x-1.5 shrink-0">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#30d158]" />
-                  <span>Zero Price Crashes</span>
+                  <span>{t.zeroPriceCrashes || "Zero Price Crashes"}</span>
                 </span>
               )}
             </div>
@@ -691,7 +691,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                 </div>
 
                 <div className="pt-2 flex items-center space-x-1 text-xs font-semibold text-[#0071e3] group-hover:translate-x-1 transition-transform">
-                  <span>Open Tool</span>
+                  <span>{t.openTool || "Open Tool"}</span>
                   <ChevronRight size={14} />
                 </div>
               </motion.div>

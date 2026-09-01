@@ -148,11 +148,16 @@ export async function fetchLiveDistrictWeather(districtId = 'rourkela', currentL
     const soilVal = hourly.soil_moisture_0_to_7cm?.[currentExactHourIndex] ?? 0.35;
     const soilPercent = Math.min(100, Math.round(soilVal * 200));
 
-    const todayRainProb = daily.precipitation_probability_max?.[todayDailyIndex] ?? 35;
+    // Current Exact Hour Real-Time Rain Probability
+    const currentHourRainProb = hourly.precipitation_probability?.[currentExactHourIndex] !== undefined
+      ? hourly.precipitation_probability[currentExactHourIndex]
+      : (daily.precipitation_probability_max?.[todayDailyIndex] ?? 25);
+
+    const todayPeakRainProb = daily.precipitation_probability_max?.[todayDailyIndex] ?? currentHourRainProb;
     const humidityVal = current.relative_humidity_2m ?? 74;
 
     // Dynamic localized farming advisories based on real-time 14-day cumulative trends
-    const dynamicWatering = (nextHighRainDays >= 2 || pastRainSum > 80 || todayRainProb > 70)
+    const dynamicWatering = (nextHighRainDays >= 2 || pastRainSum > 80 || todayPeakRainProb > 70)
       ? (t.advWaterHold || `Hold drip and furrow irrigation for the next 24-48h (${pastRainSum}mm past / ${nextRainSum}mm upcoming rain). Clear field drainage channels.`)
       : (pastDryDays >= 5 && soilPercent < 35)
         ? (t.advWaterLow || `Prolonged dry spell detected (${pastDryDays} dry days). Provide morning drip irrigation.`)
@@ -162,8 +167,8 @@ export async function fetchLiveDistrictWeather(districtId = 'rourkela', currentL
       ? (t.advPestHigh || `High humidity (${humidityVal}%) significantly elevates fungal blast and rust spore germination. Inspect lower foliage.`)
       : (t.advPestNormal || `Moderate humidity (${humidityVal}%). Fungal spore risk is low. Monitor for sucking pests.`);
 
-    const dynamicHarvest = (nextHighRainDays >= 2 || todayRainProb > 60)
-      ? (t.advHarvestUnfav || `Unfavorable window for chemical spraying due to rain runoff risk (${todayRainProb}% chance). Move harvested produce to covered sheds.`)
+    const dynamicHarvest = (nextHighRainDays >= 2 || currentHourRainProb > 60 || todayPeakRainProb > 75)
+      ? (t.advHarvestUnfav || `Unfavorable window for chemical spraying due to rain runoff risk (${currentHourRainProb}% chance). Move harvested produce to covered sheds.`)
       : (t.advHarvestFav || `Clear, dry weather window available tomorrow morning for foliar spraying and harvesting mature crops.`);
 
     const uvVal = Math.round(hourly.uv_index?.[currentExactHourIndex] || 3);
@@ -179,7 +184,8 @@ export async function fetchLiveDistrictWeather(districtId = 'rourkela', currentL
       humidity: `${humidityVal}%`,
       windSpeed: `${Math.round(current.wind_speed_10m || 12)} km/h`,
       barometric: `${Math.round(current.surface_pressure || 1010)} hPa`,
-      rainProbability: `${todayRainProb}%`,
+      rainProbability: `${currentHourRainProb}%`,
+      peakTodayRainProb: `${todayPeakRainProb}%`,
       maxNextRainProb: `${maxNextRainProb}%`,
       uvIndex: `${uvVal} (${uvLabel})`,
       soilMoistureVal: `${soilPercent}%`,

@@ -465,6 +465,9 @@ export default function MandiMarket({ currentLang, currentUser }) {
   const [initialLoading, setInitialLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isDistrictSyncing, setIsDistrictSyncing] = useState(false);
+  const [isCropSyncing, setIsCropSyncing] = useState(false);
+  const [isMarketSyncing, setIsMarketSyncing] = useState(false);
+  const [lastSyncedTime, setLastSyncedTime] = useState(() => new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
   const [hoveredPointIndex, setHoveredPointIndex] = useState(null);
   const [liveStore, setLiveStore] = useState({});
 

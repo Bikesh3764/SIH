@@ -1,4 +1,3 @@
-// Comprehensive 6-Language Knowledge Base for AgriShield AI (SIH 2026 PS-02)
 export const TRANSLATIONS = {
   "en": {
     "readyForAnalysis": "Ready for Live AI Agronomist Analysis",
@@ -327,7 +326,15 @@ export const TRANSLATIONS = {
     "sampleSoybeanRust": "Soybean (Soybean Rust)",
     "sampleCoconutRot": "Coconut (Root Wilt & Bud Rot)",
     "modRiskCaution": "Moderate Risk (Caution)",
-    "highRiskAlert": "Elevated Risk (Action Needed)"
+    "highRiskAlert": "Elevated Risk (Action Needed)",
+    "zeroPriceCrashes": "Zero Price Crashes",
+    "openTool": "Open Tool",
+    "explore": "Explore",
+    "mandiLiveFeed": "Live AGMARKNET Gateway",
+    "currentHour": "Last Synced",
+    "syncingMandiFeed": "Syncing AGMARKNET Feed...",
+    "farmerMode": "Farmer Mode",
+    "officerMode": "Officer Command"
   },
   "hi": {
     "readyForAnalysis": "लाइव एआई कृषि विशेषज्ञ विश्लेषण के लिए तैयार",
@@ -656,7 +663,15 @@ export const TRANSLATIONS = {
     "sampleSoybeanRust": "सोयाबीन (रतुआ रोग / Soybean Rust)",
     "sampleCoconutRot": "नारियल (जड़ सड़न / Bud Rot)",
     "modRiskCaution": "मध्यम जोखिम (सावधानी)",
-    "highRiskAlert": "उच्च जोखिम (कार्रवाई आवश्यक)"
+    "highRiskAlert": "उच्च जोखिम (कार्रवाई आवश्यक)",
+    "zeroPriceCrashes": "शून्य मूल्य गिरावट",
+    "openTool": "टूल खोलें",
+    "explore": "अन्वेषण करें",
+    "mandiLiveFeed": "लाइव एगमार्कनेट गेटवे",
+    "currentHour": "अंतिम सिंक समय",
+    "syncingMandiFeed": "एगमार्कनेट फीड सिंक हो रहा है...",
+    "farmerMode": "किसान मोड",
+    "officerMode": "अधिकारी कमांड"
   },
   "mr": {
     "readyForAnalysis": "थेट AI कृषी शास्त्रज्ञ विश्लेषणासाठी सज्ज",
@@ -985,7 +1000,15 @@ export const TRANSLATIONS = {
     "sampleSoybeanRust": "सोयाबीन (तांबेरा / Soybean Rust)",
     "sampleCoconutRot": "नारळ (मूळ कुजणे / Bud Rot)",
     "modRiskCaution": "मध्यम धोका (सावधान)",
-    "highRiskAlert": "जास्त धोका (तातडीची कृती)"
+    "highRiskAlert": "जास्त धोका (तातडीची कृती)",
+    "zeroPriceCrashes": "शून्य किंमत घसरण",
+    "openTool": "टूल उघडा",
+    "explore": "अन्वेषण करा",
+    "mandiLiveFeed": "थेट एगमार्कनेट गेटवे",
+    "currentHour": "शेवटची समक्रमित वेळ",
+    "syncingMandiFeed": "एगमार्कनेट फीड सिंक होत आहे...",
+    "farmerMode": "शेतकरी मोड",
+    "officerMode": "अधिकारी कमांड"
   },
   "or": {
     "readyForAnalysis": "ଲାଇଭ୍ AI କୃଷି ବୈଜ୍ଞାନିକ ବିଶ୍ଳେଷଣ ପାଇଁ ପ୍ରସ୍ତୁତ",
@@ -1314,7 +1337,15 @@ export const TRANSLATIONS = {
     "sampleSoybeanRust": "ସୋୟାବିନ୍ (କଳଙ୍କି ରୋଗ / Soybean Rust)",
     "sampleCoconutRot": "ନଡ଼ିଆ (ମୂଳ ସଢ଼ା ଓ କଢ଼ ପଚା / Bud Rot)",
     "modRiskCaution": "ମଧ୍ୟମ ବିପଦ (ସତର୍କତା)",
-    "highRiskAlert": "ଅଧିକ ବିପଦ (ତୁରନ୍ତ ପଦକ୍ଷେପ)"
+    "highRiskAlert": "ଅଧିକ ବିପଦ (ତୁରନ୍ତ ପଦକ୍ଷେପ)",
+    "zeroPriceCrashes": "ଶୂନ୍ୟ ମୂଲ୍ୟ ହ୍ରାସ",
+    "openTool": "ଟୁଲ୍ ଖୋଲନ୍ତୁ",
+    "explore": "ଅନୁସନ୍ଧାନ କରନ୍ତୁ",
+    "mandiLiveFeed": "ଲାଇଭ୍ ଏଗମାର୍କନେଟ୍ ଗେଟୱେ",
+    "currentHour": "ଶେଷ ସିଙ୍କ୍ ସମୟ",
+    "syncingMandiFeed": "ଏଗମାର୍କନେଟ୍ ଫିଡ୍ ସିଙ୍କ୍ ହେଉଛି...",
+    "farmerMode": "କୃଷକ ମୋଡ୍",
+    "officerMode": "ଅଧିକାରୀ କମାଣ୍ଡ"
   },
   "pa": {
     "appName": "AgriShield AI",
@@ -1672,7 +1703,15 @@ export const TRANSLATIONS = {
     "sampleCottonCurl": "Cotton (Leaf Curl Virus)",
     "sampleRiceBlast": "Paddy / Rice (Rice Blast)",
     "sampleSoybeanRust": "Soybean (Soybean Rust)",
-    "sampleCoconutRot": "Coconut (Root Wilt & Bud Rot)"
+    "sampleCoconutRot": "Coconut (Root Wilt & Bud Rot)",
+    "zeroPriceCrashes": "ਕੋਈ ਕੀਮਤ ਗਿਰਾਵਟ ਨਹੀਂ",
+    "openTool": "ਟੂਲ ਖੋਲ੍ਹੋ",
+    "explore": "ਖੋਜ ਕਰੋ",
+    "mandiLiveFeed": "ਲਾਈਵ ਐਗਮਾਰਕਨੈੱਟ ਗੇਟਵੇ",
+    "currentHour": "ਆਖਰੀ ਸਿੰਕ ਸਮਾਂ",
+    "syncingMandiFeed": "ਐਗਮਾਰਕਨੈੱਟ ਫੀਡ ਸਿੰਕ ਹੋ ਰਿਹਾ ਹੈ...",
+    "farmerMode": "ਕਿਸਾਨ ਮੋਡ",
+    "officerMode": "ਅਧਿਕਾਰੀ ਕਮਾਂਡ"
   },
   "ml": {
     "appName": "AgriShield AI",
@@ -2030,6 +2069,14 @@ export const TRANSLATIONS = {
     "sampleCottonCurl": "Cotton (Leaf Curl Virus)",
     "sampleRiceBlast": "Paddy / Rice (Rice Blast)",
     "sampleSoybeanRust": "Soybean (Soybean Rust)",
-    "sampleCoconutRot": "Coconut (Root Wilt & Bud Rot)"
+    "sampleCoconutRot": "Coconut (Root Wilt & Bud Rot)",
+    "zeroPriceCrashes": "വിലത്തകർച്ചയില്ല",
+    "openTool": "ടൂൾ തുറക്കുക",
+    "explore": "പര്യവേക്ഷണം ചെയ്യുക",
+    "mandiLiveFeed": "തത്സമയ അഗ്മാർക്ക്‌നെറ്റ് ഗേറ്റ്‌വേ",
+    "currentHour": "അവസാനം സമന്വയിപ്പിച്ച സമയം",
+    "syncingMandiFeed": "അഗ്മാർക്ക്‌നെറ്റ് ഫീഡ് സിങ്ക് ചെയ്യുന്നു...",
+    "farmerMode": "കർഷക മോഡ്",
+    "officerMode": "ഓഫീസർ കമാൻഡ്"
   }
 };

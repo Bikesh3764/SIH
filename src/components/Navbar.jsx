@@ -132,7 +132,7 @@ export default function Navbar({
         <div className="hidden sm:flex items-center space-x-3">
           <div className="flex items-center gap-1.5 text-[12px] text-neutral-500 font-medium bg-neutral-200/60 px-3 py-1 rounded-full">
             <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-            <span>AGMARKNET Mandi Live Feed</span>
+            <span>{t.mandiLiveFeed || 'AGMARKNET Mandi Live Feed'}</span>
           </div>
 
           <button
@@ -140,7 +140,7 @@ export default function Navbar({
             className="px-4 py-1.5 rounded-full text-[13px] font-medium bg-[#0066cc] text-white hover:bg-[#0071e3] active:scale-95 transition-all shadow-sm flex items-center space-x-1.5"
           >
             <UserCheck size={14} />
-            <span>Switch to {activeTab === 'officer' ? 'Farmer Mode' : 'Officer Command'}</span>
+            <span>{activeTab === 'officer' ? (t.farmerMode || 'Farmer Mode') : (t.officerMode || 'Officer Command')}</span>
           </button>
         </div>
       </nav>

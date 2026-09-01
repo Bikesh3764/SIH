@@ -215,7 +215,7 @@ export default function LandingPage({ onOpenSignIn, currentLang, setLang }) {
 
                 {/* Micro Action Indicator */}
                 <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[11.5px] font-medium text-white/70 group-hover:text-white transition-colors">
-                  <span>Explore</span>
+                  <span>{t.explore || "Explore"}</span>
                   <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform text-[#2997ff]" />
                 </div>
               </motion.div>

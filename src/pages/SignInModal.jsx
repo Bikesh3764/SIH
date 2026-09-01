@@ -97,7 +97,7 @@ export default function SignInModal({ isOpen, onClose, onLoginSuccess, currentLa
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 15 }}
           transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full max-w-lg liquid-glass text-[#1d1d1f] rounded-[32px] shadow-2xl overflow-hidden p-6 sm:p-8 space-y-5 border border-white/80 my-8"
+          className="relative w-full max-w-lg liquid-glass text-[#1d1d1f] rounded-[32px] shadow-2xl overflow-y-auto max-h-[92vh] p-5 sm:p-8 space-y-4 sm:space-y-5 border border-white/80 my-auto"
         >
           
           {/* Top Header: Apple Language Popover + Close Button */}
@@ -122,10 +122,10 @@ export default function SignInModal({ isOpen, onClose, onLoginSuccess, currentLa
             >
               🌾
             </motion.div>
-            <h2 className="text-[24px] font-semibold tracking-[-0.28px] text-[#1d1d1f]">
+            <h2 className="text-[22px] sm:text-[24px] font-semibold tracking-[-0.28px] text-[#1d1d1f]">
               {authMode === 'signin' ? t.signIn : t.signUp}
             </h2>
-            <p className="text-[14px] text-[#7a7a7a]">
+            <p className="text-[13px] sm:text-[14px] text-[#7a7a7a]">
               {t.tagline}
             </p>
           </div>
@@ -163,7 +163,7 @@ export default function SignInModal({ isOpen, onClose, onLoginSuccess, currentLa
               className="space-y-4 text-[14px] text-left"
             >
               <div className="space-y-1.5">
-                <label className="font-semibold text-[#1d1d1f]">{t.phone}</label>
+                <label className="font-semibold text-[#1d1d1f] text-[13px]">{t.phone}</label>
                 <div className="relative">
                   <Smartphone size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#7a7a7a]" />
                   <input
@@ -178,7 +178,7 @@ export default function SignInModal({ isOpen, onClose, onLoginSuccess, currentLa
               </div>
 
               <div className="space-y-1.5">
-                <label className="font-semibold text-[#1d1d1f]">OTP</label>
+                <label className="font-semibold text-[#1d1d1f] text-[13px]">OTP</label>
                 <div className="relative">
                   <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#7a7a7a]" />
                   <input
@@ -210,7 +210,7 @@ export default function SignInModal({ isOpen, onClose, onLoginSuccess, currentLa
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.2 }}
               onSubmit={handleFarmerRegister} 
-              className="space-y-3 text-[14px] text-left"
+              className="space-y-3.5 text-[14px] text-left"
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="space-y-1">
@@ -221,7 +221,7 @@ export default function SignInModal({ isOpen, onClose, onLoginSuccess, currentLa
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="e.g. Bikesh Ray"
-                    className="w-full px-3 py-2 rounded-[11px] bg-[#f5f5f7] border border-[#e0e0e0] focus:bg-white focus:ring-2 focus:ring-[#0066cc] focus:outline-none text-[13px]"
+                    className="w-full px-3.5 py-2.5 rounded-[12px] bg-[#f5f5f7] border border-[#e0e0e0] focus:bg-white focus:ring-2 focus:ring-[#0066cc] focus:outline-none text-[13px]"
                   />
                 </div>
 
@@ -233,7 +233,7 @@ export default function SignInModal({ isOpen, onClose, onLoginSuccess, currentLa
                     value={mobileNumber}
                     onChange={(e) => setMobileNumber(e.target.value)}
                     placeholder="10-digit mobile"
-                    className="w-full px-3 py-2 rounded-[11px] bg-[#f5f5f7] border border-[#e0e0e0] focus:bg-white focus:ring-2 focus:ring-[#0066cc] focus:outline-none text-[13px]"
+                    className="w-full px-3.5 py-2.5 rounded-[12px] bg-[#f5f5f7] border border-[#e0e0e0] focus:bg-white focus:ring-2 focus:ring-[#0066cc] focus:outline-none text-[13px]"
                   />
                 </div>
               </div>
@@ -241,16 +241,25 @@ export default function SignInModal({ isOpen, onClose, onLoginSuccess, currentLa
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="space-y-1">
                   <label className="font-semibold text-[#1d1d1f] text-[13px]">{t.district} *</label>
-                  <AppleSelect
-                    options={DISTRICTS_DATA.map((d) => ({
-                      value: d.name,
-                      label: d.name,
-                      subLabel: `(${d.state})`
-                    }))}
-                    value={selectedDistrict}
-                    onChange={setSelectedDistrict}
-                    icon={MapPin}
-                  />
+                  <div className="relative">
+                    <MapPin size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#0066cc] pointer-events-none" />
+                    <select
+                      value={selectedDistrict}
+                      onChange={(e) => setSelectedDistrict(e.target.value)}
+                      className="w-full pl-9 pr-8 py-2.5 rounded-[12px] bg-[#f5f5f7] border border-[#e0e0e0] focus:bg-white focus:ring-2 focus:ring-[#0066cc] focus:outline-none text-[13px] font-medium text-[#1d1d1f] appearance-none cursor-pointer"
+                    >
+                      {DISTRICTS_DATA.map((d) => (
+                        <option key={d.name} value={d.name}>
+                          {d.name} ({d.state})
+                        </option>
+                      ))}
+                    </select>
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[#86868b]">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="space-y-1">
@@ -260,7 +269,7 @@ export default function SignInModal({ isOpen, onClose, onLoginSuccess, currentLa
                     value={villageName}
                     onChange={(e) => setVillageName(e.target.value)}
                     placeholder="e.g. Panposh"
-                    className="w-full px-3 py-2 rounded-[11px] bg-[#f5f5f7] border border-[#e0e0e0] focus:bg-white focus:ring-2 focus:ring-[#0066cc] focus:outline-none text-[13px]"
+                    className="w-full px-3.5 py-2.5 rounded-[12px] bg-[#f5f5f7] border border-[#e0e0e0] focus:bg-white focus:ring-2 focus:ring-[#0066cc] focus:outline-none text-[13px]"
                   />
                 </div>
               </div>
@@ -273,7 +282,7 @@ export default function SignInModal({ isOpen, onClose, onLoginSuccess, currentLa
                     value={landHolding}
                     onChange={(e) => setLandHolding(e.target.value)}
                     placeholder="e.g. 3.5 Acres"
-                    className="w-full px-3 py-2 rounded-[11px] bg-[#f5f5f7] border border-[#e0e0e0] focus:bg-white focus:ring-2 focus:ring-[#0066cc] focus:outline-none text-[13px]"
+                    className="w-full px-3.5 py-2.5 rounded-[12px] bg-[#f5f5f7] border border-[#e0e0e0] focus:bg-white focus:ring-2 focus:ring-[#0066cc] focus:outline-none text-[13px]"
                   />
                 </div>
 
@@ -284,7 +293,7 @@ export default function SignInModal({ isOpen, onClose, onLoginSuccess, currentLa
                     value={primaryCrop}
                     onChange={(e) => setPrimaryCrop(e.target.value)}
                     placeholder="e.g. Paddy & Mustard"
-                    className="w-full px-3 py-2 rounded-[11px] bg-[#f5f5f7] border border-[#e0e0e0] focus:bg-white focus:ring-2 focus:ring-[#0066cc] focus:outline-none text-[13px]"
+                    className="w-full px-3.5 py-2.5 rounded-[12px] bg-[#f5f5f7] border border-[#e0e0e0] focus:bg-white focus:ring-2 focus:ring-[#0066cc] focus:outline-none text-[13px]"
                   />
                 </div>
               </div>

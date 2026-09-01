@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Scan, 
@@ -27,7 +27,9 @@ import {
   MapPin,
   ExternalLink,
   RotateCw,
-  AlertCircle
+  AlertCircle,
+  ChevronDown,
+  Check
 } from 'lucide-react';
 import { CURRENT_FARMER_PROFILE, DISTRICTS_DATA } from '../data/mockAgriData';
 import { TRANSLATIONS } from '../data/translations';
@@ -84,8 +86,23 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
 
   const [isLoanModalOpen, setIsLoanModalOpen] = useState(false);
   const [tempLoanDetails, setTempLoanDetails] = useState(loanDetails);
+  const [isSchemeDropdownOpen, setIsSchemeDropdownOpen] = useState(false);
+  const schemeDropdownRef = useRef(null);
   const [lastTelemetrySyncTime, setLastTelemetrySyncTime] = useState(() => new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
   const [isTelemetrySyncing, setIsTelemetrySyncing] = useState(false);
+
+  // Close scheme popover on click outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (schemeDropdownRef.current && !schemeDropdownRef.current.contains(event.target)) {
+        setIsSchemeDropdownOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   // 1. Fetch Live Weather (14-Day Window: Past 7d + Next 7d) & Mandi Feed with Auto Background Polling
   const syncTelemetry = useCallback(async (showLoading = false) => {
@@ -844,22 +861,71 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
               {/* Loan Details Form - Active Only When Toggle is ON */}
               {tempLoanDetails.hasLoan ? (
                 <form onSubmit={handleSaveLoanDetails} className="space-y-4">
-                  {/* Loan Scheme Selector */}
-                  <div>
-                    <label className="block text-xs font-semibold text-[#86868b] uppercase tracking-wider mb-1.5">
+                  {/* Apple VisionOS Loan Scheme Selector Popover */}
+                  <div className="space-y-1 relative" ref={schemeDropdownRef}>
+                    <label className="block text-xs font-semibold text-[#86868b] uppercase tracking-wider mb-1">
                       {t.loanScheme || 'Loan Scheme'}
                     </label>
-                    <select
-                      value={tempLoanDetails.schemeType || LOAN_SCHEMES[0].name}
-                      onChange={(e) => setTempLoanDetails({ ...tempLoanDetails, schemeType: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-xl bg-[#f5f5f7] border border-[#d2d2d7]/60 text-sm font-medium focus:outline-none focus:border-[#0071e3]"
+                    
+                    {/* Apple Capsule Trigger Button */}
+                    <button
+                      type="button"
+                      onClick={() => setIsSchemeDropdownOpen(!isSchemeDropdownOpen)}
+                      className="w-full px-4 py-2.5 rounded-[14px] bg-[#f5f5f7] hover:bg-[#ebebee] border border-[#d2d2d7]/60 flex items-center justify-between text-xs font-semibold text-[#1d1d1f] shadow-xs active:scale-[0.99] transition-all cursor-pointer"
                     >
-                      {LOAN_SCHEMES.map(s => (
-                        <option key={s.id} value={s.name}>
-                          {s.name} ({s.rate})
-                        </option>
-                      ))}
-                    </select>
+                      <div className="flex items-center space-x-2 truncate pr-2">
+                        <CreditCard size={14} className="text-[#0071e3] shrink-0" />
+                        <span className="truncate">{tempLoanDetails.schemeType || LOAN_SCHEMES[0].name}</span>
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 shrink-0">
+                          {LOAN_SCHEMES.find(s => s.name === (tempLoanDetails.schemeType || LOAN_SCHEMES[0].name))?.rate || '4%'}
+                        </span>
+                      </div>
+                      <ChevronDown size={14} className={`text-[#86868b] shrink-0 transition-transform duration-300 ${isSchemeDropdownOpen ? 'rotate-180 text-[#0071e3]' : ''}`} />
+                    </button>
+
+                    {/* Apple Framer Motion Glass Popover */}
+                    <AnimatePresence>
+                      {isSchemeDropdownOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 4, scale: 0.96 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 3, scale: 0.96 }}
+                          transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+                          className="absolute left-0 right-0 top-full mt-1.5 rounded-[18px] bg-white/95 text-[#1d1d1f] border border-white/90 shadow-[0_20px_50px_rgba(0,0,0,0.22)] p-1.5 z-[99999] backdrop-blur-3xl max-h-56 overflow-y-auto"
+                        >
+                          <div className="space-y-0.5">
+                            {LOAN_SCHEMES.map((s) => {
+                              const isSelected = (tempLoanDetails.schemeType || LOAN_SCHEMES[0].name) === s.name;
+                              return (
+                                <button
+                                  key={s.id}
+                                  type="button"
+                                  onClick={() => {
+                                    setTempLoanDetails(prev => ({ ...prev, schemeType: s.name }));
+                                    setIsSchemeDropdownOpen(false);
+                                  }}
+                                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-[12px] text-xs transition-all duration-150 cursor-pointer ${
+                                    isSelected
+                                      ? 'bg-[#0071e3]/10 text-[#0071e3] font-bold border border-[#0071e3]/20 shadow-2xs'
+                                      : 'hover:bg-black/5 text-[#1d1d1f] font-medium'
+                                  }`}
+                                >
+                                  <div className="flex items-center space-x-2 truncate pr-2 text-left">
+                                    <span className="truncate">{s.name}</span>
+                                    <span className="text-[10.5px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 shrink-0">
+                                      {s.rate}
+                                    </span>
+                                  </div>
+                                  {isSelected && (
+                                    <Check size={14} className="text-[#0071e3] shrink-0" />
+                                  )}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
 
                   <div>
@@ -870,7 +936,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                       type="text"
                       value={tempLoanDetails.bankName}
                       onChange={(e) => setTempLoanDetails({ ...tempLoanDetails, bankName: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-xl bg-[#f5f5f7] border border-[#d2d2d7]/60 text-sm focus:outline-none focus:border-[#0071e3]"
+                      className="w-full px-4 py-2.5 rounded-[14px] bg-[#f5f5f7] border border-[#d2d2d7]/60 text-xs font-medium text-[#1d1d1f] focus:bg-white focus:ring-2 focus:ring-[#0071e3] focus:outline-none transition-all shadow-2xs"
                       placeholder="e.g. State Bank of India (Rourkela Main Branch)"
                     />
                   </div>
@@ -884,7 +950,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                         type="text"
                         value={tempLoanDetails.amount}
                         onChange={(e) => setTempLoanDetails({ ...tempLoanDetails, amount: e.target.value })}
-                        className="w-full px-4 py-2.5 rounded-xl bg-[#f5f5f7] border border-[#d2d2d7]/60 text-sm focus:outline-none focus:border-[#0071e3]"
+                        className="w-full px-4 py-2.5 rounded-[14px] bg-[#f5f5f7] border border-[#d2d2d7]/60 text-xs font-medium text-[#1d1d1f] focus:bg-white focus:ring-2 focus:ring-[#0071e3] focus:outline-none transition-all shadow-2xs"
                         placeholder="1,45,000"
                       />
                     </div>
@@ -897,7 +963,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                         type="date"
                         value={tempLoanDetails.dueDate}
                         onChange={(e) => setTempLoanDetails({ ...tempLoanDetails, dueDate: e.target.value })}
-                        className="w-full px-4 py-2.5 rounded-xl bg-[#f5f5f7] border border-[#d2d2d7]/60 text-sm focus:outline-none focus:border-[#0071e3]"
+                        className="w-full px-4 py-2.5 rounded-[14px] bg-[#f5f5f7] border border-[#d2d2d7]/60 text-xs font-medium text-[#1d1d1f] focus:bg-white focus:ring-2 focus:ring-[#0071e3] focus:outline-none transition-all shadow-2xs"
                       />
                     </div>
                   </div>

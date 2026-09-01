@@ -284,8 +284,9 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
   const loanProximityScore = loanMetrics.score;
 
   // Composite FDI (0-100 Scale):
-  // When loan is OFF -> 55% Climate + 45% Mandi (Debt contribution = 0)
-  // When loan is ON -> 40% Climate + 35% Mandi + 25% Loan
+  // When loan is OFF (No Debt) -> debt contribution score is 0:
+  // (0.40 * Climate) + (0.35 * Mandi) + (0.25 * 0)
+  // When loan is ON -> (0.40 * Climate) + (0.35 * Mandi) + (0.25 * Loan proximity score)
   const computedDistressScore = useMemo(() => {
     let total;
     if (loanDetails.hasLoan) {
@@ -296,8 +297,9 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
       );
     } else {
       total = Math.round(
-        (0.55 * climateTelemetry.score) + 
-        (0.45 * marketRiskScore)
+        (0.40 * climateTelemetry.score) + 
+        (0.35 * marketRiskScore) + 
+        (0.25 * 0)
       );
     }
     return Math.min(100, Math.max(10, total));
@@ -630,13 +632,20 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                   <span>{t.loanProximity || 'Loan Proximity'}</span>
                 </span>
                 <div className="flex items-center space-x-2">
-                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${
-                    loanDetails.hasLoan 
-                      ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' 
-                      : 'bg-white/10 text-white/50 border-white/15'
-                  }`}>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setLoanDetails(prev => ({ ...prev, hasLoan: !prev.hasLoan }));
+                    }}
+                    className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold border transition-all cursor-pointer ${
+                      loanDetails.hasLoan 
+                        ? 'bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border-emerald-500/40' 
+                        : 'bg-white/10 hover:bg-white/20 text-white/70 border-white/20'
+                    }`}
+                    title="Click to quickly toggle Loan tracking ON/OFF"
+                  >
                     {loanDetails.hasLoan ? 'ON' : 'OFF'}
-                  </span>
+                  </button>
                   <button
                     onClick={() => {
                       setTempLoanDetails(loanDetails);
@@ -772,28 +781,32 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
               </div>
 
               {/* Master ON / OFF Toggle Switch */}
-              <div className="p-4 rounded-[18px] bg-[#f5f5f7] border border-[#d2d2d7]/60 flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <span className="text-sm font-bold text-[#1d1d1f] block">
-                    {t.enableLoanTracking || 'Track Active Crop Loan / KCC'}
+              <div 
+                onClick={() => setTempLoanDetails(prev => ({ ...prev, hasLoan: !prev.hasLoan }))}
+                className="p-4 rounded-[18px] bg-[#f5f5f7] hover:bg-[#ebebee] border border-[#d2d2d7]/60 flex items-center justify-between cursor-pointer transition-colors select-none"
+              >
+                <div className="space-y-0.5 pr-3">
+                  <span className="text-sm font-bold text-[#1d1d1f] flex items-center gap-2">
+                    <span>{t.enableLoanTracking || 'Track Active Crop Loan / KCC'}</span>
+                    <span className={`px-2 py-0.2 rounded-full text-[10px] font-bold ${tempLoanDetails.hasLoan ? 'bg-emerald-100 text-emerald-800' : 'bg-neutral-200 text-neutral-600'}`}>
+                      {tempLoanDetails.hasLoan ? 'ACTIVE' : 'OFF'}
+                    </span>
                   </span>
                   <span className="text-xs text-[#86868b] block">
                     {tempLoanDetails.hasLoan ? 'Loan metrics active in FDI distress model (25% weight)' : 'No debt liability. Loan contribution score is 0.'}
                   </span>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => setTempLoanDetails(prev => ({ ...prev, hasLoan: !prev.hasLoan }))}
-                  className={`w-12 h-6.5 rounded-full transition-colors relative cursor-pointer ${
+                <div
+                  className={`w-12 h-6 rounded-full transition-colors relative shrink-0 p-0.5 ${
                     tempLoanDetails.hasLoan ? 'bg-[#30d158]' : 'bg-[#d2d2d7]'
                   }`}
                 >
                   <div
-                    className={`w-5 h-5 rounded-full bg-white shadow-md absolute top-0.5 transition-transform ${
-                      tempLoanDetails.hasLoan ? 'translate-x-6' : 'translate-x-1'
+                    className={`w-5 h-5 rounded-full bg-white shadow-md transition-transform duration-200 ${
+                      tempLoanDetails.hasLoan ? 'translate-x-6' : 'translate-x-0'
                     }`}
                   />
-                </button>
+                </div>
               </div>
 
               {/* Loan Details Form - Active Only When Toggle is ON */}

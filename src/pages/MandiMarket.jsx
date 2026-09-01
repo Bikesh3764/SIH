@@ -11,7 +11,7 @@ import {
   Layers,
   ChevronDown
 } from 'lucide-react';
-import { DISTRICTS_DATA } from '../data/mockAgriData';
+import { DISTRICTS_DATA, getCropDisplayName } from '../data/mockAgriData';
 import { TRANSLATIONS } from '../data/translations';
 import AppleSelect from '../components/AppleSelect';
 import { fetchLiveDistrictMandiFeed } from '../services/mandiService';
@@ -830,9 +830,28 @@ export default function MandiMarket({ currentLang, currentUser }) {
   const currentMinPrice = Number(activeMarket.min || activeCrop.marketMap?.[activeMarket.id]?.min || activeCrop.minPrice) || Math.round(currentPrice * 0.95);
   const currentMaxPrice = Number(activeMarket.max || activeCrop.marketMap?.[activeMarket.id]?.max || activeCrop.maxPrice) || Math.round(currentPrice * 1.05);
 
+  const activeCropTranslated = getCropDisplayName(selectedCropKey || activeCrop.displayName || activeCrop.name, currentLang);
+
+  const getMandiTypeLabel = (type) => {
+    if (!type) return '';
+    const lower = type.toLowerCase();
+    if (lower.includes('principal') || lower.includes('central')) return t.principalYard || 'Principal Yard';
+    if (lower.includes('terminal') || lower.includes('hub')) return t.regionalTerminalHub || 'Regional Terminal Hub';
+    if (lower.includes('sub')) return t.subYard || 'Sub-Yard';
+    if (lower.includes('faq') || lower.includes('market') || lower.includes('apmc') || lower.includes('yard')) return t.faqMandiYard || 'FAQ Mandi Yard';
+    return type;
+  };
 
   const chartData = useMemo(() => {
-    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Today'];
+    const days = [
+      t.mon || 'Mon',
+      t.tue || 'Tue',
+      t.wed || 'Wed',
+      t.thu || 'Thu',
+      t.fri || 'Fri',
+      t.sat || 'Sat',
+      t.today || 'Today'
+    ];
     const offsets = [
       -Math.round(currentPrice * 0.024),
       -Math.round(currentPrice * 0.016),
@@ -867,7 +886,6 @@ export default function MandiMarket({ currentLang, currentUser }) {
       return { ...p, x: Math.round(x * 10) / 10, y: Math.round(y * 10) / 10 };
     });
 
-
     let pathD = `M ${coords[0].x},${coords[0].y}`;
     for (let i = 0; i < coords.length - 1; i++) {
       const p0 = coords[i === 0 ? i : i - 1];
@@ -897,7 +915,7 @@ export default function MandiMarket({ currentLang, currentUser }) {
         { label: `₹${Math.round(minP)}`, y: yBottom }
       ]
     };
-  }, [currentPrice, activeCrop]);
+  }, [currentPrice, activeCrop, t]);
 
   const activeHoverPoint = hoveredPointIndex !== null 
     ? chartData.points[hoveredPointIndex] 
@@ -914,8 +932,8 @@ export default function MandiMarket({ currentLang, currentUser }) {
               <span className="w-5 h-5 border-2 border-[#0071e3] border-t-transparent rounded-full animate-spin"></span>
             </div>
             <div className="space-y-0.5">
-              <h4 className="text-sm font-bold text-[#1d1d1f]">Syncing AGMARKNET Feed</h4>
-              <p className="text-[11px] text-[#86868b]">Connecting to National APMC Gateway for {activeDistrict.districtName}...</p>
+              <h4 className="text-sm font-bold text-[#1d1d1f]">{t.syncingMandiFeed || 'Syncing AGMARKNET Feed'}</h4>
+              <p className="text-[11px] text-[#86868b]">{t.connectingApmcGateway || 'Connecting to National APMC Gateway for'} {activeDistrict.districtName}...</p>
             </div>
           </div>
         </div>
@@ -995,7 +1013,6 @@ export default function MandiMarket({ currentLang, currentUser }) {
           />
         </div>
 
-
         {/* 3. Select Crop */}
         <div className="p-4 rounded-[22px] liquid-glass border border-white/80 shadow-xs space-y-1.5 relative z-10 focus-within:z-50 hover:z-40">
           <span className="text-[10px] text-[#86868b] uppercase font-bold tracking-wider block">
@@ -1004,14 +1021,13 @@ export default function MandiMarket({ currentLang, currentUser }) {
           <AppleSelect
             options={cropList.map(c => ({
               value: c,
-              label: activeDistrict.crops?.[c]?.displayName || activeDistrict.crops?.[c]?.name || c
+              label: getCropDisplayName(c, currentLang)
             }))}
             value={selectedCropKey}
             onChange={(val) => handleCropChange(val)}
             icon={Sparkles}
           />
         </div>
-
 
       </div>
 
@@ -1022,7 +1038,7 @@ export default function MandiMarket({ currentLang, currentUser }) {
           <div className="flex flex-wrap items-baseline gap-2.5">
             <span className="w-2.5 h-2.5 rounded-full liquid-pill-btn"></span>
             <h2 className="text-base font-semibold text-[#1d1d1f]">
-              {activeCrop.displayName || activeCrop.name}
+              {activeCropTranslated}
             </h2>
             <span className="text-xs text-[#86868b]">
               • {activeMarket.name}
@@ -1161,7 +1177,7 @@ export default function MandiMarket({ currentLang, currentUser }) {
         {/* Card 1: Modal Rate */}
         <div className="p-5 sm:p-6 rounded-[20px] liquid-glass shadow-xs space-y-1.5">
           <div className="flex justify-between items-center text-xs font-semibold text-[#86868b] uppercase tracking-wider">
-            <span>{(activeCrop.displayName || activeCrop.name)} {t.spotRate || 'Spot Rate'}</span>
+            <span>{activeCropTranslated} • {t.spotRate || 'Spot Rate'}</span>
             <span className="text-[#0071e3] font-bold">{activeCrop.change}</span>
           </div>
           <div className="text-3xl font-bold tracking-tight text-[#1d1d1f]">
@@ -1176,7 +1192,7 @@ export default function MandiMarket({ currentLang, currentUser }) {
         <div className="p-5 sm:p-6 rounded-[20px] liquid-glass shadow-xs space-y-1.5">
           <div className="flex justify-between items-center text-xs font-semibold text-[#86868b] uppercase tracking-wider">
             <span>{activeCrop.mspFloorLabel || t.govtMspFloor || 'Govt Support Price'}</span>
-            <span className="text-[#86868b]">{activeCrop.isOfficialMsp ? 'Official MSP' : 'Floor Base'}</span>
+            <span className="text-[#86868b]">{activeCrop.isOfficialMsp ? (t.officialMsp || 'Official MSP') : (t.floorBase || 'Floor Base')}</span>
           </div>
           <div className="text-3xl font-bold tracking-tight text-[#0071e3]">
             ₹{activeCrop.msp.toLocaleString()} <span className="text-xs font-normal text-[#86868b]">{activeCrop.unit}</span>
@@ -1190,7 +1206,7 @@ export default function MandiMarket({ currentLang, currentUser }) {
         <div className="p-5 sm:p-6 rounded-[20px] liquid-glass shadow-xs space-y-1.5">
           <div className="flex justify-between items-center text-xs font-semibold text-[#86868b] uppercase tracking-wider">
             <span>{t.dailyTradingRange || 'Trading Spread'}</span>
-            <span className="text-[#86868b]">Min - Max</span>
+            <span className="text-[#86868b]">{t.minMax || 'Min - Max'}</span>
           </div>
           <div className="text-3xl font-bold tracking-tight text-[#1d1d1f]">
             ₹{currentMinPrice.toLocaleString()} - ₹{currentMaxPrice.toLocaleString()}
@@ -1209,10 +1225,9 @@ export default function MandiMarket({ currentLang, currentUser }) {
             {t.regionalNetwork || 'Regional APMC Network'}
           </span>
           <h3 className="text-base font-semibold text-[#1d1d1f]">
-            {t.nearbyComparison || 'Nearby APMC Mandi Rates for'} {(activeCrop.displayName || activeCrop.name)} ({activeDistrict.districtName})
+            {t.nearbyComparison || 'Nearby APMC Mandi Rates for'} {activeCropTranslated} ({activeDistrict.districtName})
           </h3>
         </div>
-
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5">
           {(activeCrop.nearby || []).map((m, idx) => {
@@ -1234,11 +1249,11 @@ export default function MandiMarket({ currentLang, currentUser }) {
                     <h4 className={`font-semibold text-sm leading-snug ${isSelected ? 'text-[#0071e3]' : 'text-[#1d1d1f]'}`}>
                       {m.name}
                     </h4>
-                    <span className="text-xs text-[#86868b]">{m.type}</span>
+                    <span className="text-xs text-[#86868b]">{getMandiTypeLabel(m.type)}</span>
                   </div>
                   {isSelected && (
                     <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#0071e3]/10 text-[#0071e3]">
-                      Active
+                      {t.activeStatus || 'Active'}
                     </span>
                   )}
                 </div>
@@ -1261,3 +1276,4 @@ export default function MandiMarket({ currentLang, currentUser }) {
     </div>
   );
 }
+

@@ -103,8 +103,8 @@ export default function WeatherAdvisory({ currentLang, currentUser }) {
               <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
             </div>
             <div className="space-y-1">
-              <h3 className="text-base font-bold text-[#1d1d1f] tracking-tight">Syncing Microclimate Telemetry</h3>
-              <p className="text-xs text-[#86868b]">Connecting to Open-Meteo Live Satellite Feed for {selectedDistrict.name}...</p>
+              <h3 className="text-base font-bold text-[#1d1d1f] tracking-tight">{t.syncingWeather || 'Syncing Microclimate Telemetry'}</h3>
+              <p className="text-xs text-[#86868b]">{t.connectingOpenMeteo || 'Connecting to Open-Meteo Live Satellite Feed'} ({selectedDistrict.name})...</p>
             </div>
           </div>
         </div>
@@ -113,60 +113,69 @@ export default function WeatherAdvisory({ currentLang, currentUser }) {
       {/* Header & Clean District Selector (Green header line removed) */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-apple-in relative z-30">
         <div className="space-y-0.5">
-          <h1 className="text-2xl sm:text-[34px] font-bold tracking-tight text-[#1d1d1f]">
-            {t.weatherPageTitle || 'Hyperlocal Weather & Sowing Guidance'}
+          <h1 className="text-[24px] sm:text-[34px] font-bold tracking-tight text-[#1d1d1f]">
+            {t.weatherTitle || 'Hyperlocal Weather & Sowing Guidance'}
           </h1>
-          <p className="text-xs sm:text-[15px] text-[#86868b] font-normal">
-            {t.weatherPageSubtitle || 'Microclimate telemetry & soil moisture station'} • {selectedDistrict.name} ({selectedDistrict.state})
+          <p className="text-[13px] sm:text-[15px] text-[#86868b] font-normal">
+            {selectedDistrict.name} ({selectedDistrict.state}) • {t.weatherSubtitle || 'Microclimate telemetry & soil moisture station'}
           </p>
         </div>
 
-        {/* District Selector Capsule */}
-        <div className="w-full sm:w-64 self-start sm:self-auto">
+        {/* Apple Rounded District Selector Dropdown */}
+        <div className="w-full sm:w-64">
           <AppleSelect
-            options={DISTRICTS_DATA.map((d) => ({
+            options={DISTRICTS_DATA.map(d => ({
               value: d.id,
               label: d.name,
               subLabel: `(${d.state})`
             }))}
             value={selectedDistrict.id}
             onChange={(val) => {
-              const found = DISTRICTS_DATA.find((d) => d.id === val);
-              if (found) setSelectedDistrict(found);
+              const matched = DISTRICTS_DATA.find(d => d.id === val);
+              if (matched) setSelectedDistrict(matched);
             }}
             icon={MapPin}
           />
         </div>
       </div>
 
-      {/* Main Weather Card (VisionOS Liquid Obsidian-Blue Glass Tile) */}
-      <div className="p-6 sm:p-9 rounded-[30px] bg-gradient-to-br from-[#0066cc]/90 via-[#0071e3]/85 to-[#0052b3]/95 backdrop-blur-3xl text-white shadow-[0_20px_50px_rgba(0,113,227,0.28)] border border-white/30 space-y-6 overflow-hidden relative">
+      {/* Featured Microclimate Primary Station Card (Apple Vision Pro Glass) */}
+      <div className="p-6 sm:p-9 rounded-[30px] bg-gradient-to-br from-[#0071e3] via-[#005bb5] to-[#1d1d1f] text-white shadow-[0_20px_50px_rgba(0,113,227,0.25)] space-y-6 relative overflow-hidden">
         
-        {/* Ambient Light Reflection Orbs inside card */}
-        <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-white/10 blur-[60px] pointer-events-none" />
-        <div className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-blue-300/15 blur-[60px] pointer-events-none" />
+        {/* Subtle Ambient Radial Lighting */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-400/10 rounded-full blur-2xl pointer-events-none" />
 
-        <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <span className="text-[11px] font-bold text-blue-100 uppercase tracking-widest block opacity-90">
-              {t.weatherConditions || 'CURRENT WEATHER CONDITIONS'} • {selectedDistrict.name}
-            </span>
-            <div className="flex items-baseline space-x-3 mt-1.5">
-              <span className="text-5xl sm:text-7xl font-extrabold tracking-tight text-white drop-shadow-sm">
-                {currentWeather.currentTemp}
-              </span>
-              <span className="text-lg sm:text-2xl font-semibold text-blue-100 flex items-center gap-2">
-                <span className="text-3xl animate-bounce">{currentWeather.conditionIcon}</span>
-                <span>{currentWeather.condition}</span>
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="space-y-2">
+            <div className="flex items-center space-x-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-xs font-bold uppercase tracking-widest text-blue-200">
+                {t.liveStation || 'LIVE TELEMETRY STATION'}
               </span>
             </div>
-            <span className="text-xs text-blue-100/80 mt-1.5 block font-medium">
-              {t.feelsLikeText || 'Feels like'} {currentWeather.feelsLike} • {t.liveStation || 'Live Station'}
-            </span>
+            <div className="flex items-baseline space-x-4">
+              <span className="text-5xl sm:text-7xl font-extrabold tracking-tighter">
+                {currentWeather.currentTemp}
+              </span>
+              <span className="text-4xl sm:text-5xl">
+                {currentWeather.conditionIcon}
+              </span>
+            </div>
+            <p className="text-lg sm:text-xl font-medium text-blue-100">
+              {currentWeather.condition}
+            </p>
           </div>
 
-          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/15 backdrop-blur-xl flex items-center justify-center border border-white/30 text-4xl shadow-inner self-start sm:self-auto">
-            <span>{currentWeather.conditionIcon || '⛅'}</span>
+          {/* Quick Real-Time Telemetry Badges */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+            <div className="px-4 py-2.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-xs font-semibold text-white shadow-xs">
+              {t.feelsLikeText || 'Feels like'} {currentWeather.feelsLike}
+            </div>
+            <div className="px-4 py-2.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-xs font-semibold text-white shadow-xs flex items-center space-x-1.5">
+              <span className="w-2 h-2 rounded-full bg-[#30d158]"></span>
+              <span>{t.openMeteoTag || 'Open-Meteo High Precision'}</span>
+            </div>
           </div>
         </div>
 
@@ -188,7 +197,7 @@ export default function WeatherAdvisory({ currentLang, currentUser }) {
             <span className="text-sm sm:text-base font-extrabold text-white block">
               {currentWeather.rainProbability}
             </span>
-            <span className="text-[10px] text-blue-100 font-medium block">Next 24h</span>
+            <span className="text-[10px] text-blue-100 font-medium block">{t.next24h || 'Next 24h'}</span>
           </div>
 
           <div className="p-3.5 rounded-[18px] bg-white/10 hover:bg-white/15 backdrop-blur-xl border border-white/20 transition-all text-center space-y-0.5">
@@ -196,7 +205,7 @@ export default function WeatherAdvisory({ currentLang, currentUser }) {
             <span className="text-sm sm:text-base font-extrabold text-white block">
               {currentWeather.windSpeed}
             </span>
-            <span className="text-[10px] text-blue-100 font-medium block">Surface Calm</span>
+            <span className="text-[10px] text-blue-100 font-medium block">{t.surfaceCalm || 'Surface Calm'}</span>
           </div>
 
           <div className="p-3.5 rounded-[18px] bg-white/10 hover:bg-white/15 backdrop-blur-xl border border-white/20 transition-all text-center space-y-0.5">
@@ -204,7 +213,7 @@ export default function WeatherAdvisory({ currentLang, currentUser }) {
             <span className="text-sm sm:text-base font-extrabold text-white block">
               {currentWeather.humidity}
             </span>
-            <span className="text-[10px] text-blue-100 font-medium block">Atmospheric</span>
+            <span className="text-[10px] text-blue-100 font-medium block">{t.atmospheric || 'Atmospheric'}</span>
           </div>
 
           <div className="p-3.5 rounded-[18px] bg-white/10 hover:bg-white/15 backdrop-blur-xl border border-white/20 transition-all text-center space-y-0.5">
@@ -212,7 +221,7 @@ export default function WeatherAdvisory({ currentLang, currentUser }) {
             <span className="text-sm sm:text-base font-extrabold text-white block">
               {currentWeather.barometric}
             </span>
-            <span className="text-[10px] text-blue-100 font-medium block">Surface Press</span>
+            <span className="text-[10px] text-blue-100 font-medium block">{t.surfacePress || 'Surface Press'}</span>
           </div>
 
           <div className="p-3.5 rounded-[18px] bg-white/10 hover:bg-white/15 backdrop-blur-xl border border-white/20 transition-all text-center space-y-0.5">
@@ -220,7 +229,7 @@ export default function WeatherAdvisory({ currentLang, currentUser }) {
             <span className="text-sm sm:text-base font-extrabold text-white block">
               {currentWeather.uvIndex}
             </span>
-            <span className="text-[10px] text-blue-100 font-medium block">Solar Rad</span>
+            <span className="text-[10px] text-blue-100 font-medium block">{t.solarRad || 'Solar Rad'}</span>
           </div>
 
         </div>
@@ -356,7 +365,7 @@ export default function WeatherAdvisory({ currentLang, currentUser }) {
                   <span className="text-[#86868b] font-medium">{day.tempMin}°C</span>
                 </div>
                 <span className="text-[10.5px] font-bold text-blue-600 px-1.5 py-0.5 rounded-full bg-blue-100/60 inline-block">
-                  Rain: {day.rainChance}%
+                  {t.rainChanceText || 'Rain'}: {day.rainChance}%
                 </span>
                 <p className="text-[10px] text-[#86868b] block leading-tight font-medium pt-1 line-clamp-3">
                   {day.advisory}

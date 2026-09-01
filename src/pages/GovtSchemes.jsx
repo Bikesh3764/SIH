@@ -513,7 +513,7 @@ export default function GovtSchemes({ currentLang, onNavigate }) {
           </div>
           <div className="p-4 rounded-[20px] liquid-glass/[0.05] border border-white/10 backdrop-blur-xl text-center w-full sm:min-w-[140px] shadow-sm">
             <span className="text-[10.5px] uppercase font-bold text-white/50 block tracking-wider">{t.activePrograms || 'Active Schemes'}</span>
-            <span className="text-lg sm:text-2xl font-bold text-[#2997ff] tracking-tight mt-0.5 block">6 Programs</span>
+            <span className="text-lg sm:text-2xl font-bold text-[#2997ff] tracking-tight mt-0.5 block">6 {t.allSchemes || 'Programs'}</span>
           </div>
         </div>
       </div>
@@ -542,10 +542,10 @@ export default function GovtSchemes({ currentLang, onNavigate }) {
         <div className="flex items-center space-x-2 overflow-x-auto no-scrollbar pb-1">
           {[
             { id: 'all', label: t.allSchemes || 'All Programs' },
-            { id: 'financial', label: t.catFinancial || 'Financial & Direct Support' },
-            { id: 'insurance', label: t.catInsurance || 'Crop Insurance (PMFBY)' },
-            { id: 'solar', label: t.catSolar || 'Solar & Irrigation' },
-            { id: 'machinery', label: t.catMachinery || 'Farm Machinery Subsidy' }
+            { id: 'financial', label: t.catFinancial || t.directIncome || 'Financial & Direct Support' },
+            { id: 'insurance', label: t.catInsurance || t.cropInsurance || 'Crop Insurance (PMFBY)' },
+            { id: 'solar', label: t.catSolar || t.solarEnergy || 'Solar & Irrigation' },
+            { id: 'machinery', label: t.catMachinery || t.farmMachinery || 'Farm Machinery Subsidy' }
           ].map((cat) => (
             <button
               key={cat.id}
@@ -569,10 +569,10 @@ export default function GovtSchemes({ currentLang, onNavigate }) {
           const localizedTitle = scheme.localizedNames[currentLang] || scheme.name;
           const localizedDesc = scheme.benefitDesc[currentLang] || scheme.benefitDesc.en;
           const localizedEligibility = scheme.eligibility[currentLang] || scheme.eligibility.en;
-          const localizedCat = scheme.category === 'financial' ? (t.catDirectSupport || scheme.categoryLabel)
-            : scheme.category === 'insurance' ? (t.catCropInsurance || scheme.categoryLabel)
-            : scheme.category === 'solar' ? (t.catSolarIrrigation || scheme.categoryLabel)
-            : scheme.category === 'machinery' ? (t.catMachinerySubsidy || scheme.categoryLabel)
+          const localizedCat = scheme.category === 'financial' ? (t.catDirectSupport || t.directIncome || scheme.categoryLabel)
+            : scheme.category === 'insurance' ? (t.catCropInsurance || t.cropInsurance || scheme.categoryLabel)
+            : scheme.category === 'solar' ? (t.catSolarIrrigation || t.solarEnergy || scheme.categoryLabel)
+            : scheme.category === 'machinery' ? (t.catMachinerySubsidy || t.farmMachinery || scheme.categoryLabel)
             : scheme.categoryLabel;
 
           return (
@@ -640,7 +640,7 @@ export default function GovtSchemes({ currentLang, onNavigate }) {
               {/* Action Footer: Official Government Portal Pill */}
               <div className="pt-4 border-t border-[#f0f0f0] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <span className="text-[11px] text-[#86868b]">
-                  {t.processingLabel || "Processing"}: <b className="text-[#1d1d1f] font-medium">{scheme.processingDays}</b>
+                  {t.processingLabel || "Processing"}: <b className="text-[#1d1d1f] font-medium">{scheme.processingDays.replace('Days', t.daysText || 'Days')}</b>
                 </span>
 
                 <a

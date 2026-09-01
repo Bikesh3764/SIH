@@ -226,7 +226,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
     if (pastDryDays >= 5 && nextRainSum < 15 && soilNum < 32) {
       return {
         score: 78,
-        label: 'Drought Moisture Deficit',
+        label: t.droughtRisk || 'Drought Moisture Deficit',
         statusColor: '#ff453a',
         barGrad: 'from-amber-500 to-red-500'
       };
@@ -235,7 +235,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
     if ((pastRainSum > 90 || nextRainSum > 80 || nextHighRainDays >= 3) && soilNum > 68) {
       return {
         score: 72,
-        label: 'Waterlogging & Root Rot Risk',
+        label: t.waterloggingRisk || 'Waterlogging & Root Rot Risk',
         statusColor: '#ff9f0a',
         barGrad: 'from-[#0071e3] to-[#2997ff]'
       };
@@ -244,7 +244,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
     if (nextHighRainDays >= 2 || soilNum > 60 || pastRainSum > 35) {
       return {
         score: 38,
-        label: 'Moderate Rain Window',
+        label: t.moderateRainRisk || 'Moderate Rain Window',
         statusColor: '#ffd60a',
         barGrad: 'from-blue-400 to-teal-400'
       };
@@ -252,11 +252,11 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
     // Scenario D: Optimal Balanced Microclimate
     return {
       score: 18,
-      label: 'Optimal Moisture Balance',
+      label: t.optimalMoistureBalance || 'Optimal Moisture Balance',
       statusColor: '#30d158',
       barGrad: 'from-emerald-400 to-teal-500'
     };
-  }, [pastDryDays, nextRainSum, soilNum, pastRainSum, nextHighRainDays]);
+  }, [pastDryDays, nextRainSum, soilNum, pastRainSum, nextHighRainDays, t]);
 
   // Pillar 2: Mandi Market Health & Price Crash Risk (35% Weight)
   const marketRiskScore = useMemo(() => {
@@ -317,7 +317,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
       title: t.scanLeafTitle || 'Crop Disease AI',
       subtitle: t.scanLeafDesc || 'Multimodal leaf scan with organic & chemical pathology',
       icon: Scan,
-      tag: 'Vision AI',
+      tag: t.visionAiTag || 'Vision AI',
       iconGrad: 'from-emerald-500 to-teal-600 shadow-emerald-500/25',
       hoverGlow: 'group-hover:border-emerald-500/40 group-hover:shadow-emerald-500/10',
       accentColor: 'text-emerald-600'
@@ -327,7 +327,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
       title: t.askAiTitle || 'Kisan Voice AI',
       subtitle: t.askAiDesc || 'Speak or ask agronomy questions in your regional language',
       icon: MessageSquareText,
-      tag: 'Voice AI',
+      tag: t.voiceAiTag || 'Voice AI',
       iconGrad: 'from-purple-500 to-indigo-600 shadow-purple-500/25',
       hoverGlow: 'group-hover:border-purple-500/40 group-hover:shadow-purple-500/10',
       accentColor: 'text-purple-600'
@@ -337,7 +337,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
       title: t.mandiRadarTitle || 'Market Prices',
       subtitle: t.mandiRadarDesc || 'Compare nearby APMC spot rates & best sell timing',
       icon: TrendingUp,
-      tag: 'AGMARKNET',
+      tag: t.agmarknetTag || 'AGMARKNET',
       iconGrad: 'from-[#0071e3] to-[#005bb5] shadow-blue-500/25',
       hoverGlow: 'group-hover:border-blue-500/40 group-hover:shadow-blue-500/10',
       accentColor: 'text-[#0071e3]'
@@ -347,7 +347,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
       title: t.weatherTitle || 'Weather Advisory',
       subtitle: t.weatherDesc || 'Hyperlocal rain probability & soil moisture guidance',
       icon: CloudSun,
-      tag: 'Open-Meteo',
+      tag: t.openMeteoTag || 'Open-Meteo',
       iconGrad: 'from-amber-400 to-orange-500 shadow-orange-500/25',
       hoverGlow: 'group-hover:border-amber-500/40 group-hover:shadow-amber-500/10',
       accentColor: 'text-amber-600'
@@ -357,7 +357,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
       title: t.schemesTitle || 'Govt Schemes',
       subtitle: t.schemesDesc || 'Explore central & state subsidies with direct portal links',
       icon: Building2,
-      tag: 'Direct Benefit',
+      tag: t.directBenefitTag || 'Direct Benefit',
       iconGrad: 'from-teal-400 to-emerald-600 shadow-teal-500/25',
       hoverGlow: 'group-hover:border-teal-500/40 group-hover:shadow-teal-500/10',
       accentColor: 'text-teal-600'
@@ -458,7 +458,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
               {t.fdiTitle || 'Predictive Farm Distress-Risk Index'}
             </h2>
             <p className="text-xs text-white/60">
-              Multi-factor agronomic telemetry: 14-day cumulative climate trend, whole APMC market realization, and debt proximity
+              {t.fdiSubtitle || 'Multi-factor agronomic telemetry: 14-day cumulative climate trend, whole APMC market realization, and debt proximity'}
             </p>
           </div>
 
@@ -489,7 +489,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
               <div className="flex items-center justify-between text-xs text-white/70">
                 <span className="font-medium flex items-center gap-1.5">
                   <span>🌧️</span>
-                  <span>14-Day Climate Risk</span>
+                  <span>{t.climateRiskTitle || '14-Day Climate Risk'}</span>
                 </span>
                 <span className="px-2 py-0.5 rounded-full liquid-glass/[0.06] border border-white/10 text-[10px] text-white/60 font-semibold">
                   40% {t.impact || "Impact"}
@@ -516,17 +516,17 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                   />
                 </div>
                 <div className="flex justify-between text-[10px] text-white/40 font-medium px-0.5">
-                  <span>0 (Safe Buffer)</span>
-                  <span>50 (Moderate)</span>
-                  <span>100 (High Distress)</span>
+                  <span>{t.safeBufferScale || '0 (Safe Buffer)'}</span>
+                  <span>{t.moderateScale || '50 (Moderate)'}</span>
+                  <span>{t.highDistressScale || '100 (High Distress)'}</span>
                 </div>
               </div>
             </div>
 
             <div className="pt-2 border-t border-white/[0.06] text-xs text-white/60 flex items-center justify-between">
-              <span>14d Rain: <strong className="text-white font-semibold">{cumulative14dRain}mm</strong> ({pastRainSum}mm past / {nextRainSum}mm next)</span>
+              <span>{t.rain14dLabel || '14d Rain'}: <strong className="text-white font-semibold">{cumulative14dRain}mm</strong> ({pastRainSum}mm {t.past || 'past'} / {nextRainSum}mm {t.next || 'next'})</span>
               <span className="px-2.5 py-0.5 rounded-full bg-white/[0.08] border border-white/15 text-white/80 font-medium text-[11px] shrink-0 ml-1">
-                Soil: {currentSoilMoisture}
+                {t.soilMoistureLabel || 'Soil'}: {currentSoilMoisture}
               </span>
             </div>
           </motion.div>
@@ -541,7 +541,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
               <div className="flex items-center justify-between text-xs text-white/70">
                 <span className="font-medium flex items-center gap-1.5">
                   <span>📈</span>
-                  <span>Mandi Realization & Crash Radar</span>
+                  <span>{t.mandiRealizationTitle || 'Mandi Realization & Crash Radar'}</span>
                 </span>
                 <span className="px-2 py-0.5 rounded-full liquid-glass/[0.06] border border-white/10 text-[10px] text-white/60 font-semibold">
                   35% {t.impact || "Impact"}
@@ -553,7 +553,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                   {mandiAnalytics.avgMarginPct >= 0 ? `+${mandiAnalytics.avgMarginPct}%` : `${mandiAnalytics.avgMarginPct}%`}
                 </span>
                 <span className="text-xs font-semibold text-white/70">
-                  {mandiAnalytics.avgMarginPct >= 0 ? (t.avgMarginMsp || "Avg Margin over MSP") : "Avg Below MSP"}
+                  {mandiAnalytics.avgMarginPct >= 0 ? (t.avgMarginMsp || "Avg Margin over MSP") : (t.avgBelowMsp || "Avg Below MSP")}
                 </span>
               </div>
 
@@ -568,7 +568,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                   />
                 </div>
                 <div className="flex justify-between text-[10px] text-white/40 font-medium px-0.5">
-                  <span>0% (MSP Floor)</span>
+                  <span>{t.mspFloorZero || '0% (MSP Floor)'}</span>
                   <span>+50%</span>
                   <span>+100%</span>
                 </div>
@@ -577,11 +577,11 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
 
             {/* Clean Overall APMC Market Health Status (Subtle Apple Capsule) */}
             <div className="pt-2 border-t border-white/[0.06] text-xs text-white/60 flex items-center justify-between">
-              <span>{mandiAnalytics.totalCommodities} Active Mandi Commodities</span>
+              <span>{mandiAnalytics.totalCommodities} {t.activeMandiCommodities || 'Active Mandi Commodities'}</span>
               {mandiAnalytics.hasCrashAlert ? (
                 <span className="px-2.5 py-0.5 rounded-full bg-[#ff453a]/15 text-[#ff453a] border border-[#ff453a]/30 font-medium text-[11px] flex items-center space-x-1.5 shrink-0">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#ff453a]" />
-                  <span>{mandiAnalytics.crashedCount} Below MSP Alert</span>
+                  <span>{mandiAnalytics.crashedCount} {t.belowMspAlert || 'Below MSP Alert'}</span>
                 </span>
               ) : (
                 <span className="px-2.5 py-0.5 rounded-full bg-white/[0.08] border border-white/15 text-white/80 font-medium text-[11px] flex items-center space-x-1.5 shrink-0">
@@ -661,7 +661,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
           <h2 className="text-[20px] sm:text-[22px] font-bold tracking-tight text-[#1d1d1f]">
             {t.quickServicesTitle || 'Agricultural Intelligence Modules'}
           </h2>
-          <span className="text-xs text-[#86868b] font-medium">5 AI Systems Active</span>
+          <span className="text-xs text-[#86868b] font-medium">{t.aiSystemsActive || '5 AI Systems Active'}</span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
@@ -714,7 +714,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
               className="bg-white rounded-[28px] max-w-lg w-full p-6 sm:p-8 space-y-6 shadow-2xl text-[#1d1d1f]"
             >
               <div className="flex items-center justify-between pb-3 border-b border-[#d2d2d7]/50">
-                <h3 className="text-lg font-bold">Edit KCC Crop Loan Details</h3>
+                <h3 className="text-lg font-bold">{t.editLoanDetails || 'Edit KCC Crop Loan Details'}</h3>
                 <button
                   onClick={() => setIsLoanModalOpen(false)}
                   className="w-8 h-8 rounded-full bg-[#f5f5f7] hover:bg-[#e8e8ed] flex items-center justify-center text-[#86868b] transition-colors cursor-pointer"
@@ -726,7 +726,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
               <form onSubmit={handleSaveLoanDetails} className="space-y-4">
                 <div>
                   <label className="block text-xs font-semibold text-[#86868b] uppercase tracking-wider mb-1.5">
-                    Lending Institution
+                    {t.lendingInstitution || 'Lending Institution'}
                   </label>
                   <input
                     type="text"
@@ -739,7 +739,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-semibold text-[#86868b] uppercase tracking-wider mb-1.5">
-                      Loan Amount (₹)
+                      {t.loanAmountLabel || 'Loan Amount (₹)'}
                     </label>
                     <input
                       type="text"
@@ -751,7 +751,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
 
                   <div>
                     <label className="block text-xs font-semibold text-[#86868b] uppercase tracking-wider mb-1.5">
-                      Repayment Due Date
+                      {t.repaymentDueDate || 'Repayment Due Date'}
                     </label>
                     <input
                       type="date"
@@ -768,13 +768,13 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                     onClick={() => setIsLoanModalOpen(false)}
                     className="px-4 py-2 rounded-full text-xs font-semibold text-[#86868b] hover:bg-[#f5f5f7] transition-colors cursor-pointer"
                   >
-                    Cancel
+                    {t.cancel || 'Cancel'}
                   </button>
                   <button
                     type="submit"
                     className="px-5 py-2 rounded-full liquid-pill-btn text-white text-xs font-semibold shadow-md shadow-blue-500/20 active:scale-95 transition-all cursor-pointer"
                   >
-                    Save & Recompute FDI
+                    {t.saveRecomputeFdi || 'Save & Recompute FDI'}
                   </button>
                 </div>
               </form>

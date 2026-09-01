@@ -40,7 +40,10 @@ export const DASHBOARD_DISTRICT_CROPS = {
   nashik: { key: 'nashik', name: 'Nashik (Lasalgaon)', state: 'Maharashtra' },
   bathinda: { key: 'bathinda', name: 'Bathinda (Malwa Belt)', state: 'Punjab' },
   karnal: { key: 'karnal', name: 'Karnal (GT Road Belt)', state: 'Haryana' },
-  ernakulam: { key: 'ernakulam', name: 'Ernakulam (Kochi)', state: 'Kerala' }
+  ernakulam: { key: 'ernakulam', name: 'Ernakulam (Kochi)', state: 'Kerala' },
+  pune: { key: 'pune', name: 'Pune (Gultekdi)', state: 'Maharashtra' },
+  latur: { key: 'latur', name: 'Latur (Marathwada)', state: 'Maharashtra' },
+  indore: { key: 'indore', name: 'Indore (Malwa)', state: 'Madhya Pradesh' }
 };
 
 export default function FarmerDashboard({ onNavigate, currentLang, currentUser }) {

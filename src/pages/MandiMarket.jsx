@@ -453,6 +453,204 @@ const DISTRICT_DATA_STORE = {
         ]
       }
     }
+  },
+  pune: {
+    districtName: 'Pune (Gultekdi)',
+    stateName: 'Maharashtra',
+    markets: [
+      { id: 'gultekdi', name: 'Pune Gultekdi APMC', premium: 0 },
+      { id: 'baramati', name: 'Baramati Market Yard', premium: 35 },
+      { id: 'manchar', name: 'Manchar APMC', premium: -20 },
+      { id: 'junnar', name: 'Junnar Market', premium: -15 }
+    ],
+    crops: {
+      Soybean: {
+        name: 'Soybean (सोयाबीन - Yellow JS-9305)',
+        unit: '₹ / quintal',
+        basePrice: 4750,
+        minPrice: 4580,
+        maxPrice: 4920,
+        msp: 4600,
+        trend: 'up',
+        change: '+2.8%',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
+        historyOffsets: [-60, -40, -25, -30, -10, +15, 0],
+        nearby: [
+          { name: 'Pune Gultekdi Hub', type: 'Terminal APMC', price: 4750, min: 4580, max: 4920 },
+          { name: 'Baramati APMC', type: 'Major Yard', price: 4790, min: 4620, max: 4960 },
+          { name: 'Satara APMC', type: 'Regional Hub', price: 4720, min: 4550, max: 4890 },
+          { name: 'Solapur APMC', type: 'Principal Yard', price: 4820, min: 4650, max: 4990 }
+        ]
+      },
+      Onion: {
+        name: 'Onion (लाल कांदा - Pune Red)',
+        unit: '₹ / quintal',
+        basePrice: 2780,
+        minPrice: 2550,
+        maxPrice: 3020,
+        msp: 1800,
+        trend: 'up',
+        change: '+6.2%',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
+        historyOffsets: [-120, -90, -50, -60, -20, +20, 0],
+        nearby: [
+          { name: 'Pune Gultekdi Hub', type: 'Terminal Mega Hub', price: 2780, min: 2550, max: 3020 },
+          { name: 'Manchar APMC', type: 'Principal Yard', price: 2720, min: 2500, max: 2950 },
+          { name: 'Khed APMC', type: 'Sub-Yard', price: 2690, min: 2470, max: 2920 },
+          { name: 'Mumbai Vashi Terminal', type: 'Mega Market', price: 2950, min: 2700, max: 3200 }
+        ]
+      },
+      Wheat: {
+        name: 'Wheat (गेहूं - Lokwan Grade-A)',
+        unit: '₹ / quintal',
+        basePrice: 2480,
+        minPrice: 2410,
+        maxPrice: 2560,
+        msp: 2275,
+        trend: 'up',
+        change: '+1.9%',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
+        historyOffsets: [-40, -25, -15, -20, -5, +10, 0],
+        nearby: [
+          { name: 'Pune Gultekdi APMC', type: 'Principal Yard', price: 2480, min: 2410, max: 2560 },
+          { name: 'Baramati Grain Yard', type: 'Major APMC', price: 2510, min: 2440, max: 2590 },
+          { name: 'Ahmednagar Mandi', type: 'Regional Hub', price: 2460, min: 2390, max: 2540 },
+          { name: 'Mumbai Vashi Mega Hub', type: 'Terminal Market', price: 2570, min: 2500, max: 2650 }
+        ]
+      }
+    }
+  },
+  latur: {
+    districtName: 'Latur (Marathwada)',
+    stateName: 'Maharashtra',
+    markets: [
+      { id: 'latur_dal', name: 'Latur Pulse & Oilseed APMC', premium: 0 },
+      { id: 'udgir', name: 'Udgir Main Yard', premium: 25 },
+      { id: 'ahmedpur', name: 'Ahmedpur Mandi', premium: -15 },
+      { id: 'ausa', name: 'Ausa APMC', premium: -20 }
+    ],
+    crops: {
+      Toor: {
+        name: 'Toor / Arhar (तुवर - Latur Red Bold)',
+        unit: '₹ / quintal',
+        basePrice: 10150,
+        minPrice: 9700,
+        maxPrice: 10550,
+        msp: 7000,
+        trend: 'up',
+        change: '+6.8%',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
+        historyOffsets: [-220, -160, -100, -130, -50, +35, 0],
+        nearby: [
+          { name: 'Latur Pulse Market', type: 'Asia Largest Pulse Hub', price: 10150, min: 9700, max: 10550 },
+          { name: 'Udgir APMC', type: 'Principal Yard', price: 10080, min: 9630, max: 10480 },
+          { name: 'Akola Dal APMC', type: 'Major Hub', price: 9950, min: 9500, max: 10350 },
+          { name: 'Solapur Mandi', type: 'Regional APMC', price: 10200, min: 9750, max: 10600 }
+        ]
+      },
+      Soybean: {
+        name: 'Soybean (सोयाबीन - Yellow JS-335)',
+        unit: '₹ / quintal',
+        basePrice: 4790,
+        minPrice: 4620,
+        maxPrice: 4950,
+        msp: 4600,
+        trend: 'up',
+        change: '+3.1%',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
+        historyOffsets: [-80, -55, -35, -45, -15, +15, 0],
+        nearby: [
+          { name: 'Latur APMC Main', type: 'Principal Oilseed Hub', price: 4790, min: 4620, max: 4950 },
+          { name: 'Udgir Mandi', type: 'Sub-Market Yard', price: 4760, min: 4590, max: 4920 },
+          { name: 'Nanded APMC', type: 'Major APMC', price: 4820, min: 4650, max: 4980 },
+          { name: 'Parbhani Yard', type: 'Regional Hub', price: 4740, min: 4570, max: 4900 }
+        ]
+      },
+      Gram: {
+        name: 'Chana / Bengal Gram (चना - Desi Chana)',
+        unit: '₹ / quintal',
+        basePrice: 5890,
+        minPrice: 5650,
+        maxPrice: 6100,
+        msp: 5440,
+        trend: 'up',
+        change: '+4.2%',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
+        historyOffsets: [-110, -80, -45, -60, -20, +25, 0],
+        nearby: [
+          { name: 'Latur Pulse Hub', type: 'Principal Yard', price: 5890, min: 5650, max: 6100 },
+          { name: 'Udgir APMC', type: 'Sub-Yard', price: 5850, min: 5610, max: 6060 },
+          { name: 'Solapur Mandi', type: 'Major APMC', price: 5930, min: 5690, max: 6140 },
+          { name: 'Gulbarga APMC', type: 'Regional Hub', price: 5970, min: 5730, max: 6180 }
+        ]
+      }
+    }
+  },
+  indore: {
+    districtName: 'Indore (Malwa)',
+    stateName: 'Madhya Pradesh',
+    markets: [
+      { id: 'choithram', name: 'Indore Choithram Mandi', premium: 0 },
+      { id: 'sanwer', name: 'Sanwer APMC Yard', premium: -20 },
+      { id: 'mhow', name: 'Mhow Market Yard', premium: 15 },
+      { id: 'depalpur', name: 'Depalpur Mandi', premium: -30 }
+    ],
+    crops: {
+      Soybean: {
+        name: 'Soybean (सोयाबीन - Yellow JS-9560)',
+        unit: '₹ / quintal',
+        basePrice: 4820,
+        minPrice: 4650,
+        maxPrice: 4990,
+        msp: 4600,
+        trend: 'up',
+        change: '+3.5%',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
+        historyOffsets: [-90, -65, -40, -50, -20, +15, 0],
+        nearby: [
+          { name: 'Indore Choithram Hub', type: 'Major MP Hub', price: 4820, min: 4650, max: 4990 },
+          { name: 'Ujjain APMC', type: 'Principal Yard', price: 4790, min: 4620, max: 4960 },
+          { name: 'Dewas Grain Mandi', type: 'Regional Hub', price: 4850, min: 4680, max: 5020 },
+          { name: 'Khandwa APMC', type: 'Major Market', price: 4760, min: 4590, max: 4930 }
+        ]
+      },
+      Wheat: {
+        name: 'Wheat (गेहूं - Malwa Sharbati Premium)',
+        unit: '₹ / quintal',
+        basePrice: 2850,
+        minPrice: 2720,
+        maxPrice: 3050,
+        msp: 2275,
+        trend: 'up',
+        change: '+5.4%',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
+        historyOffsets: [-70, -50, -30, -40, -15, +20, 0],
+        nearby: [
+          { name: 'Indore Grain Yard', type: 'Sharbati Wheat Hub', price: 2850, min: 2720, max: 3050 },
+          { name: 'Sehore Mandi', type: 'World Sharbati APMC', price: 2920, min: 2780, max: 3120 },
+          { name: 'Ujjain APMC', type: 'Principal Yard', price: 2810, min: 2680, max: 3010 },
+          { name: 'Bhopal Karond Mandi', type: 'Regional Hub', price: 2880, min: 2750, max: 3080 }
+        ]
+      },
+      Maize: {
+        name: 'Maize / Corn (मक्का - Yellow Feed Grade)',
+        unit: '₹ / quintal',
+        basePrice: 2180,
+        minPrice: 2090,
+        maxPrice: 2260,
+        msp: 2090,
+        trend: 'up',
+        change: '+1.5%',
+        arrivalDate: new Date().toLocaleDateString('en-GB'),
+        historyOffsets: [-30, -20, -10, -15, -5, +10, 0],
+        nearby: [
+          { name: 'Indore Choithram Yard', type: 'Principal Yard', price: 2180, min: 2090, max: 2260 },
+          { name: 'Sanwer APMC', type: 'Sub-Yard', price: 2150, min: 2060, max: 2230 },
+          { name: 'Chhindwara APMC', type: 'Asia Largest Corn Hub', price: 2240, min: 2150, max: 2320 },
+          { name: 'Ratlam Mandi', type: 'Regional Hub', price: 2170, min: 2080, max: 2250 }
+        ]
+      }
+    }
   }
 };
 
@@ -492,6 +690,7 @@ export default function MandiMarket({ currentLang, currentUser }) {
           }
         }
       }
+      setLastSyncedTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
     } catch (e) {
       console.warn('Live mandi fetch error:', e);
     }
@@ -549,6 +748,7 @@ export default function MandiMarket({ currentLang, currentUser }) {
   };
 
   const handleCropChange = (newCropKey) => {
+    setIsCropSyncing(true);
     setSelectedCropKey(newCropKey);
     setHoveredPointIndex(null);
     const cropObj = activeDistrict.crops?.[newCropKey];
@@ -558,6 +758,18 @@ export default function MandiMarket({ currentLang, currentUser }) {
         setSelectedMarketId(marketKeys[0]);
       }
     }
+    setTimeout(() => {
+      setIsCropSyncing(false);
+    }, 200);
+  };
+
+  const handleMarketChange = (newMarketId) => {
+    setIsMarketSyncing(true);
+    setSelectedMarketId(newMarketId);
+    setHoveredPointIndex(null);
+    setTimeout(() => {
+      setIsMarketSyncing(false);
+    }, 180);
   };
 
   const handleRefresh = async () => {
@@ -720,7 +932,13 @@ export default function MandiMarket({ currentLang, currentUser }) {
           </p>
         </div>
 
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2.5">
+          {/* Live AGMARKNET Status Badge & Timestamp */}
+          <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-full liquid-pill-light border border-emerald-500/30 text-[11px] font-semibold text-emerald-700 bg-emerald-50/70 shadow-xs">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>Live Feed • {lastSyncedTime}</span>
+          </div>
+
           <button
             onClick={handleRefresh}
             disabled={isRefreshing}
@@ -745,9 +963,12 @@ export default function MandiMarket({ currentLang, currentUser }) {
               { value: 'rourkela', label: 'Rourkela (Sundargarh)', subLabel: '(Odisha)' },
               { value: 'yavatmal', label: 'Yavatmal', subLabel: '(Maharashtra)' },
               { value: 'ernakulam', label: 'Ernakulam (Kochi)', subLabel: '(Kerala)' },
-              { value: 'nashik', label: 'Nashik (Lasalgaon)', subLabel: '(Maharashtra)' },
               { value: 'karnal', label: 'Karnal', subLabel: '(Haryana)' },
-              { value: 'bathinda', label: 'Bathinda', subLabel: '(Punjab)' }
+              { value: 'bathinda', label: 'Bathinda', subLabel: '(Punjab)' },
+              { value: 'nashik', label: 'Nashik (Lasalgaon)', subLabel: '(Maharashtra)' },
+              { value: 'pune', label: 'Pune (Gultekdi)', subLabel: '(Maharashtra)' },
+              { value: 'latur', label: 'Latur (Marathwada)', subLabel: '(Maharashtra)' },
+              { value: 'indore', label: 'Indore (Malwa)', subLabel: '(Madhya Pradesh)' }
             ]}
             value={selectedDistrictKey}
             onChange={(val) => handleDistrictChange(val)}
@@ -768,8 +989,7 @@ export default function MandiMarket({ currentLang, currentUser }) {
             }))}
             value={activeMarket.id}
             onChange={(val) => {
-              setSelectedMarketId(val);
-              setHoveredPointIndex(null);
+              handleMarketChange(val);
             }}
             icon={Store}
           />
@@ -796,7 +1016,8 @@ export default function MandiMarket({ currentLang, currentUser }) {
       </div>
 
       {/* Main Interactive Precision Price Chart Card (Pure Apple Aesthetic) */}
-      <div className="p-6 sm:p-8 rounded-[28px] liquid-glass border border-white/80 shadow-[0_8px_32px_rgba(0,0,0,0.04)] space-y-5 relative z-10">
+      <div className={`p-6 sm:p-8 rounded-[28px] liquid-glass border border-white/80 shadow-[0_8px_32px_rgba(0,0,0,0.04)] space-y-5 relative z-10 transition-opacity duration-200 ${isCropSyncing || isMarketSyncing ? 'opacity-70 scale-[0.995]' : 'opacity-100'}`}>
+
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#f0f0f0]">
           <div className="flex flex-wrap items-baseline gap-2.5">
             <span className="w-2.5 h-2.5 rounded-full liquid-pill-btn"></span>
@@ -1000,8 +1221,7 @@ export default function MandiMarket({ currentLang, currentUser }) {
               <div
                 key={idx}
                 onClick={() => {
-                  if (m.id) setSelectedMarketId(m.id);
-                  setHoveredPointIndex(null);
+                  if (m.id) handleMarketChange(m.id);
                 }}
                 className={`p-5 rounded-[18px] transition-all shadow-xs cursor-pointer ${
                   isSelected 

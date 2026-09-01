@@ -1,5 +1,5 @@
 // Live Hyperlocal Open-Meteo Weather Service (100% Free, Real-time & Multilingual)
-import { TRANSLATIONS } from '../data/translations';
+import { TRANSLATIONS } from '../data/translations.js';
 
 export const DISTRICT_COORDINATES = {
   rourkela: { lat: 22.2604, lng: 84.8536, name: 'Rourkela (Sundargarh)', state: 'Odisha' },
@@ -71,15 +71,25 @@ export async function fetchLiveDistrictWeather(districtId = 'rourkela', currentL
     const currentIsDay = current.is_day !== undefined ? current.is_day : (now.getHours() >= 6 && now.getHours() < 19 ? 1 : 0);
     const currentWeather = interpretWmoCode(current.weather_code || 0, currentLang, currentIsDay);
 
-    // Calculate exact daily and hourly offsets for TODAY
-    const todayStr = now.toISOString().split('T')[0];
-    let todayDailyIndex = daily.time?.findIndex(d => d === todayStr);
+    // Calculate exact daily and hourly offsets for TODAY using Open-Meteo local timeline
+    let currentExactHourIndex = -1;
+    if (current.time && Array.isArray(hourly.time)) {
+      currentExactHourIndex = hourly.time.findIndex(t => t === current.time || t.startsWith(current.time.slice(0, 13)));
+    }
+
+    const todayDateStr = current.time 
+      ? current.time.split('T')[0] 
+      : `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    
+    let todayDailyIndex = daily.time?.findIndex(d => d === todayDateStr);
     if (todayDailyIndex === -1 || todayDailyIndex === undefined) {
       todayDailyIndex = 7; // Fallback to index 7 in 14-day window
     }
 
     const currentHour = now.getHours();
-    const currentExactHourIndex = (todayDailyIndex * 24) + currentHour;
+    if (currentExactHourIndex === -1) {
+      currentExactHourIndex = (todayDailyIndex * 24) + currentHour;
+    }
 
     // Build 24-Hour timeline starting from RIGHT NOW
     const next24Hours = [];

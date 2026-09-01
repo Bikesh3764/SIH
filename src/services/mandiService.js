@@ -1,5 +1,5 @@
 // Live data.gov.in AGMARKNET Mandi Price Service
-const DATAGOV_API_KEY = import.meta.env.VITE_DATAGOV_API_KEY || '579b464db66ec23bdd00000187e425eb33e94b207a311b47b6fabacc';
+const DATAGOV_API_KEY = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_DATAGOV_API_KEY) || '579b464db66ec23bdd00000187e425eb33e94b207a311b47b6fabacc';
 
 // Resource ID for Daily Mandi Price and Arrivals on data.gov.in
 const RESOURCE_ID = '9ef84268-d588-465a-a308-a864a43d0070';
@@ -87,6 +87,30 @@ export const DISTRICT_CONFIGS = {
     districtName: 'Ernakulam (Kochi)',
     stateName: 'Kerala',
     regionalHubs: ['Kochi Spices Board Hub', 'Kottayam Central Yard', 'Thrissur APMC Yard', 'Palakkad Terminal Hub']
+  },
+  pune: {
+    state: 'Maharashtra',
+    district: 'Pune',
+    altDistrict: 'Satara',
+    districtName: 'Pune (Gultekdi)',
+    stateName: 'Maharashtra',
+    regionalHubs: ['Pune Gultekdi Hub', 'Baramati APMC', 'Manchar Market', 'Mumbai Vashi Mega Terminal']
+  },
+  latur: {
+    state: 'Maharashtra',
+    district: 'Latur',
+    altDistrict: 'Osmanabad',
+    districtName: 'Latur (Marathwada)',
+    stateName: 'Maharashtra',
+    regionalHubs: ['Latur Pulse & Oilseed APMC', 'Udgir Main Yard', 'Ahmedpur Mandi', 'Solapur APMC']
+  },
+  indore: {
+    state: 'Madhya Pradesh',
+    district: 'Indore',
+    altDistrict: 'Ujjain',
+    districtName: 'Indore (Malwa)',
+    stateName: 'Madhya Pradesh',
+    regionalHubs: ['Indore Choithram Mandi', 'Sanwer Yard', 'Ujjain APMC Hub', 'Dewas Grain Market']
   }
 };
 

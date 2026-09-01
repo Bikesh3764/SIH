@@ -230,54 +230,63 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
     };
   }, [liveMandiFeed]);
 
-  // 4. 14-Day Cumulative Climate Stress Model
+  // 4. 14-Day Cumulative Climate Stress Model (Continuous Agronomic Telemetry)
   // Combines: Past 7 Days Rainfall + Next 7 Days Forecast + Soil Root-Zone Moisture
   const soilNum = parseInt(currentSoilMoisture) || 50;
 
   const climateTelemetry = useMemo(() => {
-    // Scenario A: Prolonged Drought (Past dry spell + low forecast rain + dry soil)
-    if (pastDryDays >= 5 && nextRainSum < 15 && soilNum < 32) {
+    const r14 = pastRainSum + nextRainSum;
+
+    // Scenario A: Excessive Rain & Waterlogging Threat (Over 80mm or Saturated Soil > 60%)
+    if (r14 > 80 || soilNum > 60) {
+      const rainExcess = Math.max(0, r14 - 80);
+      const soilExcess = Math.max(0, soilNum - 60);
+      const dynScore = Math.min(100, Math.max(20, Math.round(20 + (rainExcess * 0.28) + (soilExcess * 0.75))));
       return {
-        score: 78,
+        score: dynScore,
+        label: t.waterloggingRisk || 'Waterlogging & Root Rot Risk',
+        statusColor: dynScore > 65 ? '#ff453a' : '#ff9f0a',
+        barGrad: 'from-[#0071e3] to-[#2997ff]'
+      };
+    }
+
+    // Scenario B: Moisture Deficit & Drought Threat (Under 40mm and Dry Soil < 40%)
+    if (r14 < 40 && soilNum < 40) {
+      const rainDeficit = Math.max(0, 40 - r14);
+      const soilDeficit = Math.max(0, 40 - soilNum);
+      const dynScore = Math.min(100, Math.max(20, Math.round(20 + (rainDeficit * 1.25) + (soilDeficit * 1.0))));
+      return {
+        score: dynScore,
         label: t.droughtRisk || 'Drought Moisture Deficit',
         statusColor: '#ff453a',
         barGrad: 'from-amber-500 to-red-500'
       };
     }
-    // Scenario B: Excessive Waterlogging / Flood Threat (Heavy 14-day rain + saturated root-zone)
-    if ((pastRainSum > 90 || nextRainSum > 80 || nextHighRainDays >= 3) && soilNum > 68) {
-      return {
-        score: 72,
-        label: t.waterloggingRisk || 'Waterlogging & Root Rot Risk',
-        statusColor: '#ff9f0a',
-        barGrad: 'from-[#0071e3] to-[#2997ff]'
-      };
-    }
-    // Scenario C: Moderate Moisture Buffer
-    if (nextHighRainDays >= 2 || soilNum > 60 || pastRainSum > 35) {
-      return {
-        score: 38,
-        label: t.moderateRainRisk || 'Moderate Rain Window',
-        statusColor: '#ffd60a',
-        barGrad: 'from-blue-400 to-teal-400'
-      };
-    }
-    // Scenario D: Optimal Balanced Microclimate
+
+    // Scenario C: Optimal Moisture & Balanced Weather Window (40mm - 80mm, Soil 40% - 60%)
+    const deviationScore = Math.round(15 + Math.abs(r14 - 60) * 0.15 + Math.abs(soilNum - 50) * 0.20);
     return {
-      score: 18,
-      label: t.optimalMoistureBalance || 'Optimal Moisture Balance',
-      statusColor: '#30d158',
+      score: deviationScore,
+      label: deviationScore > 25 ? (t.moderateRainRisk || 'Moderate Rain Window') : (t.optimalMoistureBalance || 'Optimal Moisture Balance'),
+      statusColor: deviationScore > 25 ? '#ffd60a' : '#30d158',
       barGrad: 'from-emerald-400 to-teal-500'
     };
-  }, [pastDryDays, nextRainSum, soilNum, pastRainSum, nextHighRainDays, t]);
+  }, [pastRainSum, nextRainSum, soilNum, t]);
 
   // Pillar 2: Mandi Market Health & Price Crash Risk (35% Weight)
+  // Continuous Econometric Risk Function: Directly maps actual % margin over/below MSP to 0-100 distress
+  // When margin is +40% (high profit) -> Risk = 0
+  // When margin is 0% (exact MSP floor) -> Risk = 50
+  // When margin is -20% (price crash) -> Risk = 75
+  // When margin is -40% (severe crash) -> Risk = 100
   const marketRiskScore = useMemo(() => {
     const { avgMarginPct, crashedCount } = mandiAnalytics;
-    if (crashedCount > 0 && avgMarginPct < 5) return 75; // Severe Market Distress (Below MSP)
-    if (avgMarginPct < 10) return 48; // Tight agrarian margins
-    if (avgMarginPct >= 25) return 12; // Strong profit buffer
-    return 20; // Stable
+    // Formula: 50 - (avgMarginPct * 1.25)
+    let score = Math.round(50 - (avgMarginPct * 1.25));
+    if (crashedCount > 0) {
+      score = Math.max(score, 60 + (crashedCount * 5));
+    }
+    return Math.min(100, Math.max(5, score));
   }, [mandiAnalytics]);
 
   // Pillar 3: Debt & Credit Proximity Risk (25% Weight if ON, 0% contribution if OFF)
@@ -570,9 +579,14 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                   <span>📈</span>
                   <span>{t.mandiRealizationTitle || 'Mandi Realization & Crash Radar'}</span>
                 </span>
-                <span className="px-2 py-0.5 rounded-full liquid-glass/[0.06] border border-white/10 text-[10px] text-white/60 font-semibold">
-                  35% {t.impact || "Impact"}
-                </span>
+                <div className="flex items-center space-x-1.5">
+                  <span className="px-2 py-0.5 rounded-full liquid-glass/[0.06] border border-white/10 text-[10px] text-white/70 font-semibold">
+                    {marketRiskScore}/100 {t.risk || 'Risk'}
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full liquid-glass/[0.06] border border-white/10 text-[10px] text-white/60 font-semibold">
+                    35% {t.impact || "Impact"}
+                  </span>
+                </div>
               </div>
 
               <div className="flex items-baseline space-x-2 pt-1">

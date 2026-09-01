@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Scan, 
@@ -84,39 +84,37 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
 
   const [isLoanModalOpen, setIsLoanModalOpen] = useState(false);
   const [tempLoanDetails, setTempLoanDetails] = useState(loanDetails);
+  const [lastTelemetrySyncTime, setLastTelemetrySyncTime] = useState(() => new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+  const [isTelemetrySyncing, setIsTelemetrySyncing] = useState(false);
 
-  // 1. Fetch Live Weather (14-Day Window: Past 7d + Next 7d) & Mandi Feed
-  useEffect(() => {
-    let isMounted = true;
-    async function loadLiveData() {
-      setWeatherLoading(true);
-      setMandiLoading(true);
-      
-      try {
-        const weather = await fetchLiveDistrictWeather(activeDistKey, currentLang);
-        if (isMounted && weather) {
-          setLiveWeather(weather);
-        }
-      } catch (e) {
-        console.warn('Dashboard weather sync error:', e);
-      } finally {
-        if (isMounted) setWeatherLoading(false);
-      }
-
-      try {
-        const mandi = await fetchLiveDistrictMandiFeed(activeDistKey);
-        if (isMounted && mandi) {
-          setLiveMandiFeed(mandi);
-        }
-      } catch (e) {
-        console.warn('Dashboard mandi sync error:', e);
-      } finally {
-        if (isMounted) setMandiLoading(false);
-      }
+  // 1. Fetch Live Weather (14-Day Window: Past 7d + Next 7d) & Mandi Feed with Auto Background Polling
+  const syncTelemetry = useCallback(async (showLoading = false) => {
+    if (showLoading) setIsTelemetrySyncing(true);
+    try {
+      const [weather, mandi] = await Promise.all([
+        fetchLiveDistrictWeather(activeDistKey, currentLang),
+        fetchLiveDistrictMandiFeed(activeDistKey)
+      ]);
+      if (weather) setLiveWeather(weather);
+      if (mandi) setLiveMandiFeed(mandi);
+      setLastTelemetrySyncTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+    } catch (e) {
+      console.warn('Dashboard telemetry sync error:', e);
+    } finally {
+      setIsTelemetrySyncing(false);
+      setWeatherLoading(false);
+      setMandiLoading(false);
     }
-    loadLiveData();
-    return () => { isMounted = false; };
   }, [activeDistKey, currentLang]);
+
+  useEffect(() => {
+    syncTelemetry(true);
+    // Background live telemetry polling every 45 seconds
+    const timer = setInterval(() => {
+      syncTelemetry(false);
+    }, 45000);
+    return () => clearInterval(timer);
+  }, [syncTelemetry]);
 
   // Real-Time Weather & 14-Day Cumulative Climate Metrics
   const currentTemp = liveWeather?.currentTemp || '28°C';
@@ -498,8 +496,28 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
             </p>
           </div>
 
-          {/* Dynamic Score Capsule */}
-          <div className="flex items-center space-x-2 shrink-0">
+          {/* Dynamic Score Capsule & Live Sync */}
+          <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+            {/* Live Ticker Indicator */}
+            <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-white/[0.07] border border-white/15 text-[11px] font-medium text-emerald-400 backdrop-blur-md">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Live • {lastTelemetrySyncTime}</span>
+            </div>
+
+            {/* Quick Refresh Button */}
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => syncTelemetry(true)}
+              disabled={isTelemetrySyncing}
+              className="px-3 py-1.5 rounded-full liquid-glass/[0.08] hover:liquid-glass/[0.15] border border-white/15 text-[11px] font-semibold text-white/90 hover:text-white flex items-center space-x-1.5 cursor-pointer active:scale-95 transition-all disabled:opacity-60"
+              title="Query live Open-Meteo & data.gov.in AGMARKNET APIs now"
+            >
+              <RotateCw size={12} className={isTelemetrySyncing ? 'animate-spin text-[#2997ff]' : ''} />
+              <span>{isTelemetrySyncing ? 'Syncing...' : (t.refresh || 'Sync Data')}</span>
+            </motion.button>
+
+            {/* Total FDI Badge */}
             <motion.div 
               whileHover={{ scale: 1.05 }}
               className="px-4 py-2 rounded-full liquid-glass/[0.08] border border-white/15 backdrop-blur-xl shadow-lg flex items-center space-x-2.5 transition-all cursor-default"

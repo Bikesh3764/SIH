@@ -873,12 +873,9 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                       onClick={() => setIsSchemeDropdownOpen(!isSchemeDropdownOpen)}
                       className="w-full px-4 py-2.5 rounded-[14px] bg-[#f5f5f7] hover:bg-[#ebebee] border border-[#d2d2d7]/60 flex items-center justify-between text-xs font-semibold text-[#1d1d1f] shadow-xs active:scale-[0.99] transition-all cursor-pointer"
                     >
-                      <div className="flex items-center space-x-2 truncate pr-2">
-                        <CreditCard size={14} className="text-[#0071e3] shrink-0" />
-                        <span className="truncate">{tempLoanDetails.schemeType || LOAN_SCHEMES[0].name}</span>
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 shrink-0">
-                          {LOAN_SCHEMES.find(s => s.name === (tempLoanDetails.schemeType || LOAN_SCHEMES[0].name))?.rate || '4%'}
-                        </span>
+                      <div className="flex items-center space-x-2.5 truncate pr-2">
+                        <CreditCard size={15} className="text-[#0071e3] shrink-0" />
+                        <span className="truncate font-semibold text-[#1d1d1f]">{tempLoanDetails.schemeType || LOAN_SCHEMES[0].name}</span>
                       </div>
                       <ChevronDown size={14} className={`text-[#86868b] shrink-0 transition-transform duration-300 ${isSchemeDropdownOpen ? 'rotate-180 text-[#0071e3]' : ''}`} />
                     </button>
@@ -891,7 +888,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: 3, scale: 0.96 }}
                           transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-                          className="absolute left-0 right-0 top-full mt-1.5 rounded-[18px] bg-white/95 text-[#1d1d1f] border border-white/90 shadow-[0_20px_50px_rgba(0,0,0,0.22)] p-1.5 z-[99999] backdrop-blur-3xl max-h-56 overflow-y-auto"
+                          className="absolute left-0 right-0 top-full mt-1.5 rounded-[18px] bg-white/95 text-[#1d1d1f] border border-white/90 shadow-[0_20px_50px_rgba(0,0,0,0.22)] p-1.5 z-[99999] backdrop-blur-3xl max-h-60 overflow-y-auto"
                         >
                           <div className="space-y-0.5">
                             {LOAN_SCHEMES.map((s) => {
@@ -904,7 +901,7 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                                     setTempLoanDetails(prev => ({ ...prev, schemeType: s.name }));
                                     setIsSchemeDropdownOpen(false);
                                   }}
-                                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-[12px] text-xs transition-all duration-150 cursor-pointer ${
+                                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-[12px] text-xs transition-all duration-150 cursor-pointer ${
                                     isSelected
                                       ? 'bg-[#0071e3]/10 text-[#0071e3] font-bold border border-[#0071e3]/20 shadow-2xs'
                                       : 'hover:bg-black/5 text-[#1d1d1f] font-medium'
@@ -912,12 +909,9 @@ export default function FarmerDashboard({ onNavigate, currentLang, currentUser }
                                 >
                                   <div className="flex items-center space-x-2 truncate pr-2 text-left">
                                     <span className="truncate">{s.name}</span>
-                                    <span className="text-[10.5px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 shrink-0">
-                                      {s.rate}
-                                    </span>
                                   </div>
                                   {isSelected && (
-                                    <Check size={14} className="text-[#0071e3] shrink-0" />
+                                    <Check size={14} className="text-[#0071e3] shrink-0 ml-2" />
                                   )}
                                 </button>
                               );
